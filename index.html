@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PETER COMMISSIONER | Premium Real Estate</title>
-    <meta name="google-site-verification" content="5ZVtUlEU9hJJRVhfdEobTpzI-oIvw4Ai4Ua4eZPhfY4" />
-    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- Favicon (your logo.png) -->
+    <link rel="icon" type="image/png" sizes="512x512" href="logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    
+    <!-- Google Search Console verification (REPLACE content with your own code) -->
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            background: #f0f4f8;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+        body { background: #f0f4f8; font-family: 'Inter', system-ui, sans-serif; }
         body::before {
             content: '';
             position: fixed;
@@ -25,10 +32,7 @@
             pointer-events: none;
             z-index: -1;
         }
-        .hero-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-        }
+        .hero-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; }
         .hero-bg h1, .hero-bg p, .hero-bg .uppercase { color: white; }
         .product-card {
             background: white;
@@ -37,38 +41,16 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
-        }
-        .btn-primary {
-            background: #2563eb;
-            transition: all 0.2s;
-            color: white;
-            border-radius: 9999px;
-        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15); }
+        .btn-primary { background: #2563eb; transition: all 0.2s; color: white; border-radius: 9999px; }
         .btn-primary:hover { background: #1d4ed8; transform: scale(1.02); }
-        .btn-outline {
-            border: 1px solid white;
-            color: white;
-            background: transparent;
-            border-radius: 9999px;
-        }
+        .btn-outline { border: 1px solid white; color: white; background: transparent; border-radius: 9999px; }
         .btn-outline:hover { background: rgba(255,255,255,0.1); }
         .status-available { background: #10b981; color: white; }
         .status-sold { background: #ef4444; color: white; }
         .info-item { background: #f1f5f9; color: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
-        .filter-bar {
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-        nav {
-            background: white;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            border-bottom: 1px solid #e2e8f0;
-        }
+        .filter-bar { background: white; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        nav { background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-bottom: 1px solid #e2e8f0; }
         .loader-overlay {
             position: fixed;
             top: 0;
@@ -90,10 +72,7 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
         .image-preview { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin: 4px; border: 2px solid #2563eb; }
         .detail-image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 8px; }
         .detail-main-img { max-height: 400px; object-fit: contain; }
@@ -106,16 +85,8 @@
         }
         .notification-success { border-left-color: #10b981; }
         .notification-error { border-left-color: #ef4444; }
-        #existingImagesPreview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .existing-image-item {
-            position: relative;
-            display: inline-block;
-        }
+        #existingImagesPreview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+        .existing-image-item { position: relative; display: inline-block; }
         .remove-image-btn {
             position: absolute;
             top: -8px;
@@ -270,7 +241,7 @@
 <div id="loginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeLoginModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Welcome Back</h3><form id="loginForm"><input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Login</button></form><p class="text-center text-gray-500 text-sm mt-4">Don't have an account? <button id="switchToRegister" class="text-blue-600 hover:underline">Register here</button></p></div></div>
 
 <script type="module">
-    // Firebase Configuration
+    // ==================== FIREBASE CONFIGURATION ====================
     const firebaseConfig = {
         apiKey: "AIzaSyBmQVW-mHhcuapT0UG_7JwMybuakpaa4eY",
         authDomain: "peter-commissioner.firebaseapp.com",
@@ -291,25 +262,36 @@
     const db = getFirestore(app);
     const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
 
-    // ImageBB upload function
+    // ---------- Helper functions ----------
+    const loader = document.getElementById('globalLoader');
+    function showLoader() { if (loader) loader.classList.remove('hidden'); }
+    function hideLoader() { if (loader) loader.classList.add('hidden'); }
+
+    function showMessage(msg, type = 'info') {
+        const container = document.getElementById('notificationContainer');
+        if (!container) return;
+        const notif = document.createElement('div');
+        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-100 text-green-800 border-l-4 border-green-500' : type === 'error' ? 'bg-red-100 text-red-800 border-l-4 border-red-500' : 'bg-blue-100 text-blue-800 border-l-4 border-blue-500'}`;
+        notif.innerHTML = `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
+        container.appendChild(notif);
+        setTimeout(() => notif.remove(), 4000);
+    }
+    function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+    function getFriendlyError(code) {
+        const map = { 'auth/email-already-in-use': 'Email already registered.','auth/invalid-email':'Invalid email.','auth/weak-password':'Password must be 6+ chars.','auth/wrong-password':'Incorrect password.','auth/user-not-found':'No account. Register first.','auth/too-many-requests':'Too many attempts.' };
+        return map[code] || `Error: ${code}`;
+    }
+
+    // ---------- ImageBB upload ----------
     async function uploadImageToImgBB(file) {
         const formData = new FormData();
         formData.append('image', file);
         formData.append('key', IMGBB_API_KEY);
-        
-        const response = await fetch('https://api.imgbb.com/1/upload', {
-            method: 'POST',
-            body: formData
-        });
-        
+        const response = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData });
         const data = await response.json();
-        if (data.success) {
-            return data.data.url;
-        } else {
-            throw new Error('Image upload failed: ' + data.error.message);
-        }
+        if (data.success) return data.data.url;
+        else throw new Error('Image upload failed: ' + (data.error?.message || 'Unknown error'));
     }
-
     async function uploadMultipleImages(files) {
         const urls = [];
         for (const file of files) {
@@ -324,7 +306,7 @@
         return urls;
     }
 
-    // DOM elements
+    // ---------- DOM references ----------
     const getEl = (id) => document.getElementById(id);
     const dom = {
         homeSec: getEl('home-section'), userSec: getEl('user-panel-section'), adminSec: getEl('admin-panel-section'), contactSec: getEl('contact-section'), productDetailSec: getEl('product-detail-section'),
@@ -343,52 +325,14 @@
         loginRequiredModal: getEl('loginRequiredModal'), closeLoginRequiredModal: getEl('closeLoginRequiredModal'), loginRequiredLoginBtn: getEl('loginRequiredLoginBtn'), loginRequiredRegisterBtn: getEl('loginRequiredRegisterBtn'), switchToRegister: getEl('switchToRegister')
     };
 
+    // ---------- Global state ----------
     let currentUser = null, userRole = 'guest', allProducts = [], filteredProducts = [], cart = [], editingId = null;
     let recentlyViewedIds = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
     let contactInfo = { instagramUrl: '', phoneNumber: '' };
     let pendingProduct = null;
     let currentImages = [];
 
-    const loader = getEl('globalLoader');
-    const showLoader = () => loader.classList.remove('hidden');
-    const hideLoader = () => loader.classList.add('hidden');
-
-    function showMessage(msg, type = 'info') {
-        const container = getEl('notificationContainer');
-        if (!container) return;
-        const notif = document.createElement('div');
-        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-100 text-green-800 border-l-4 border-green-500' : type === 'error' ? 'bg-red-100 text-red-800 border-l-4 border-red-500' : 'bg-blue-100 text-blue-800 border-l-4 border-blue-500'}`;
-        notif.innerHTML = `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
-        container.appendChild(notif);
-        setTimeout(() => notif.remove(), 4000);
-    }
-    function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
-    function getFriendlyError(code) {
-        const map = { 'auth/email-already-in-use': 'Email already registered.','auth/invalid-email':'Invalid email.','auth/weak-password':'Password must be 6+ chars.','auth/wrong-password':'Incorrect password.','auth/user-not-found':'No account. Register first.','auth/too-many-requests':'Too many attempts.' };
-        return map[code] || `Error: ${code}`;
-    }
-
-    // Preview uploaded images
-    function previewImages(files) {
-        const previewDiv = document.getElementById('existingImagesPreview');
-        if (!previewDiv) return;
-        
-        for (const file of files) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgContainer = document.createElement('div');
-                imgContainer.className = 'existing-image-item';
-                imgContainer.innerHTML = `
-                    <img src="${e.target.result}" class="image-preview">
-                    <span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>
-                `;
-                previewDiv.appendChild(imgContainer);
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    // Contact Info
+    // ---------- Contact Info ----------
     async function loadContactInfo() {
         try {
             const docRef = doc(db, "settings", "contactInfo");
@@ -404,7 +348,6 @@
             if (dom.adminPhoneNumber) dom.adminPhoneNumber.value = contactInfo.phoneNumber;
         } catch (err) { console.error(err); }
     }
-
     async function saveContactInfo(url, phone) {
         showLoader();
         try {
@@ -417,7 +360,7 @@
         finally { hideLoader(); }
     }
 
-    // Cart functions
+    // ---------- Cart functions ----------
     function saveCart() { localStorage.setItem('peterCommissionerCart', JSON.stringify(cart)); updateCartUI(); }
     function loadCart() { cart = JSON.parse(localStorage.getItem('peterCommissionerCart') || '[]'); updateCartUI(); }
     function updateCartUI() {
@@ -446,7 +389,7 @@
         });
     }
 
-    // Order functions
+    // ---------- Order / Inquiry ----------
     async function initiateOrder(product) {
         if (!currentUser) { pendingProduct = product; dom.loginRequiredModal.classList.remove('hidden'); return; }
         if (product.stock === 'sold' || product.quantity <= 0) { showMessage("This property is no longer available.", "warning"); return; }
@@ -462,7 +405,6 @@
         qtyInput.value = 1;
         dom.customerModal.classList.remove('hidden');
     }
-
     async function submitOrderAndAddToCart(e) {
         e.preventDefault();
         const fullName = document.getElementById('orderFullName').value.trim();
@@ -498,7 +440,7 @@
         finally { hideLoader(); }
     }
 
-    // Product display
+    // ---------- Product display ----------
     function showProductDetail(productId) {
         const product = allProducts.find(p => p.id === productId);
         if (!product) return;
@@ -517,7 +459,6 @@
         document.getElementById('product-detail-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         addRecentlyViewed(product.id);
     }
-
     function productCardTemplate(p) {
         const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/300';
         const hasStock = (p.stock === 'available' && p.quantity > 0);
@@ -525,7 +466,6 @@
         const orderBtn = hasStock ? `<button class="add-cart-trigger btn-primary text-white font-semibold px-4 py-2 rounded-full text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>` : `<button class="bg-gray-300 text-white font-semibold px-4 py-2 rounded-full text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-1"></i> Sold</button>`;
         return `<div class="product-card bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-56 w-full object-cover" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl text-gray-800">${escapeHtml(p.name)}</h3><div class="flex justify-between items-center mt-1"><span class="text-blue-700 font-semibold">${p.price.toLocaleString()} RWF</span><span class="text-xs text-gray-500"><i class="fas fa-bed"></i> ${p.bedrooms || 0}</span></div><div class="flex justify-between items-center mt-2">${orderBtn}</div></div></div>`;
     }
-
     function attachProductEvents(container) {
         container.querySelectorAll('.product-card').forEach(card => {
             card.onclick = (e) => {
@@ -542,7 +482,6 @@
             };
         });
     }
-
     function addRecentlyViewed(productId) {
         recentlyViewedIds = recentlyViewedIds.filter(id => id !== productId);
         recentlyViewedIds.unshift(productId); if (recentlyViewedIds.length > 6) recentlyViewedIds.pop();
@@ -581,7 +520,7 @@
     }
     function refreshAll() { applyFiltersAndRender(); renderRecentlyViewed(); renderRecommendations(); }
 
-    // Admin CRUD with image upload
+    // ---------- Admin CRUD ----------
     async function fetchProducts() {
         showLoader();
         try {
@@ -592,7 +531,6 @@
         } catch(e) { showMessage('Failed to load properties', 'error'); }
         finally { hideLoader(); }
     }
-
     async function renderAdminList() {
         if (!dom.productList) return;
         if (!allProducts.length) { dom.productList.innerHTML = '<div class="text-gray-500">No properties</div>'; return; }
@@ -600,7 +538,6 @@
         dom.productList.querySelectorAll('.edit-prod').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
         dom.productList.querySelectorAll('.del-prod').forEach(btn => btn.onclick = async () => { if (confirm('Delete property?')) await deleteProduct(btn.dataset.id); });
     }
-
     async function deleteProduct(id) {
         showLoader();
         try {
@@ -611,7 +548,6 @@
         } catch(e) { showMessage('Delete failed', 'error'); }
         finally { hideLoader(); }
     }
-
     async function openEdit(id) {
         const prod = allProducts.find(p => p.id === id);
         if (!prod) return;
@@ -630,7 +566,6 @@
             currentImages = [...prod.images];
         }
     }
-
     function resetEdit() { 
         editingId = null; 
         dom.productForm.reset(); 
@@ -642,10 +577,10 @@
         dom.propertyType.value = 'House'; 
         dom.productFormTitle.innerText = '➕ Add New Property'; 
         dom.cancelEdit.classList.add('hidden'); 
-        document.getElementById('existingImagesPreview').innerHTML = ''; 
+        const previewDiv = document.getElementById('existingImagesPreview');
+        if (previewDiv) previewDiv.innerHTML = '';
         currentImages = [];
     }
-
     dom.productForm.onsubmit = async (e) => {
         e.preventDefault();
         const name = dom.productName.value.trim(), desc = dom.productDesc.value.trim(), price = parseInt(dom.productPrice.value), stock = dom.productStock.value, quantity = parseInt(dom.productQuantity.value), bedrooms = parseInt(dom.bedrooms.value), bathrooms = parseInt(dom.bathrooms.value), area = parseInt(dom.area.value), propertyType = dom.propertyType.value;
@@ -654,27 +589,21 @@
         showLoader();
         try {
             let images = [];
-            
-            // Get existing images from preview (keep the ones not removed)
+            // collect existing images from preview (not removed)
             const existingPreviews = document.querySelectorAll('#existingImagesPreview .existing-image-item img');
             for (const img of existingPreviews) {
-                if (img.src) {
-                    images.push(img.src);
-                }
+                if (img.src) images.push(img.src);
             }
-            
-            // Upload new images
+            // upload new images
             if (files.length > 0) {
                 const newUrls = await uploadMultipleImages(files);
                 images.push(...newUrls);
             }
-            
             if (images.length === 0) {
                 showMessage('Please add at least one image', 'warning');
                 hideLoader();
                 return;
             }
-            
             if (editingId) {
                 const existingRef = doc(db, "products", editingId);
                 await updateDoc(existingRef, { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms, area, propertyType, updatedAt: new Date() });
@@ -694,21 +623,15 @@
         finally { hideLoader(); }
     };
     dom.cancelEdit.onclick = resetEdit;
-
-    // Add image preview when files are selected
     dom.productImages.addEventListener('change', (e) => {
         const files = Array.from(e.target.files);
         const previewDiv = document.getElementById('existingImagesPreview');
-        
         for (const file of files) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const imgContainer = document.createElement('div');
                 imgContainer.className = 'existing-image-item';
-                imgContainer.innerHTML = `
-                    <img src="${event.target.result}" class="image-preview">
-                    <span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>
-                `;
+                imgContainer.innerHTML = `<img src="${event.target.result}" class="image-preview"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>`;
                 previewDiv.appendChild(imgContainer);
             };
             reader.readAsDataURL(file);
@@ -719,13 +642,12 @@
         if (!dom.userTable) return;
         try {
             const snap = await getDocs(collection(db, "users"));
-            let html = `<table><th class="text-left text-blue-700">Name</th><th class="text-left text-blue-700">Email</th><th class="text-left text-blue-700">Role</th>`;
-            snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1">${escapeHtml(data.email)}</td><td class="py-1">${escapeHtml(data.role||'user')}</td></tr>`; });
+            let html = `<tr><th class="text-left text-blue-700">Name</th><th class="text-left text-blue-700">Email</th><th class="text-left text-blue-700">Role</th>`;
+            snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1">${escapeHtml(data.email)}</td><td class="py-1">${escapeHtml(data.role||'user')}</td>`; });
             dom.userTable.innerHTML = html;
             if (dom.perfStats) dom.perfStats.innerHTML = `<div class="p-3"><p class="font-semibold text-blue-700">📊 Performance</p><p>Users: ${snap.size}</p><p>Properties: ${allProducts.length}</p><p>Inquiries: ${cart.reduce((a,b)=>a+b.quantity,0)}</p></div>`;
         } catch(e) { console.warn(e); }
     }
-
     async function fetchOrders() {
         if (!dom.ordersList) return;
         try {
@@ -741,7 +663,7 @@
         } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td></tr>'; }
     }
 
-    // Auth functions
+    // ---------- Authentication ----------
     async function register(email, pwd, first, last) {
         showLoader();
         try {
@@ -766,7 +688,7 @@
     }
     function logout() { signOut(auth); showMessage('Logged out', 'info'); showHome(); pendingProduct = null; }
 
-    // Navigation
+    // ---------- Navigation ----------
     function showHome() {
         setActiveSection(dom.homeSec, [dom.userSec, dom.adminSec, dom.contactSec, dom.productDetailSec]);
         fetchProducts();
@@ -807,7 +729,7 @@
         fetchProducts();
     });
 
-    // Event binding
+    // ---------- Event bindings (final) ----------
     const closeModal = (m) => m.classList.add('hidden');
     const openModal = (m) => m.classList.remove('hidden');
     dom.homeNav.onclick = showHome;
@@ -859,6 +781,7 @@
         await saveContactInfo("https://www.instagram.com/__bullet_wi_gikondo__", "+250786811816");
     });
 
+    // Initialization
     loadCart();
     loadContactInfo();
     fetchProducts();
