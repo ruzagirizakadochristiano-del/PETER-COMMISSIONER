@@ -93,7 +93,7 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .image-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin: 4px; border: 1px solid #d4af37; }
+        .image-preview { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin: 4px; border: 2px solid #2563eb; }
         .detail-image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 8px; }
         .detail-main-img { max-height: 400px; object-fit: contain; }
         .price-large { font-size: 2rem; font-weight: bold; color: #1e293b; }
@@ -105,6 +105,32 @@
         }
         .notification-success { border-left-color: #10b981; }
         .notification-error { border-left-color: #ef4444; }
+        #existingImagesPreview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .existing-image-item {
+            position: relative;
+            display: inline-block;
+        }
+        .remove-image-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -203,7 +229,12 @@
             <div><label class="block text-sm mb-1">Property Type</label><select id="propertyType" class="bg-gray-50 border border-gray-300 p-2 rounded-lg w-full"><option value="House">House</option><option value="Apartment">Apartment</option><option value="Villa">Villa</option><option value="Land">Land</option><option value="Commercial">Commercial</option></select></div>
             <div><label class="block text-sm mb-1">Status</label><select id="productStock" class="bg-gray-50 border border-gray-300 p-2 rounded-lg w-full"><option value="available">Available</option><option value="sold">Sold</option></select></div>
             <div><label class="block text-sm mb-1">Quantity (for land plots)</label><input type="number" id="productQuantity" min="0" value="1" class="bg-gray-50 border border-gray-300 p-2 rounded-lg w-full"></div>
-            <div class="md:col-span-2"><label class="block text-sm mb-1">Property Images (multiple, max 5)</label><input type="file" id="productImages" accept="image/*" multiple class="bg-gray-50 border border-gray-300 p-1 rounded-lg w-full"><div id="existingImagesPreview" class="flex flex-wrap gap-2 mt-2"></div><p class="text-xs text-gray-500 mt-1">Select up to 5 images. On edit, new images will replace existing ones.</p></div>
+            <div class="md:col-span-2">
+                <label class="block text-sm mb-1">Property Images (multiple, max 5)</label>
+                <input type="file" id="productImages" accept="image/*" multiple class="bg-gray-50 border border-gray-300 p-1 rounded-lg w-full">
+                <div id="existingImagesPreview" class="flex flex-wrap gap-2 mt-2"></div>
+                <p class="text-xs text-gray-500 mt-1">Select up to 5 images. On edit, you can add new images or remove existing ones.</p>
+            </div>
             <div class="md:col-span-2 flex gap-3"><button type="submit" class="btn-primary text-white px-5 py-2 rounded-lg font-semibold"><span id="productFormTitle">➕ Add New Property</span></button><button type="button" id="cancelEdit" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-lg hidden">Cancel Edit</button></div>
         </form>
         <div class="mt-8"><h3 class="font-bold text-xl text-blue-700">📋 Property Inventory</h3><div id="productListAdmin" class="mt-2 space-y-2"></div></div>
@@ -231,14 +262,14 @@
     <div class="border-t border-gray-200 p-5 bg-gray-50"><div class="flex justify-between text-xl font-bold text-gray-800">Total: <span id="cartTotal" class="text-blue-600">0</span> RWF</div><button class="w-full btn-primary text-white py-3 mt-4 rounded-full font-semibold">Submit Inquiry</button></div>
 </div>
 
-<!-- Modals (simplified but fully functional) -->
+<!-- Modals -->
 <div id="customerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-2xl w-full p-6 relative max-h-[90vh] overflow-y-auto"><button id="closeCustomerModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Request Property Information</h3><form id="customerOrderForm"><input type="hidden" id="orderProductId"><input type="hidden" id="orderProductName"><input type="hidden" id="orderProductPrice"><input type="hidden" id="orderMaxQuantity"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><input type="text" id="orderFullName" placeholder="Full Name *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="email" id="orderEmail" placeholder="Email Address *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="tel" id="orderPhone" placeholder="Phone Number *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="number" id="orderQuantity" placeholder="Interested units *" min="1" value="1" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="text" id="orderLocation" placeholder="Preferred location for viewing *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2"><textarea id="orderNotes" placeholder="Additional questions or message" rows="3" class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2"></textarea></div><div class="mt-4 p-3 bg-gray-50 rounded-lg"><p class="text-gray-700">Property: <span id="orderProductDisplay"></span></p><p class="text-gray-700">Price per unit: <span id="orderPriceDisplay"></span> RWF</p><p class="text-gray-700">Available: <span id="orderAvailableDisplay"></span></p></div><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold mt-4">Send Inquiry</button></form></div></div>
 <div id="loginRequiredModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative text-center"><button id="closeLoginRequiredModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><i class="fas fa-lock text-5xl text-blue-600 mb-3"></i><h3 class="text-2xl font-bold text-gray-800 mb-2">Login Required</h3><p class="text-gray-600 mb-6">Please log in or create an account to inquire about properties.</p><div class="flex gap-4 justify-center"><button id="loginRequiredLoginBtn" class="btn-primary text-white px-5 py-2 rounded-full font-semibold">Login</button><button id="loginRequiredRegisterBtn" class="border border-blue-600 text-blue-600 px-5 py-2 rounded-full font-semibold">Register</button></div></div></div>
 <div id="registerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeRegModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Create Account</h3><form id="regForm"><input type="text" id="regFirstName" placeholder="First Name" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="text" id="regLastName" placeholder="Last Name" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="email" id="regEmail" placeholder="Email" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="regPassword" placeholder="Password (min 6 chars)" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="regConfirmPassword" placeholder="Confirm Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Register</button></form></div></div>
 <div id="loginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeLoginModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Welcome Back</h3><form id="loginForm"><input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Login</button></form><p class="text-center text-gray-500 text-sm mt-4">Don't have an account? <button id="switchToRegister" class="text-blue-600 hover:underline">Register here</button></p></div></div>
 
 <script type="module">
-    // Firebase Configuration – REPLACE WITH YOUR OWN KEYS
+    // Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyBmQVW-mHhcuapT0UG_7JwMybuakpaa4eY",
         authDomain: "peter-commissioner.firebaseapp.com",
@@ -259,7 +290,40 @@
     const db = getFirestore(app);
     const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
 
-    // DOM elements (shortened for brevity)
+    // ImageBB upload function
+    async function uploadImageToImgBB(file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('key', IMGBB_API_KEY);
+        
+        const response = await fetch('https://api.imgbb.com/1/upload', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            return data.data.url;
+        } else {
+            throw new Error('Image upload failed: ' + data.error.message);
+        }
+    }
+
+    async function uploadMultipleImages(files) {
+        const urls = [];
+        for (const file of files) {
+            try {
+                const url = await uploadImageToImgBB(file);
+                urls.push(url);
+                showMessage(`Uploaded: ${file.name}`, 'success');
+            } catch (error) {
+                showMessage(`Failed to upload ${file.name}: ${error.message}`, 'error');
+            }
+        }
+        return urls;
+    }
+
+    // DOM elements
     const getEl = (id) => document.getElementById(id);
     const dom = {
         homeSec: getEl('home-section'), userSec: getEl('user-panel-section'), adminSec: getEl('admin-panel-section'), contactSec: getEl('contact-section'), productDetailSec: getEl('product-detail-section'),
@@ -282,6 +346,7 @@
     let recentlyViewedIds = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
     let contactInfo = { instagramUrl: '', phoneNumber: '' };
     let pendingProduct = null;
+    let currentImages = [];
 
     const loader = getEl('globalLoader');
     const showLoader = () => loader.classList.remove('hidden');
@@ -294,7 +359,7 @@
         notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-100 text-green-800 border-l-4 border-green-500' : type === 'error' ? 'bg-red-100 text-red-800 border-l-4 border-red-500' : 'bg-blue-100 text-blue-800 border-l-4 border-blue-500'}`;
         notif.innerHTML = `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
         container.appendChild(notif);
-        setTimeout(() => notif.remove(), 3000);
+        setTimeout(() => notif.remove(), 4000);
     }
     function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
     function getFriendlyError(code) {
@@ -302,7 +367,27 @@
         return map[code] || `Error: ${code}`;
     }
 
-    // Contact Info (simplified)
+    // Preview uploaded images
+    function previewImages(files) {
+        const previewDiv = document.getElementById('existingImagesPreview');
+        if (!previewDiv) return;
+        
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'existing-image-item';
+                imgContainer.innerHTML = `
+                    <img src="${e.target.result}" class="image-preview">
+                    <span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>
+                `;
+                previewDiv.appendChild(imgContainer);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Contact Info
     async function loadContactInfo() {
         try {
             const docRef = doc(db, "settings", "contactInfo");
@@ -319,7 +404,19 @@
         } catch (err) { console.error(err); }
     }
 
-    // Cart functions (same as before)
+    async function saveContactInfo(url, phone) {
+        showLoader();
+        try {
+            await setDoc(doc(db, "settings", "contactInfo"), { instagramUrl: url, phoneNumber: phone });
+            contactInfo = { instagramUrl: url, phoneNumber: phone };
+            if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML = `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-blue-600 underline">${contactInfo.instagramUrl}</a>`;
+            if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML = `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-blue-600 underline">${contactInfo.phoneNumber}</a>`;
+            showMessage("Contact info updated", "success");
+        } catch (err) { showMessage("Update failed", "error"); }
+        finally { hideLoader(); }
+    }
+
+    // Cart functions
     function saveCart() { localStorage.setItem('peterCommissionerCart', JSON.stringify(cart)); updateCartUI(); }
     function loadCart() { cart = JSON.parse(localStorage.getItem('peterCommissionerCart') || '[]'); updateCartUI(); }
     function updateCartUI() {
@@ -348,7 +445,7 @@
         });
     }
 
-    // Order functions (essential – kept)
+    // Order functions
     async function initiateOrder(product) {
         if (!currentUser) { pendingProduct = product; dom.loginRequiredModal.classList.remove('hidden'); return; }
         if (product.stock === 'sold' || product.quantity <= 0) { showMessage("This property is no longer available.", "warning"); return; }
@@ -400,7 +497,7 @@
         finally { hideLoader(); }
     }
 
-    // Product display (abbreviated but fully working)
+    // Product display
     function showProductDetail(productId) {
         const product = allProducts.find(p => p.id === productId);
         if (!product) return;
@@ -483,18 +580,7 @@
     }
     function refreshAll() { applyFiltersAndRender(); renderRecentlyViewed(); renderRecommendations(); }
 
-    // Admin CRUD (essential functions)
-    async function uploadMultipleImages(files) {
-        const urls = [];
-        for (const file of files) {
-            const fd = new FormData(); fd.append('image', file); fd.append('key', IMGBB_API_KEY);
-            const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: fd });
-            const data = await res.json();
-            if (!data.success) throw new Error(`Upload failed for ${file.name}`);
-            urls.push(data.data.url);
-        }
-        return urls;
-    }
+    // Admin CRUD with image upload
     async function fetchProducts() {
         showLoader();
         try {
@@ -505,6 +591,7 @@
         } catch(e) { showMessage('Failed to load properties', 'error'); }
         finally { hideLoader(); }
     }
+
     async function renderAdminList() {
         if (!dom.productList) return;
         if (!allProducts.length) { dom.productList.innerHTML = '<div class="text-gray-500">No properties</div>'; return; }
@@ -512,6 +599,7 @@
         dom.productList.querySelectorAll('.edit-prod').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
         dom.productList.querySelectorAll('.del-prod').forEach(btn => btn.onclick = async () => { if (confirm('Delete property?')) await deleteProduct(btn.dataset.id); });
     }
+
     async function deleteProduct(id) {
         showLoader();
         try {
@@ -522,6 +610,7 @@
         } catch(e) { showMessage('Delete failed', 'error'); }
         finally { hideLoader(); }
     }
+
     async function openEdit(id) {
         const prod = allProducts.find(p => p.id === id);
         if (!prod) return;
@@ -535,9 +624,27 @@
         dom.productFormTitle.innerText = '✏️ Update Property';
         dom.cancelEdit.classList.remove('hidden');
         const previewDiv = document.getElementById('existingImagesPreview');
-        if (previewDiv && prod.images) previewDiv.innerHTML = prod.images.map(url => `<img src="${url}" class="image-preview">`).join('');
+        if (previewDiv && prod.images) {
+            previewDiv.innerHTML = prod.images.map(url => `<div class="existing-image-item"><img src="${url}" class="image-preview"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span></div>`).join('');
+            currentImages = [...prod.images];
+        }
     }
-    function resetEdit() { editingId = null; dom.productForm.reset(); dom.productStock.value = 'available'; dom.productQuantity.value = 1; dom.bedrooms.value = 3; dom.bathrooms.value = 2; dom.area.value = 150; dom.propertyType.value = 'House'; dom.productFormTitle.innerText = '➕ Add New Property'; dom.cancelEdit.classList.add('hidden'); document.getElementById('existingImagesPreview').innerHTML = ''; }
+
+    function resetEdit() { 
+        editingId = null; 
+        dom.productForm.reset(); 
+        dom.productStock.value = 'available'; 
+        dom.productQuantity.value = 1; 
+        dom.bedrooms.value = 3; 
+        dom.bathrooms.value = 2; 
+        dom.area.value = 150; 
+        dom.propertyType.value = 'House'; 
+        dom.productFormTitle.innerText = '➕ Add New Property'; 
+        dom.cancelEdit.classList.add('hidden'); 
+        document.getElementById('existingImagesPreview').innerHTML = ''; 
+        currentImages = [];
+    }
+
     dom.productForm.onsubmit = async (e) => {
         e.preventDefault();
         const name = dom.productName.value.trim(), desc = dom.productDesc.value.trim(), price = parseInt(dom.productPrice.value), stock = dom.productStock.value, quantity = parseInt(dom.productQuantity.value), bedrooms = parseInt(dom.bedrooms.value), bathrooms = parseInt(dom.bathrooms.value), area = parseInt(dom.area.value), propertyType = dom.propertyType.value;
@@ -546,36 +653,78 @@
         showLoader();
         try {
             let images = [];
+            
+            // Get existing images from preview (keep the ones not removed)
+            const existingPreviews = document.querySelectorAll('#existingImagesPreview .existing-image-item img');
+            for (const img of existingPreviews) {
+                if (img.src) {
+                    images.push(img.src);
+                }
+            }
+            
+            // Upload new images
+            if (files.length > 0) {
+                const newUrls = await uploadMultipleImages(files);
+                images.push(...newUrls);
+            }
+            
+            if (images.length === 0) {
+                showMessage('Please add at least one image', 'warning');
+                hideLoader();
+                return;
+            }
+            
             if (editingId) {
                 const existingRef = doc(db, "products", editingId);
-                if (files.length) images = await uploadMultipleImages(files);
-                else { const old = (await getDoc(existingRef)).data(); images = old.images || []; }
                 await updateDoc(existingRef, { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms, area, propertyType, updatedAt: new Date() });
                 showMessage('Property updated', 'success');
             } else {
-                if (!files.length) { showMessage('Select at least one image', 'warning'); return; }
-                images = await uploadMultipleImages(files);
                 await addDoc(collection(db, "products"), { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms, area, propertyType, createdAt: new Date() });
                 showMessage('Property added', 'success');
             }
             resetEdit();
+            dom.productImages.value = '';
             await fetchProducts();
             if (userRole === 'admin') await fetchUsers();
-        } catch(err) { showMessage('Upload error: ' + err.message, 'error'); }
+        } catch(err) { 
+            console.error(err);
+            showMessage('Upload error: ' + err.message, 'error'); 
+        }
         finally { hideLoader(); }
     };
     dom.cancelEdit.onclick = resetEdit;
+
+    // Add image preview when files are selected
+    dom.productImages.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        const previewDiv = document.getElementById('existingImagesPreview');
+        
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'existing-image-item';
+                imgContainer.innerHTML = `
+                    <img src="${event.target.result}" class="image-preview">
+                    <span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>
+                `;
+                previewDiv.appendChild(imgContainer);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
     async function fetchUsers() {
         if (!dom.userTable) return;
         try {
             const snap = await getDocs(collection(db, "users"));
-            let html = `<tr><th class="text-left text-blue-700">Name</th><th class="text-left text-blue-700">Email</th><th class="text-left text-blue-700">Role</th></tr>`;
-            snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1">${escapeHtml(data.email)}</td><td class="py-1">${escapeHtml(data.role||'user')}</td>`; });
+            let html = `<table><th class="text-left text-blue-700">Name</th><th class="text-left text-blue-700">Email</th><th class="text-left text-blue-700">Role</th>`;
+            snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1">${escapeHtml(data.email)}</td><td class="py-1">${escapeHtml(data.role||'user')}</td></tr>`; });
             dom.userTable.innerHTML = html;
             if (dom.perfStats) dom.perfStats.innerHTML = `<div class="p-3"><p class="font-semibold text-blue-700">📊 Performance</p><p>Users: ${snap.size}</p><p>Properties: ${allProducts.length}</p><p>Inquiries: ${cart.reduce((a,b)=>a+b.quantity,0)}</p></div>`;
         } catch(e) { console.warn(e); }
     }
+
     async function fetchOrders() {
         if (!dom.ordersList) return;
         try {
@@ -583,7 +732,10 @@
             const snap = await getDocs(q);
             if (snap.empty) { dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-500">No inquiries yet</td></tr>'; return; }
             let html = '';
-            snap.forEach(doc => { const o = doc.data(); html += `<tr class="border-b border-gray-200"><td class="p-2">${escapeHtml(o.fullName)}</td><td class="p-2">${escapeHtml(o.email)}</td><td class="p-2">${escapeHtml(o.phone)}</td><td class="p-2">${escapeHtml(o.productName)}</td><td class="p-2">${o.quantity}</td><td class="p-2">${escapeHtml(o.location)}</td><td class="p-2">${escapeHtml(o.notes || '')}</td><td class="p-2">${new Date(o.createdAt?.toDate()).toLocaleString()}</td></tr>`; });
+            snap.forEach(doc => {
+                const o = doc.data();
+                html += `<tr class="border-b border-gray-200"><td class="p-2">${escapeHtml(o.fullName)}</td><td class="p-2">${escapeHtml(o.email)}</td><td class="p-2">${escapeHtml(o.phone)}</td><td class="p-2">${escapeHtml(o.productName)}</td><td class="p-2">${o.quantity}</td><td class="p-2">${escapeHtml(o.location)}</td><td class="p-2">${escapeHtml(o.notes || '')}</td><td class="p-2">${new Date(o.createdAt?.toDate()).toLocaleString()}</td></tr>`;
+            });
             dom.ordersList.innerHTML = html;
         } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td></tr>'; }
     }
