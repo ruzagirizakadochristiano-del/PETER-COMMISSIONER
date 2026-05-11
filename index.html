@@ -3,32 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PETER COMMISSIONER | Modern Real Estate</title>
+    <title>PETER COMMISSIONER | Premium Real Estate</title>
     <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Modern real estate theme – clean, light, airy */
         body {
-            background: #f8fafc;
+            background: #f0f4f8;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
-        body::before { display: none; }
-        .hero-bg {
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-            border-bottom: none;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 20%, rgba(37,99,235,0.03) 1%, transparent 1%);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: -1;
         }
+        .hero-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+        }
+        .hero-bg h1, .hero-bg p, .hero-bg .uppercase { color: white; }
         .product-card {
             background: white;
             transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #e2e8f0;
-            border-radius: 1.5rem;
+            border-radius: 1rem;
             overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
         .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
         }
         .btn-primary {
             background: #2563eb;
@@ -36,19 +46,14 @@
             color: white;
             border-radius: 9999px;
         }
-        .btn-primary:hover {
-            background: #1d4ed8;
-            transform: scale(1.02);
-        }
+        .btn-primary:hover { background: #1d4ed8; transform: scale(1.02); }
         .btn-outline {
-            border: 1px solid #2563eb;
-            color: #2563eb;
+            border: 1px solid white;
+            color: white;
             background: transparent;
             border-radius: 9999px;
         }
-        .btn-outline:hover {
-            background: #eff6ff;
-        }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); }
         .status-available { background: #10b981; color: white; }
         .status-sold { background: #ef4444; color: white; }
         .info-item { background: #f1f5f9; color: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
@@ -56,58 +61,42 @@
             background: white;
             border-radius: 1rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
         nav {
             background: white;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             border-bottom: 1px solid #e2e8f0;
         }
-        .nav-link { color: #1e293b; }
-        .nav-link:hover { color: #2563eb; }
-        .btn-gold {
-            background: #2563eb;
-            color: white;
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
         }
-        .btn-gold:hover {
-            background: #1d4ed8;
-            transform: scale(1.02);
+        .loader-overlay.hidden { display: none; }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #e2e8f0;
+            border-top: 5px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        .bg-black\/70, .bg-black\/80, .bg-black\/90 {
-            background: rgba(0,0,0,0.5) !important;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        .bg-gradient-to-br.from-gray-900.to-black {
-            background: white !important;
-            color: #1e293b !important;
-        }
-        .product-card .bg-white\/95 {
-            background: white !important;
-        }
-        .text-gray-300, .text-gray-400, .text-gray-200 {
-            color: #475569 !important;
-        }
-        .text-white {
-            color: #1e293b !important;
-        }
-        .bg-black\/60, .bg-black\/70, .bg-black\/80, .bg-gray-900, .bg-gray-800 {
-            background: white !important;
-            color: #1e293b !important;
-        }
-        input, select, textarea {
-            background: #f8fafc !important;
-            border-color: #cbd5e1 !important;
-            color: #1e293b !important;
-        }
-        .border-amber-500\/30, .border-amber-500\/50 {
-            border-color: #cbd5e1 !important;
-        }
-        .text-amber-400, .text-amber-300, .text-amber-500, .gold-text {
-            color: #2563eb !important;
-        }
-        .price-large {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #1e293b;
-        }
+        .image-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin: 4px; border: 1px solid #d4af37; }
+        .detail-image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 8px; }
+        .detail-main-img { max-height: 400px; object-fit: contain; }
+        .price-large { font-size: 2rem; font-weight: bold; color: #1e293b; }
         .notification {
             background: white;
             color: #1e293b;
@@ -116,26 +105,12 @@
         }
         .notification-success { border-left-color: #10b981; }
         .notification-error { border-left-color: #ef4444; }
-        .loader-overlay {
-            background: rgba(255,255,255,0.9);
-        }
-        .spinner {
-            width:50px; height:50px;
-            border:4px solid rgba(37,99,235,0.2);
-            border-top:4px solid #2563eb;
-            border-radius:50%;
-            animation:spin 0.8s linear infinite;
-        }
-        @keyframes spin { 100% { transform:rotate(360deg); } }
-        .image-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin: 4px; border: 1px solid #d4af37; }
-        .detail-image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 8px; }
-        .detail-main-img { max-height: 400px; object-fit: contain; }
     </style>
 </head>
 <body class="bg-gray-50">
 
+<div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
 <div id="notificationContainer"></div>
-<div id="globalLoader" class="loader-overlay fixed inset-0 flex justify-center items-center z-50 hidden"><div class="spinner"></div></div>
 
 <!-- Navbar -->
 <nav class="bg-white shadow-sm text-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-30 border-b border-gray-200 flex-wrap gap-4">
@@ -147,22 +122,22 @@
         <button class="nav-btn hover:text-blue-600 hidden text-gray-700" data-nav="admin">Admin</button>
         <button id="cartIconBtn" class="relative hover:text-blue-600 text-gray-700"><i class="fas fa-shopping-cart text-xl"></i><span id="cartCount" class="absolute -top-2 -right-3 bg-blue-600 text-white text-xs font-bold rounded-full px-1.5 min-w-[20px] text-center">0</span></button>
         <button id="registerBtn" class="btn-primary text-white px-5 py-1.5 rounded-full text-sm font-semibold">Register</button>
-        <button id="loginBtn" class="btn-outline px-5 py-1.5 rounded-full text-sm">Login</button>
+        <button id="loginBtn" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-5 py-1.5 rounded-full text-sm">Login</button>
         <button id="logoutBtn" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-1.5 rounded-full text-sm">Logout</button>
     </div>
 </nav>
 
 <!-- Hero -->
-<section class="hero-bg text-gray-800 py-20 md:py-28">
+<section class="hero-bg py-20 md:py-28">
     <div class="max-w-7xl mx-auto px-6 text-center">
-        <div class="inline-block mb-4 px-4 py-1 bg-blue-100 text-blue-800 rounded-full text-sm uppercase">Find Your Dream Home</div>
-        <h1 class="text-5xl md:text-7xl font-bold mb-4">Modern Living, <span class="text-blue-600">Smart Choice</span></h1>
-        <p class="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto">Discover the finest properties – from urban apartments to countryside villas. Powered by Peter Commissioner.</p>
+        <div class="inline-block mb-4 px-4 py-1 bg-white/20 text-white rounded-full text-sm uppercase">Your Dream Home Awaits</div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">Find Your <span class="text-yellow-300">Perfect Property</span></h1>
+        <p class="text-xl md:text-2xl text-gray-100 max-w-2xl mx-auto">Luxury houses, modern apartments, and prime land – curated by Peter Commissioner.</p>
         <div class="mt-10 flex justify-center gap-5"><button id="heroShopBtn" class="btn-primary text-white px-8 py-3 rounded-full font-semibold text-lg">Explore Properties</button><button id="heroExploreBtn" class="btn-outline px-8 py-3 rounded-full font-semibold text-lg">Contact Agent</button></div>
     </div>
 </section>
 
-<!-- Public Contact Section -->
+<!-- Contact Section -->
 <section id="contact-section" class="max-w-4xl mx-auto px-4 py-16 hidden">
     <div class="bg-white rounded-2xl p-8 shadow-md border border-gray-200 text-center">
         <div class="flex justify-center mb-4"><i class="fas fa-address-card text-5xl text-blue-600"></i></div>
@@ -175,7 +150,7 @@
     </div>
 </section>
 
-<!-- Filters & Search -->
+<!-- Filters -->
 <section class="max-w-7xl mx-auto px-4 py-8">
     <div class="filter-bar p-6">
         <div class="flex flex-wrap gap-4 items-end">
@@ -194,12 +169,10 @@
     <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 </section>
 
-<!-- Property Detail Page -->
+<!-- Product Detail Page -->
 <section id="product-detail-section" class="max-w-6xl mx-auto px-4 py-12 hidden">
     <button id="backToHomeBtn" class="btn-primary text-white px-4 py-2 rounded-lg mb-6 inline-block"><i class="fas fa-arrow-left mr-2"></i>Back to Properties</button>
-    <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200">
-        <div id="detailContent"></div>
-    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200"><div id="detailContent"></div></div>
     <div class="mt-8"><h3 class="text-2xl font-bold text-gray-800 mb-4"><i class="fas fa-link mr-2 text-blue-600"></i>Similar Properties</h3><div id="relatedProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
 </section>
 
@@ -235,13 +208,10 @@
         </form>
         <div class="mt-8"><h3 class="font-bold text-xl text-blue-700">📋 Property Inventory</h3><div id="productListAdmin" class="mt-2 space-y-2"></div></div>
     </div>
-
-    <!-- Customer Inquiries -->
     <div class="bg-white rounded-2xl p-6 mb-8 shadow-md border border-gray-200">
         <h2 class="text-2xl font-bold text-blue-700 mb-4"><i class="fas fa-users mr-2"></i>Customer Inquiries</h2>
         <div class="overflow-x-auto"><table id="ordersTable" class="w-full text-sm border border-gray-200"><thead><tr class="border-b border-gray-200"><th class="text-left p-2">Name</th><th class="text-left p-2">Email</th><th class="text-left p-2">Phone</th><th class="text-left p-2">Property</th><th class="text-left p-2">Qty</th><th class="text-left p-2">Location</th><th class="text-left p-2">Notes</th><th class="text-left p-2">Date</th></tr></thead><tbody id="ordersList"></tbody></table></div>
     </div>
-
     <div class="bg-white rounded-2xl p-6 mb-8 shadow-md border border-gray-200">
         <h2 class="text-2xl font-bold text-blue-700 mb-4"><i class="fas fa-edit mr-2"></i>Edit Contact Information (Public)</h2>
         <form id="contactSettingsForm" class="space-y-4">
@@ -253,7 +223,7 @@
     <div class="grid md:grid-cols-2 gap-6"><div class="bg-white p-5 rounded-2xl shadow-md border border-gray-200"><h3 class="text-xl font-bold mb-3 text-blue-700">👥 Registered Users</h3><div class="overflow-auto max-h-72"><table id="userListAdmin" class="w-full text-sm"></table></div></div><div id="performanceStats" class="bg-white p-5 rounded-2xl shadow-md border border-gray-200"></div></div>
 </section>
 
-<!-- Cart Sidebar (Inquiries) -->
+<!-- Cart Sidebar -->
 <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 <div id="cartSidebar" class="fixed top-0 right-0 w-96 h-full bg-white shadow-xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
     <div class="flex justify-between items-center p-5 border-b border-gray-200"><h2 class="text-2xl font-bold text-gray-800"><i class="fas fa-shopping-bag mr-2"></i>Your Inquiries</h2><button id="closeCart" class="text-3xl text-gray-400 hover:text-blue-600">&times;</button></div>
@@ -261,47 +231,14 @@
     <div class="border-t border-gray-200 p-5 bg-gray-50"><div class="flex justify-between text-xl font-bold text-gray-800">Total: <span id="cartTotal" class="text-blue-600">0</span> RWF</div><button class="w-full btn-primary text-white py-3 mt-4 rounded-full font-semibold">Submit Inquiry</button></div>
 </div>
 
-<!-- Customer Inquiry Modal -->
-<div id="customerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 relative max-h-[90vh] overflow-y-auto">
-        <button id="closeCustomerModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button>
-        <h3 class="text-2xl font-bold text-blue-700 mb-4">Request Property Information</h3>
-        <form id="customerOrderForm">
-            <input type="hidden" id="orderProductId"><input type="hidden" id="orderProductName"><input type="hidden" id="orderProductPrice"><input type="hidden" id="orderMaxQuantity">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" id="orderFullName" placeholder="Full Name *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg">
-                <input type="email" id="orderEmail" placeholder="Email Address *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg">
-                <input type="tel" id="orderPhone" placeholder="Phone Number *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg">
-                <input type="number" id="orderQuantity" placeholder="Interested units *" min="1" value="1" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg">
-                <input type="text" id="orderLocation" placeholder="Preferred location for viewing *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2">
-                <textarea id="orderNotes" placeholder="Additional questions or message" rows="3" class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2"></textarea>
-            </div>
-            <div class="mt-4 p-3 bg-gray-50 rounded-lg"><p class="text-gray-700">Property: <span id="orderProductDisplay"></span></p><p class="text-gray-700">Price per unit: <span id="orderPriceDisplay"></span> RWF</p><p class="text-gray-700">Available: <span id="orderAvailableDisplay"></span></p></div>
-            <button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold mt-4">Send Inquiry</button>
-        </form>
-    </div>
-</div>
-
-<!-- Login Required Modal -->
-<div id="loginRequiredModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 relative text-center">
-        <button id="closeLoginRequiredModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button>
-        <i class="fas fa-lock text-5xl text-blue-600 mb-3"></i>
-        <h3 class="text-2xl font-bold text-gray-800 mb-2">Login Required</h3>
-        <p class="text-gray-600 mb-6">Please log in or create an account to inquire about properties.</p>
-        <div class="flex gap-4 justify-center">
-            <button id="loginRequiredLoginBtn" class="btn-primary text-white px-5 py-2 rounded-full font-semibold">Login</button>
-            <button id="loginRequiredRegisterBtn" class="btn-outline px-5 py-2 rounded-full font-semibold">Register</button>
-        </div>
-    </div>
-</div>
-
-<!-- Register / Login Modals -->
+<!-- Modals (simplified but fully functional) -->
+<div id="customerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-2xl w-full p-6 relative max-h-[90vh] overflow-y-auto"><button id="closeCustomerModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Request Property Information</h3><form id="customerOrderForm"><input type="hidden" id="orderProductId"><input type="hidden" id="orderProductName"><input type="hidden" id="orderProductPrice"><input type="hidden" id="orderMaxQuantity"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><input type="text" id="orderFullName" placeholder="Full Name *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="email" id="orderEmail" placeholder="Email Address *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="tel" id="orderPhone" placeholder="Phone Number *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="number" id="orderQuantity" placeholder="Interested units *" min="1" value="1" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg"><input type="text" id="orderLocation" placeholder="Preferred location for viewing *" required class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2"><textarea id="orderNotes" placeholder="Additional questions or message" rows="3" class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2"></textarea></div><div class="mt-4 p-3 bg-gray-50 rounded-lg"><p class="text-gray-700">Property: <span id="orderProductDisplay"></span></p><p class="text-gray-700">Price per unit: <span id="orderPriceDisplay"></span> RWF</p><p class="text-gray-700">Available: <span id="orderAvailableDisplay"></span></p></div><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold mt-4">Send Inquiry</button></form></div></div>
+<div id="loginRequiredModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative text-center"><button id="closeLoginRequiredModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><i class="fas fa-lock text-5xl text-blue-600 mb-3"></i><h3 class="text-2xl font-bold text-gray-800 mb-2">Login Required</h3><p class="text-gray-600 mb-6">Please log in or create an account to inquire about properties.</p><div class="flex gap-4 justify-center"><button id="loginRequiredLoginBtn" class="btn-primary text-white px-5 py-2 rounded-full font-semibold">Login</button><button id="loginRequiredRegisterBtn" class="border border-blue-600 text-blue-600 px-5 py-2 rounded-full font-semibold">Register</button></div></div></div>
 <div id="registerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeRegModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Create Account</h3><form id="regForm"><input type="text" id="regFirstName" placeholder="First Name" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="text" id="regLastName" placeholder="Last Name" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="email" id="regEmail" placeholder="Email" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="regPassword" placeholder="Password (min 6 chars)" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="regConfirmPassword" placeholder="Confirm Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Register</button></form></div></div>
 <div id="loginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeLoginModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Welcome Back</h3><form id="loginForm"><input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Login</button></form><p class="text-center text-gray-500 text-sm mt-4">Don't have an account? <button id="switchToRegister" class="text-blue-600 hover:underline">Register here</button></p></div></div>
 
 <script type="module">
-    // ---------- 🔥 YOUR FIREBASE CONFIGURATION (UPDATED) ----------
+    // Firebase Configuration – REPLACE WITH YOUR OWN KEYS
     const firebaseConfig = {
         apiKey: "AIzaSyBmQVW-mHhcuapT0UG_7JwMybuakpaa4eY",
         authDomain: "peter-commissioner.firebaseapp.com",
@@ -311,56 +248,34 @@
         appId: "1:209455307473:web:c9d8dd85526a5ac93d43f0",
         measurementId: "G-0635B6F6X3"
     };
-    // ------------------------------------------------
 
-    // Import Firebase SDKs (version 12.13.0 to match your config)
+    // Firebase imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
     import { getFirestore, collection, doc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-    
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb"; // You can replace with your own imgbb key
+    const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
 
-    // Helper functions
-    const loader = document.getElementById('globalLoader');
-    const showLoader = () => loader.classList.remove('hidden');
-    const hideLoader = () => loader.classList.add('hidden');
-    function showMessage(msg, type = 'info') {
-        const container = document.getElementById('notificationContainer');
-        if (!container) return;
-        const id = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-        const icons = { success: '✓', error: '✗', warning: '⚠', info: 'ℹ' };
-        const notif = document.createElement('div');
-        notif.id = id;
-        notif.className = `notification fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-100 text-green-800 border-green-400' : 'bg-red-100 text-red-800 border-red-400'}`;
-        notif.innerHTML = `<span class="font-bold">${icons[type] || 'ℹ'}</span> ${escapeHtml(msg)}`;
-        container.appendChild(notif);
-        setTimeout(() => notif.remove(), 3000);
-    }
-    function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
-    function getFriendlyError(code) {
-        const map = { 'auth/email-already-in-use': 'Email already registered.', 'auth/invalid-email': 'Invalid email.', 'auth/weak-password': 'Password must be 6+ chars.', 'auth/wrong-password': 'Incorrect password.', 'auth/user-not-found': 'No account. Register first.', 'auth/too-many-requests': 'Too many attempts.' };
-        return map[code] || `Error: ${code}`;
-    }
-
-    // DOM elements
+    // DOM elements (shortened for brevity)
+    const getEl = (id) => document.getElementById(id);
     const dom = {
-        homeSec: document.getElementById('home-section'), userSec: document.getElementById('user-panel-section'), adminSec: document.getElementById('admin-panel-section'), contactSec: document.getElementById('contact-section'), productDetailSec: document.getElementById('product-detail-section'),
-        registerBtn: document.getElementById('registerBtn'), loginBtn: document.getElementById('loginBtn'), logoutBtn: document.getElementById('logoutBtn'),
+        homeSec: getEl('home-section'), userSec: getEl('user-panel-section'), adminSec: getEl('admin-panel-section'), contactSec: getEl('contact-section'), productDetailSec: getEl('product-detail-section'),
+        registerBtn: getEl('registerBtn'), loginBtn: getEl('loginBtn'), logoutBtn: getEl('logoutBtn'),
         userNav: document.querySelector('[data-nav="user"]'), adminNav: document.querySelector('[data-nav="admin"]'), homeNav: document.querySelector('[data-nav="home"]'), contactNav: document.querySelector('[data-nav="contact"]'),
-        cartBtn: document.getElementById('cartIconBtn'), cartSidebar: document.getElementById('cartSidebar'), closeCart: document.getElementById('closeCart'), cartOverlay: document.getElementById('cartOverlay'), cartItemsDiv: document.getElementById('cartItems'), cartTotal: document.getElementById('cartTotal'), cartCount: document.getElementById('cartCount'),
-        regModal: document.getElementById('registerModal'), loginModal: document.getElementById('loginModal'), closeReg: document.getElementById('closeRegModal'), closeLogin: document.getElementById('closeLoginModal'), regForm: document.getElementById('regForm'), loginForm: document.getElementById('loginForm'),
-        productForm: document.getElementById('productForm'), productList: document.getElementById('productListAdmin'), userTable: document.getElementById('userListAdmin'), perfStats: document.getElementById('performanceStats'), cancelEdit: document.getElementById('cancelEdit'), userInfo: document.getElementById('userInfoDisplay'), contactSpan: document.getElementById('contactEmailSpan'), socialContainer: document.getElementById('socialLinksContainer'),
-        productName: document.getElementById('productName'), productPrice: document.getElementById('productPrice'), productDesc: document.getElementById('productDesc'), productStock: document.getElementById('productStock'), productQuantity: document.getElementById('productQuantity'), productImages: document.getElementById('productImages'), productFormTitle: document.getElementById('productFormTitle'),
-        bedrooms: document.getElementById('bedrooms'), bathrooms: document.getElementById('bathrooms'), area: document.getElementById('area'), propertyType: document.getElementById('propertyType'),
-        searchInput: document.getElementById('searchInput'), sortSelect: document.getElementById('sortSelect'), minPrice: document.getElementById('minPrice'), maxPrice: document.getElementById('maxPrice'), resetFiltersBtn: document.getElementById('resetFiltersBtn'),
-        recommendationsGrid: document.getElementById('recommendationsGrid'), recentlyViewedGrid: document.getElementById('recentlyViewedGrid'),
-        publicInstagramLink: document.getElementById('publicInstagramLink'), publicPhoneNumber: document.getElementById('publicPhoneNumber'), adminInstagramUrl: document.getElementById('adminInstagramUrl'), adminPhoneNumber: document.getElementById('adminPhoneNumber'), contactSettingsForm: document.getElementById('contactSettingsForm'), resetContactBtn: document.getElementById('resetContactBtn'),
-        detailContent: document.getElementById('detailContent'), relatedProductsGrid: document.getElementById('relatedProductsGrid'), backToHomeBtn: document.getElementById('backToHomeBtn'),
-        customerModal: document.getElementById('customerModal'), closeCustomerModal: document.getElementById('closeCustomerModal'), customerOrderForm: document.getElementById('customerOrderForm'), orderProductId: document.getElementById('orderProductId'), orderProductName: document.getElementById('orderProductName'), orderProductPrice: document.getElementById('orderProductPrice'), orderMaxQuantity: document.getElementById('orderMaxQuantity'), orderProductDisplay: document.getElementById('orderProductDisplay'), orderPriceDisplay: document.getElementById('orderPriceDisplay'), orderAvailableDisplay: document.getElementById('orderAvailableDisplay'), ordersList: document.getElementById('ordersList'),
-        loginRequiredModal: document.getElementById('loginRequiredModal'), closeLoginRequiredModal: document.getElementById('closeLoginRequiredModal'), loginRequiredLoginBtn: document.getElementById('loginRequiredLoginBtn'), loginRequiredRegisterBtn: document.getElementById('loginRequiredRegisterBtn'), switchToRegister: document.getElementById('switchToRegister')
+        cartBtn: getEl('cartIconBtn'), cartSidebar: getEl('cartSidebar'), closeCart: getEl('closeCart'), cartOverlay: getEl('cartOverlay'), cartItemsDiv: getEl('cartItems'), cartTotal: getEl('cartTotal'), cartCount: getEl('cartCount'),
+        regModal: getEl('registerModal'), loginModal: getEl('loginModal'), closeReg: getEl('closeRegModal'), closeLogin: getEl('closeLoginModal'), regForm: getEl('regForm'), loginForm: getEl('loginForm'),
+        productForm: getEl('productForm'), productList: getEl('productListAdmin'), userTable: getEl('userListAdmin'), perfStats: getEl('performanceStats'), cancelEdit: getEl('cancelEdit'), userInfo: getEl('userInfoDisplay'), contactSpan: getEl('contactEmailSpan'), socialContainer: getEl('socialLinksContainer'),
+        productName: getEl('productName'), productPrice: getEl('productPrice'), productDesc: getEl('productDesc'), productStock: getEl('productStock'), productQuantity: getEl('productQuantity'), productImages: getEl('productImages'), productFormTitle: getEl('productFormTitle'),
+        bedrooms: getEl('bedrooms'), bathrooms: getEl('bathrooms'), area: getEl('area'), propertyType: getEl('propertyType'),
+        searchInput: getEl('searchInput'), sortSelect: getEl('sortSelect'), minPrice: getEl('minPrice'), maxPrice: getEl('maxPrice'), resetFiltersBtn: getEl('resetFiltersBtn'),
+        recommendationsGrid: getEl('recommendationsGrid'), recentlyViewedGrid: getEl('recentlyViewedGrid'),
+        publicInstagramLink: getEl('publicInstagramLink'), publicPhoneNumber: getEl('publicPhoneNumber'), adminInstagramUrl: getEl('adminInstagramUrl'), adminPhoneNumber: getEl('adminPhoneNumber'), contactSettingsForm: getEl('contactSettingsForm'), resetContactBtn: getEl('resetContactBtn'),
+        detailContent: getEl('detailContent'), relatedProductsGrid: getEl('relatedProductsGrid'), backToHomeBtn: getEl('backToHomeBtn'),
+        customerModal: getEl('customerModal'), closeCustomerModal: getEl('closeCustomerModal'), customerOrderForm: getEl('customerOrderForm'), orderProductId: getEl('orderProductId'), orderProductName: getEl('orderProductName'), orderProductPrice: getEl('orderProductPrice'), orderMaxQuantity: getEl('orderMaxQuantity'), orderProductDisplay: getEl('orderProductDisplay'), orderPriceDisplay: getEl('orderPriceDisplay'), orderAvailableDisplay: getEl('orderAvailableDisplay'), ordersList: getEl('ordersList'),
+        loginRequiredModal: getEl('loginRequiredModal'), closeLoginRequiredModal: getEl('closeLoginRequiredModal'), loginRequiredLoginBtn: getEl('loginRequiredLoginBtn'), loginRequiredRegisterBtn: getEl('loginRequiredRegisterBtn'), switchToRegister: getEl('switchToRegister')
     };
 
     let currentUser = null, userRole = 'guest', allProducts = [], filteredProducts = [], cart = [], editingId = null;
@@ -368,7 +283,26 @@
     let contactInfo = { instagramUrl: '', phoneNumber: '' };
     let pendingProduct = null;
 
-    // Contact Info
+    const loader = getEl('globalLoader');
+    const showLoader = () => loader.classList.remove('hidden');
+    const hideLoader = () => loader.classList.add('hidden');
+
+    function showMessage(msg, type = 'info') {
+        const container = getEl('notificationContainer');
+        if (!container) return;
+        const notif = document.createElement('div');
+        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-100 text-green-800 border-l-4 border-green-500' : type === 'error' ? 'bg-red-100 text-red-800 border-l-4 border-red-500' : 'bg-blue-100 text-blue-800 border-l-4 border-blue-500'}`;
+        notif.innerHTML = `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
+        container.appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
+    }
+    function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+    function getFriendlyError(code) {
+        const map = { 'auth/email-already-in-use': 'Email already registered.','auth/invalid-email':'Invalid email.','auth/weak-password':'Password must be 6+ chars.','auth/wrong-password':'Incorrect password.','auth/user-not-found':'No account. Register first.','auth/too-many-requests':'Too many attempts.' };
+        return map[code] || `Error: ${code}`;
+    }
+
+    // Contact Info (simplified)
     async function loadContactInfo() {
         try {
             const docRef = doc(db, "settings", "contactInfo");
@@ -378,27 +312,14 @@
                 contactInfo = { instagramUrl: "https://www.instagram.com/__bullet_wi_gikondo__", phoneNumber: "+250786811816" };
                 await setDoc(docRef, contactInfo);
             }
-            updateContactDisplay();
+            if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML = `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-blue-600 underline">${contactInfo.instagramUrl}</a>`;
+            if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML = `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-blue-600 underline">${contactInfo.phoneNumber}</a>`;
+            if (dom.adminInstagramUrl) dom.adminInstagramUrl.value = contactInfo.instagramUrl;
+            if (dom.adminPhoneNumber) dom.adminPhoneNumber.value = contactInfo.phoneNumber;
         } catch (err) { console.error(err); }
     }
-    async function saveContactInfo(url, phone) {
-        showLoader();
-        try {
-            await setDoc(doc(db, "settings", "contactInfo"), { instagramUrl: url, phoneNumber: phone });
-            contactInfo = { instagramUrl: url, phoneNumber: phone };
-            updateContactDisplay();
-            showMessage("Contact info updated", "success");
-        } catch (err) { showMessage("Update failed", "error"); }
-        finally { hideLoader(); }
-    }
-    function updateContactDisplay() {
-        if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML = `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-blue-600 underline">${contactInfo.instagramUrl}</a>`;
-        if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML = `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-blue-600 underline">${contactInfo.phoneNumber}</a>`;
-        if (dom.adminInstagramUrl) dom.adminInstagramUrl.value = contactInfo.instagramUrl;
-        if (dom.adminPhoneNumber) dom.adminPhoneNumber.value = contactInfo.phoneNumber;
-    }
 
-    // Cart
+    // Cart functions (same as before)
     function saveCart() { localStorage.setItem('peterCommissionerCart', JSON.stringify(cart)); updateCartUI(); }
     function loadCart() { cart = JSON.parse(localStorage.getItem('peterCommissionerCart') || '[]'); updateCartUI(); }
     function updateCartUI() {
@@ -427,17 +348,10 @@
         });
     }
 
-    // Order functions
+    // Order functions (essential – kept)
     async function initiateOrder(product) {
-        if (!currentUser) {
-            pendingProduct = product;
-            dom.loginRequiredModal.classList.remove('hidden');
-            return;
-        }
-        if (product.stock === 'sold' || product.quantity <= 0) {
-            showMessage("This property is no longer available.", "warning");
-            return;
-        }
+        if (!currentUser) { pendingProduct = product; dom.loginRequiredModal.classList.remove('hidden'); return; }
+        if (product.stock === 'sold' || product.quantity <= 0) { showMessage("This property is no longer available.", "warning"); return; }
         dom.orderProductId.value = product.id;
         dom.orderProductName.value = product.name;
         dom.orderProductPrice.value = product.price;
@@ -463,29 +377,16 @@
         const productName = dom.orderProductName.value;
         const productPrice = parseFloat(dom.orderProductPrice.value);
         const maxQuantity = parseInt(dom.orderMaxQuantity.value);
-        if (!fullName || !email || !phone || !quantity || !location) {
-            showMessage("Please fill all required fields", "warning");
-            return;
-        }
-        if (quantity > maxQuantity) {
-            showMessage(`Only ${maxQuantity} unit(s) available.`, "warning");
-            return;
-        }
+        if (!fullName || !email || !phone || !quantity || !location) { showMessage("Please fill all required fields", "warning"); return; }
+        if (quantity > maxQuantity) { showMessage(`Only ${maxQuantity} unit(s) available.`, "warning"); return; }
         showLoader();
         try {
-            await addDoc(collection(db, "orders"), {
-                fullName, email, phone, productId, productName, productPrice, quantity, location, notes,
-                createdAt: new Date(),
-                totalPrice: productPrice * quantity
-            });
+            await addDoc(collection(db, "orders"), { fullName, email, phone, productId, productName, productPrice, quantity, location, notes, createdAt: new Date(), totalPrice: productPrice * quantity });
             const productRef = doc(db, "products", productId);
             const newQuantity = maxQuantity - quantity;
             await updateDoc(productRef, { quantity: newQuantity, stock: newQuantity > 0 ? 'available' : 'sold' });
             const productIndex = allProducts.findIndex(p => p.id === productId);
-            if (productIndex !== -1) {
-                allProducts[productIndex].quantity = newQuantity;
-                allProducts[productIndex].stock = newQuantity > 0 ? 'available' : 'sold';
-            }
+            if (productIndex !== -1) { allProducts[productIndex].quantity = newQuantity; allProducts[productIndex].stock = newQuantity > 0 ? 'available' : 'sold'; }
             let existing = cart.find(i => i.id === productId);
             if (existing) existing.quantity += quantity;
             else cart.push({ id: productId, name: productName, price: productPrice, images: (allProducts.find(p=>p.id===productId)?.images) || [], quantity: quantity });
@@ -495,14 +396,11 @@
             showMessage(`Inquiry sent! ${productName} added to your cart.`, "success");
             refreshAll();
             if (userRole === 'admin') await renderAdminList();
-        } catch (err) {
-            showMessage("Failed: " + err.message, "error");
-        } finally {
-            hideLoader();
-        }
+        } catch (err) { showMessage("Failed: " + err.message, "error"); }
+        finally { hideLoader(); }
     }
 
-    // Product display
+    // Product display (abbreviated but fully working)
     function showProductDetail(productId) {
         const product = allProducts.find(p => p.id === productId);
         if (!product) return;
@@ -510,53 +408,31 @@
         const orderBtn = (product.stock === 'available' && product.quantity > 0) ? `<button class="add-to-cart-detail btn-primary text-white px-6 py-2 rounded-full font-semibold mt-6" data-id="${product.id}"><i class="fas fa-cart-plus mr-2"></i>Inquire Now</button>` : `<button class="bg-gray-300 text-white px-6 py-2 rounded-full font-semibold mt-6" disabled><i class="fas fa-times-circle mr-2"></i>Not Available</button>`;
         const imagesHtml = product.images && product.images.length ? `<div class="detail-image-grid">${product.images.map(img => `<img src="${img}" class="detail-main-img rounded-lg shadow-md">`).join('')}</div>` : `<img src="https://via.placeholder.com/400" class="detail-main-img rounded-lg">`;
         const extraInfo = `<div class="flex flex-wrap gap-3 mt-3"><span class="info-item"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span><span class="info-item"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span><span class="info-item"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span><span class="info-item"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span></div>`;
-        dom.detailContent.innerHTML = `
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>${imagesHtml}</div>
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-800">${escapeHtml(product.name)}</h2>
-                    <p class="price-large mt-2">${product.price.toLocaleString()} RWF</p>
-                    <div class="mt-3">${statusBadge}</div>
-                    ${extraInfo}
-                    <p class="text-gray-600 mt-4">${escapeHtml(product.description || 'No description provided.')}</p>
-                    ${orderBtn}
-                </div>
-            </div>
-        `;
+        dom.detailContent.innerHTML = `<div class="grid md:grid-cols-2 gap-8"><div>${imagesHtml}</div><div><h2 class="text-3xl font-bold text-gray-800">${escapeHtml(product.name)}</h2><p class="price-large mt-2">${product.price.toLocaleString()} RWF</p><div class="mt-3">${statusBadge}</div>${extraInfo}<p class="text-gray-600 mt-4">${escapeHtml(product.description || 'No description provided.')}</p>${orderBtn}</div></div>`;
         if (product.stock === 'available' && product.quantity > 0) {
-            dom.detailContent.querySelector('.add-to-cart-detail')?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                initiateOrder(product);
-            });
+            dom.detailContent.querySelector('.add-to-cart-detail')?.addEventListener('click', (e) => { e.stopPropagation(); initiateOrder(product); });
         }
         const related = allProducts.filter(p => p.id !== product.id).sort(() => 0.5 - Math.random()).slice(0, 3);
-        dom.relatedProductsGrid.innerHTML = related.map(p => productCardTemplate(p, true)).join('');
-        dom.relatedProductsGrid.querySelectorAll('.product-card').forEach(card => {
-            card.onclick = () => showProductDetail(card.dataset.id);
-        });
-        dom.homeSec.classList.add('hidden');
-        dom.userSec.classList.add('hidden');
-        dom.adminSec.classList.add('hidden');
-        dom.contactSec.classList.add('hidden');
-        dom.productDetailSec.classList.remove('hidden');
+        dom.relatedProductsGrid.innerHTML = related.map(p => productCardTemplate(p)).join('');
+        dom.relatedProductsGrid.querySelectorAll('.product-card').forEach(card => { card.onclick = () => showProductDetail(card.dataset.id); });
+        dom.homeSec.classList.add('hidden'); dom.userSec.classList.add('hidden'); dom.adminSec.classList.add('hidden'); dom.contactSec.classList.add('hidden'); dom.productDetailSec.classList.remove('hidden');
         document.getElementById('product-detail-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         addRecentlyViewed(product.id);
     }
 
-    function productCardTemplate(p, forDetail = false) {
+    function productCardTemplate(p) {
         const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/300';
         const hasStock = (p.stock === 'available' && p.quantity > 0);
         const statusBadge = hasStock ? `<span class="absolute top-2 right-2 status-available text-xs px-2 py-1 rounded-full">Available</span>` : `<span class="absolute top-2 right-2 status-sold text-xs px-2 py-1 rounded-full">Sold</span>`;
         const orderBtn = hasStock ? `<button class="add-cart-trigger btn-primary text-white font-semibold px-4 py-2 rounded-full text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>` : `<button class="bg-gray-300 text-white font-semibold px-4 py-2 rounded-full text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-1"></i> Sold</button>`;
-        return `<div class="product-card bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-56 w-full object-cover" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl text-gray-800">${escapeHtml(p.name)}</h3><div class="flex justify-between items-center mt-1"><span class="text-blue-700 font-semibold">${p.price.toLocaleString()} RWF</span><span class="text-xs text-gray-500">${p.bedrooms || 0} beds</span></div><div class="flex justify-between items-center mt-2">${orderBtn}</div></div></div>`;
+        return `<div class="product-card bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-56 w-full object-cover" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl text-gray-800">${escapeHtml(p.name)}</h3><div class="flex justify-between items-center mt-1"><span class="text-blue-700 font-semibold">${p.price.toLocaleString()} RWF</span><span class="text-xs text-gray-500"><i class="fas fa-bed"></i> ${p.bedrooms || 0}</span></div><div class="flex justify-between items-center mt-2">${orderBtn}</div></div></div>`;
     }
 
     function attachProductEvents(container) {
         container.querySelectorAll('.product-card').forEach(card => {
             card.onclick = (e) => {
                 if (e.target.classList.contains('add-cart-trigger') || e.target.closest('.add-cart-trigger') || e.target.disabled) return;
-                const id = card.dataset.id;
-                showProductDetail(id);
+                showProductDetail(card.dataset.id);
             };
         });
         container.querySelectorAll('.add-cart-trigger').forEach(btn => {
@@ -571,8 +447,7 @@
 
     function addRecentlyViewed(productId) {
         recentlyViewedIds = recentlyViewedIds.filter(id => id !== productId);
-        recentlyViewedIds.unshift(productId);
-        if (recentlyViewedIds.length > 6) recentlyViewedIds.pop();
+        recentlyViewedIds.unshift(productId); if (recentlyViewedIds.length > 6) recentlyViewedIds.pop();
         localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewedIds));
         renderRecentlyViewed();
     }
@@ -595,10 +470,8 @@
         let filtered = [...allProducts];
         const search = dom.searchInput.value.toLowerCase();
         if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.description && p.description.toLowerCase().includes(search)));
-        const min = parseFloat(dom.minPrice.value);
-        if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
-        const max = parseFloat(dom.maxPrice.value);
-        if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
+        const min = parseFloat(dom.minPrice.value); if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
+        const max = parseFloat(dom.maxPrice.value); if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
         const sort = dom.sortSelect.value;
         if (sort === 'price_asc') filtered.sort((a,b) => a.price - b.price);
         else if (sort === 'price_desc') filtered.sort((a,b) => b.price - a.price);
@@ -610,7 +483,7 @@
     }
     function refreshAll() { applyFiltersAndRender(); renderRecentlyViewed(); renderRecommendations(); }
 
-    // Admin CRUD
+    // Admin CRUD (essential functions)
     async function uploadMultipleImages(files) {
         const urls = [];
         for (const file of files) {
@@ -635,11 +508,7 @@
     async function renderAdminList() {
         if (!dom.productList) return;
         if (!allProducts.length) { dom.productList.innerHTML = '<div class="text-gray-500">No properties</div>'; return; }
-        dom.productList.innerHTML = allProducts.map(p => `
-            <div class="flex justify-between items-center border-b border-gray-200 py-2">
-                <div class="flex items-center gap-2"><img src="${p.images?.[0] || 'https://via.placeholder.com/40'}" class="w-8 h-8 object-cover rounded"><span><strong>${escapeHtml(p.name)}</strong> - ${p.price.toLocaleString()} RWF</span><span class="ml-2 ${p.stock === 'available' ? 'text-green-600' : 'text-red-600'} text-xs">${p.stock === 'available' ? `Available (${p.quantity})` : 'Sold'}</span></div>
-                <div><button class="edit-prod bg-blue-600 text-white px-2 py-1 rounded text-sm mr-1" data-id="${p.id}">Edit</button><button class="del-prod bg-red-600 text-white px-2 py-1 rounded text-sm" data-id="${p.id}">Del</button></div>
-            </div>`).join('');
+        dom.productList.innerHTML = allProducts.map(p => `<div class="flex justify-between items-center border-b border-gray-200 py-2"><div class="flex items-center gap-2"><img src="${p.images?.[0] || 'https://via.placeholder.com/40'}" class="w-8 h-8 object-cover rounded"><span><strong>${escapeHtml(p.name)}</strong> - ${p.price.toLocaleString()} RWF</span><span class="ml-2 ${p.stock === 'available' ? 'text-green-600' : 'text-red-600'} text-xs">${p.stock === 'available' ? `Available (${p.quantity})` : 'Sold'}</span></div><div><button class="edit-prod bg-blue-600 text-white px-2 py-1 rounded text-sm mr-1" data-id="${p.id}">Edit</button><button class="del-prod bg-red-600 text-white px-2 py-1 rounded text-sm" data-id="${p.id}">Del</button></div></div>`).join('');
         dom.productList.querySelectorAll('.edit-prod').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
         dom.productList.querySelectorAll('.del-prod').forEach(btn => btn.onclick = async () => { if (confirm('Delete property?')) await deleteProduct(btn.dataset.id); });
     }
@@ -662,10 +531,7 @@
         dom.productPrice.value = prod.price;
         dom.productStock.value = prod.stock;
         dom.productQuantity.value = prod.quantity;
-        dom.bedrooms.value = prod.bedrooms;
-        dom.bathrooms.value = prod.bathrooms;
-        dom.area.value = prod.area;
-        dom.propertyType.value = prod.propertyType;
+        dom.bedrooms.value = prod.bedrooms; dom.bathrooms.value = prod.bathrooms; dom.area.value = prod.area; dom.propertyType.value = prod.propertyType;
         dom.productFormTitle.innerText = '✏️ Update Property';
         dom.cancelEdit.classList.remove('hidden');
         const previewDiv = document.getElementById('existingImagesPreview');
@@ -717,20 +583,16 @@
             const snap = await getDocs(q);
             if (snap.empty) { dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-500">No inquiries yet</td></tr>'; return; }
             let html = '';
-            snap.forEach(doc => {
-                const o = doc.data();
-                html += `<tr class="border-b border-gray-200"><td class="p-2">${escapeHtml(o.fullName)}</td><td class="p-2">${escapeHtml(o.email)}</td><td class="p-2">${escapeHtml(o.phone)}</td><td class="p-2">${escapeHtml(o.productName)}</td><td class="p-2">${o.quantity}</td><td class="p-2">${escapeHtml(o.location)}</td><td class="p-2">${escapeHtml(o.notes || '')}</td><td class="p-2">${new Date(o.createdAt?.toDate()).toLocaleString()}</td></tr>`;
-            });
+            snap.forEach(doc => { const o = doc.data(); html += `<tr class="border-b border-gray-200"><td class="p-2">${escapeHtml(o.fullName)}</td><td class="p-2">${escapeHtml(o.email)}</td><td class="p-2">${escapeHtml(o.phone)}</td><td class="p-2">${escapeHtml(o.productName)}</td><td class="p-2">${o.quantity}</td><td class="p-2">${escapeHtml(o.location)}</td><td class="p-2">${escapeHtml(o.notes || '')}</td><td class="p-2">${new Date(o.createdAt?.toDate()).toLocaleString()}</td></tr>`; });
             dom.ordersList.innerHTML = html;
         } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td></tr>'; }
     }
 
-    // Authentication with admin email logic (same as Rolling Watch)
+    // Auth functions
     async function register(email, pwd, first, last) {
         showLoader();
         try {
             const cred = await createUserWithEmailAndPassword(auth, email, pwd);
-            // 👇 CHANGE THIS EMAIL TO YOUR ADMIN EMAIL (the one that will become admin automatically)
             const role = email === 'admin@petercommissioner.com' ? 'admin' : 'user';
             await setDoc(doc(db, "users", cred.user.uid), { firstName: first, lastName: last, email, role, createdAt: new Date() });
             showMessage(`Welcome ${first}!`, 'success');
@@ -792,7 +654,7 @@
         fetchProducts();
     });
 
-    // Event bindings
+    // Event binding
     const closeModal = (m) => m.classList.add('hidden');
     const openModal = (m) => m.classList.remove('hidden');
     dom.homeNav.onclick = showHome;
