@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PETER COMMISSIONER | Modern House Online Platform</title>
+    <title>PETER COMMISSIONER | Modern Real Estate</title>
     <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,14 +13,11 @@
             background: #f8fafc;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
-        /* Remove dark overlay */
         body::before { display: none; }
-        /* Light hero with soft gradient */
         .hero-bg {
             background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
             border-bottom: none;
         }
-        /* Product cards – modern, white, subtle shadow */
         .product-card {
             background: white;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -32,12 +29,6 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
             border-color: #cbd5e1;
-        }
-        .gold-text { 
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
         .btn-primary {
             background: #2563eb;
@@ -61,24 +52,18 @@
         .status-available { background: #10b981; color: white; }
         .status-sold { background: #ef4444; color: white; }
         .info-item { background: #f1f5f9; color: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
-        /* Filter bar light */
         .filter-bar {
             background: white;
             border-radius: 1rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-        /* Navbar light */
         nav {
             background: white;
             box-shadow: 0 1px 2px rgba(0,0,0,0.03);
             border-bottom: 1px solid #e2e8f0;
         }
-        .nav-link {
-            color: #1e293b;
-        }
-        .nav-link:hover {
-            color: #2563eb;
-        }
+        .nav-link { color: #1e293b; }
+        .nav-link:hover { color: #2563eb; }
         .btn-gold {
             background: #2563eb;
             color: white;
@@ -87,7 +72,6 @@
             background: #1d4ed8;
             transform: scale(1.02);
         }
-        /* Modal backgrounds light */
         .bg-black\/70, .bg-black\/80, .bg-black\/90 {
             background: rgba(0,0,0,0.5) !important;
         }
@@ -124,7 +108,6 @@
             font-weight: bold;
             color: #1e293b;
         }
-        /* Keep notifications visible */
         .notification {
             background: white;
             color: #1e293b;
@@ -136,14 +119,25 @@
         .loader-overlay {
             background: rgba(255,255,255,0.9);
         }
+        .spinner {
+            width:50px; height:50px;
+            border:4px solid rgba(37,99,235,0.2);
+            border-top:4px solid #2563eb;
+            border-radius:50%;
+            animation:spin 0.8s linear infinite;
+        }
+        @keyframes spin { 100% { transform:rotate(360deg); } }
+        .image-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin: 4px; border: 1px solid #d4af37; }
+        .detail-image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 8px; }
+        .detail-main-img { max-height: 400px; object-fit: contain; }
     </style>
 </head>
 <body class="bg-gray-50">
 
 <div id="notificationContainer"></div>
-<div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
+<div id="globalLoader" class="loader-overlay fixed inset-0 flex justify-center items-center z-50 hidden"><div class="spinner"></div></div>
 
-<!-- Navbar – modern light -->
+<!-- Navbar -->
 <nav class="bg-white shadow-sm text-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-30 border-b border-gray-200 flex-wrap gap-4">
     <div class="text-2xl font-bold tracking-tight"><i class="fas fa-home text-blue-600 mr-2"></i>PETER <span class="text-blue-600">COMMISSIONER</span></div>
     <div class="flex gap-5 items-center flex-wrap">
@@ -158,7 +152,7 @@
     </div>
 </nav>
 
-<!-- Hero – modern, bright -->
+<!-- Hero -->
 <section class="hero-bg text-gray-800 py-20 md:py-28">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <div class="inline-block mb-4 px-4 py-1 bg-blue-100 text-blue-800 rounded-full text-sm uppercase">Find Your Dream Home</div>
@@ -168,7 +162,7 @@
     </div>
 </section>
 
-<!-- Public Contact Section (same content, light themed) -->
+<!-- Public Contact Section -->
 <section id="contact-section" class="max-w-4xl mx-auto px-4 py-16 hidden">
     <div class="bg-white rounded-2xl p-8 shadow-md border border-gray-200 text-center">
         <div class="flex justify-center mb-4"><i class="fas fa-address-card text-5xl text-blue-600"></i></div>
@@ -181,7 +175,7 @@
     </div>
 </section>
 
-<!-- Filters & Search – white card -->
+<!-- Filters & Search -->
 <section class="max-w-7xl mx-auto px-4 py-8">
     <div class="filter-bar p-6">
         <div class="flex flex-wrap gap-4 items-end">
@@ -200,7 +194,7 @@
     <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 </section>
 
-<!-- Property Detail Page (light) -->
+<!-- Property Detail Page -->
 <section id="product-detail-section" class="max-w-6xl mx-auto px-4 py-12 hidden">
     <button id="backToHomeBtn" class="btn-primary text-white px-4 py-2 rounded-lg mb-6 inline-block"><i class="fas fa-arrow-left mr-2"></i>Back to Properties</button>
     <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200">
@@ -209,11 +203,11 @@
     <div class="mt-8"><h3 class="text-2xl font-bold text-gray-800 mb-4"><i class="fas fa-link mr-2 text-blue-600"></i>Similar Properties</h3><div id="relatedProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
 </section>
 
-<!-- Recommendations & Recently Viewed (same structure) -->
+<!-- Recommendations & Recently Viewed -->
 <section id="recommendations-section" class="max-w-7xl mx-auto px-4 py-8 border-t border-gray-200"><h2 class="text-2xl font-bold text-gray-800 mb-6"><i class="fas fa-star text-blue-600 mr-2"></i>Recommended for You</h2><div id="recommendationsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div></section>
 <section id="recently-viewed-section" class="max-w-7xl mx-auto px-4 py-8 border-t border-gray-200"><h2 class="text-2xl font-bold text-gray-800 mb-6"><i class="fas fa-history text-blue-600 mr-2"></i>Recently Viewed</h2><div id="recentlyViewedGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div></section>
 
-<!-- User Panel (light) -->
+<!-- User Panel -->
 <section id="user-panel-section" class="max-w-4xl mx-auto px-4 py-12 hidden">
     <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200">
         <h2 class="text-2xl font-bold border-b border-gray-200 pb-2 mb-4"><i class="fas fa-id-card text-blue-600 mr-2"></i>My Dashboard</h2>
@@ -222,12 +216,11 @@
     </div>
 </section>
 
-<!-- Admin Panel (light) – same fields but light background -->
+<!-- Admin Panel -->
 <section id="admin-panel-section" class="max-w-6xl mx-auto px-4 py-12 hidden">
     <div class="bg-white rounded-2xl p-6 mb-8 shadow-md border border-gray-200">
         <h2 class="text-2xl font-bold text-blue-700">🛠️ Property Management</h2>
         <form id="productForm" class="grid md:grid-cols-2 gap-4 mt-5">
-            <!-- same input fields but default style light -->
             <input type="text" id="productName" placeholder="Property title" class="bg-gray-50 border border-gray-300 p-2 rounded-lg" required>
             <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-50 border border-gray-300 p-2 rounded-lg" required>
             <textarea id="productDesc" placeholder="Description (location, features, etc.)" class="bg-gray-50 border border-gray-300 p-2 rounded-lg md:col-span-2"></textarea>
@@ -260,8 +253,7 @@
     <div class="grid md:grid-cols-2 gap-6"><div class="bg-white p-5 rounded-2xl shadow-md border border-gray-200"><h3 class="text-xl font-bold mb-3 text-blue-700">👥 Registered Users</h3><div class="overflow-auto max-h-72"><table id="userListAdmin" class="w-full text-sm"></table></div></div><div id="performanceStats" class="bg-white p-5 rounded-2xl shadow-md border border-gray-200"></div></div>
 </section>
 
-<!-- Cart Sidebar, Modals (same functionality, just light theme override via classes; they'll inherit white backgrounds) -->
-<!-- The rest of the HTML modals remain unchanged because we added style overrides to make them white -->
+<!-- Cart Sidebar (Inquiries) -->
 <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 <div id="cartSidebar" class="fixed top-0 right-0 w-96 h-full bg-white shadow-xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
     <div class="flex justify-between items-center p-5 border-b border-gray-200"><h2 class="text-2xl font-bold text-gray-800"><i class="fas fa-shopping-bag mr-2"></i>Your Inquiries</h2><button id="closeCart" class="text-3xl text-gray-400 hover:text-blue-600">&times;</button></div>
@@ -269,7 +261,7 @@
     <div class="border-t border-gray-200 p-5 bg-gray-50"><div class="flex justify-between text-xl font-bold text-gray-800">Total: <span id="cartTotal" class="text-blue-600">0</span> RWF</div><button class="w-full btn-primary text-white py-3 mt-4 rounded-full font-semibold">Submit Inquiry</button></div>
 </div>
 
-<!-- Customer Inquiry Modal (light) -->
+<!-- Customer Inquiry Modal -->
 <div id="customerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl max-w-2xl w-full p-6 relative max-h-[90vh] overflow-y-auto">
         <button id="closeCustomerModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button>
@@ -290,7 +282,7 @@
     </div>
 </div>
 
-<!-- Login Required Modal (light) -->
+<!-- Login Required Modal -->
 <div id="loginRequiredModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 relative text-center">
         <button id="closeLoginRequiredModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button>
@@ -304,33 +296,37 @@
     </div>
 </div>
 
-<!-- Register / Login Modals (light) -->
+<!-- Register / Login Modals -->
 <div id="registerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeRegModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Create Account</h3><form id="regForm"><input type="text" id="regFirstName" placeholder="First Name" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="text" id="regLastName" placeholder="Last Name" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="email" id="regEmail" placeholder="Email" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="regPassword" placeholder="Password (min 6 chars)" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="regConfirmPassword" placeholder="Confirm Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Register</button></form></div></div>
 <div id="loginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"><div class="bg-white rounded-2xl max-w-md w-full p-6 relative"><button id="closeLoginModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-blue-600">&times;</button><h3 class="text-2xl font-bold text-blue-700 mb-4">Welcome Back</h3><form id="loginForm"><input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-50 border border-gray-300 p-2 mb-3 rounded-lg" required><input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-50 border border-gray-300 p-2 mb-4 rounded-lg" required><button type="submit" class="w-full btn-primary text-white py-2 rounded-full font-semibold">Login</button></form><p class="text-center text-gray-500 text-sm mt-4">Don't have an account? <button id="switchToRegister" class="text-blue-600 hover:underline">Register here</button></p></div></div>
 
-<!-- All remaining JavaScript is IDENTICAL to the previous version (no changes needed) -->
 <script type="module">
-    // ---------- Firebase Config (same as before) ----------
+    // ---------- 🔥 YOUR FIREBASE CONFIGURATION (UPDATED) ----------
     const firebaseConfig = {
-        apiKey: "AIzaSyDZxBIpI6QdN1MjK3t1N_m4BVfEEoI_SGY",
-        authDomain: "rolling-watch-collection.firebaseapp.com",
-        projectId: "rolling-watch-collection",
-        storageBucket: "rolling-watch-collection.firebasestorage.app",
-        messagingSenderId: "780300275683",
-        appId: "1:780300275683:web:05a06771ac53c744e3dad6"
+        apiKey: "AIzaSyBmQVW-mHhcuapT0UG_7JwMybuakpaa4eY",
+        authDomain: "peter-commissioner.firebaseapp.com",
+        projectId: "peter-commissioner",
+        storageBucket: "peter-commissioner.firebasestorage.app",
+        messagingSenderId: "209455307473",
+        appId: "1:209455307473:web:c9d8dd85526a5ac93d43f0",
+        measurementId: "G-0635B6F6X3"
     };
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    // ------------------------------------------------
+
+    // Import Firebase SDKs (version 12.13.0 to match your config)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+    
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
+    const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb"; // You can replace with your own imgbb key
 
-    // Helper functions (exact same as original)
+    // Helper functions
     const loader = document.getElementById('globalLoader');
-    const showLoader = () => loader.classList.add('active');
-    const hideLoader = () => loader.classList.remove('active');
+    const showLoader = () => loader.classList.remove('hidden');
+    const hideLoader = () => loader.classList.add('hidden');
     function showMessage(msg, type = 'info') {
         const container = document.getElementById('notificationContainer');
         if (!container) return;
@@ -338,11 +334,10 @@
         const icons = { success: '✓', error: '✗', warning: '⚠', info: 'ℹ' };
         const notif = document.createElement('div');
         notif.id = id;
-        notif.className = `notification notification-${type}`;
-        notif.innerHTML = `<i>${icons[type] || 'ℹ'}</i><span>${escapeHtml(msg)}</span>`;
+        notif.className = `notification fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-100 text-green-800 border-green-400' : 'bg-red-100 text-red-800 border-red-400'}`;
+        notif.innerHTML = `<span class="font-bold">${icons[type] || 'ℹ'}</span> ${escapeHtml(msg)}`;
         container.appendChild(notif);
-        setTimeout(() => notif.classList.add('show'), 10);
-        setTimeout(() => { notif.classList.remove('show'); setTimeout(() => notif.remove(), 300); }, 3200);
+        setTimeout(() => notif.remove(), 3000);
     }
     function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
     function getFriendlyError(code) {
@@ -350,7 +345,7 @@
         return map[code] || `Error: ${code}`;
     }
 
-    // DOM elements (same IDs, no change)
+    // DOM elements
     const dom = {
         homeSec: document.getElementById('home-section'), userSec: document.getElementById('user-panel-section'), adminSec: document.getElementById('admin-panel-section'), contactSec: document.getElementById('contact-section'), productDetailSec: document.getElementById('product-detail-section'),
         registerBtn: document.getElementById('registerBtn'), loginBtn: document.getElementById('loginBtn'), logoutBtn: document.getElementById('logoutBtn'),
@@ -373,7 +368,7 @@
     let contactInfo = { instagramUrl: '', phoneNumber: '' };
     let pendingProduct = null;
 
-    // Contact info functions (identical)
+    // Contact Info
     async function loadContactInfo() {
         try {
             const docRef = doc(db, "settings", "contactInfo");
@@ -403,7 +398,7 @@
         if (dom.adminPhoneNumber) dom.adminPhoneNumber.value = contactInfo.phoneNumber;
     }
 
-    // Cart functions (identical)
+    // Cart
     function saveCart() { localStorage.setItem('peterCommissionerCart', JSON.stringify(cart)); updateCartUI(); }
     function loadCart() { cart = JSON.parse(localStorage.getItem('peterCommissionerCart') || '[]'); updateCartUI(); }
     function updateCartUI() {
@@ -432,6 +427,7 @@
         });
     }
 
+    // Order functions
     async function initiateOrder(product) {
         if (!currentUser) {
             pendingProduct = product;
@@ -506,12 +502,12 @@
         }
     }
 
-    // Product detail and card templates (identical logic, just updated classes to match light theme)
+    // Product display
     function showProductDetail(productId) {
         const product = allProducts.find(p => p.id === productId);
         if (!product) return;
-        const statusBadge = product.stock === 'available' ? '<span class="status-badge status-available"><i class="fas fa-check-circle mr-1"></i>Available</span>' : '<span class="status-badge status-sold"><i class="fas fa-times-circle mr-1"></i>Sold</span>';
-        const orderBtn = (product.stock === 'available' && product.quantity > 0) ? `<button class="add-to-cart-detail btn-primary text-white px-6 py-2 rounded-full font-semibold mt-6" data-id="${product.id}"><i class="fas fa-cart-plus mr-2"></i>Inquire Now</button>` : `<button class="btn-disabled bg-gray-300 text-white px-6 py-2 rounded-full font-semibold mt-6" disabled><i class="fas fa-times-circle mr-2"></i>Not Available</button>`;
+        const statusBadge = product.stock === 'available' ? '<span class="status-available px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle mr-1"></i>Available</span>' : '<span class="status-sold px-3 py-1 rounded-full text-sm"><i class="fas fa-times-circle mr-1"></i>Sold</span>';
+        const orderBtn = (product.stock === 'available' && product.quantity > 0) ? `<button class="add-to-cart-detail btn-primary text-white px-6 py-2 rounded-full font-semibold mt-6" data-id="${product.id}"><i class="fas fa-cart-plus mr-2"></i>Inquire Now</button>` : `<button class="bg-gray-300 text-white px-6 py-2 rounded-full font-semibold mt-6" disabled><i class="fas fa-times-circle mr-2"></i>Not Available</button>`;
         const imagesHtml = product.images && product.images.length ? `<div class="detail-image-grid">${product.images.map(img => `<img src="${img}" class="detail-main-img rounded-lg shadow-md">`).join('')}</div>` : `<img src="https://via.placeholder.com/400" class="detail-main-img rounded-lg">`;
         const extraInfo = `<div class="flex flex-wrap gap-3 mt-3"><span class="info-item"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span><span class="info-item"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span><span class="info-item"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span><span class="info-item"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span></div>`;
         dom.detailContent.innerHTML = `
@@ -543,15 +539,14 @@
         dom.adminSec.classList.add('hidden');
         dom.contactSec.classList.add('hidden');
         dom.productDetailSec.classList.remove('hidden');
-        const detailSection = document.getElementById('product-detail-section');
-        if (detailSection) detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('product-detail-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         addRecentlyViewed(product.id);
     }
 
     function productCardTemplate(p, forDetail = false) {
         const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/300';
         const hasStock = (p.stock === 'available' && p.quantity > 0);
-        const statusBadge = hasStock ? `<span class="absolute top-2 right-2 status-badge status-available text-xs">Available</span>` : `<span class="absolute top-2 right-2 status-badge status-sold text-xs">Sold</span>`;
+        const statusBadge = hasStock ? `<span class="absolute top-2 right-2 status-available text-xs px-2 py-1 rounded-full">Available</span>` : `<span class="absolute top-2 right-2 status-sold text-xs px-2 py-1 rounded-full">Sold</span>`;
         const orderBtn = hasStock ? `<button class="add-cart-trigger btn-primary text-white font-semibold px-4 py-2 rounded-full text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>` : `<button class="bg-gray-300 text-white font-semibold px-4 py-2 rounded-full text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-1"></i> Sold</button>`;
         return `<div class="product-card bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-56 w-full object-cover" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl text-gray-800">${escapeHtml(p.name)}</h3><div class="flex justify-between items-center mt-1"><span class="text-blue-700 font-semibold">${p.price.toLocaleString()} RWF</span><span class="text-xs text-gray-500">${p.bedrooms || 0} beds</span></div><div class="flex justify-between items-center mt-2">${orderBtn}</div></div></div>`;
     }
@@ -615,7 +610,7 @@
     }
     function refreshAll() { applyFiltersAndRender(); renderRecentlyViewed(); renderRecommendations(); }
 
-    // Admin CRUD (identical)
+    // Admin CRUD
     async function uploadMultipleImages(files) {
         const urls = [];
         for (const file of files) {
@@ -730,12 +725,13 @@
         } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td></tr>'; }
     }
 
-    // Authentication (identical)
+    // Authentication with admin email logic (same as Rolling Watch)
     async function register(email, pwd, first, last) {
         showLoader();
         try {
             const cred = await createUserWithEmailAndPassword(auth, email, pwd);
-            const role = email === 'admin@rollingwatch.com' ? 'admin' : 'user';
+            // 👇 CHANGE THIS EMAIL TO YOUR ADMIN EMAIL (the one that will become admin automatically)
+            const role = email === 'admin@petercommissioner.com' ? 'admin' : 'user';
             await setDoc(doc(db, "users", cred.user.uid), { firstName: first, lastName: last, email, role, createdAt: new Date() });
             showMessage(`Welcome ${first}!`, 'success');
             closeModal(dom.regModal);
@@ -787,7 +783,7 @@
     onAuthStateChanged(auth, async (user) => {
         currentUser = user;
         if (user) {
-            try { const snap = await getDoc(doc(db, "users", user.uid)); userRole = snap.exists() ? snap.data().role : (user.email === 'admin@rollingwatch.com' ? 'admin' : 'user'); }
+            try { const snap = await getDoc(doc(db, "users", user.uid)); userRole = snap.exists() ? snap.data().role : (user.email === 'admin@petercommissioner.com' ? 'admin' : 'user'); }
             catch(e) { userRole = 'user'; }
         } else userRole = 'guest';
         updateNav();
@@ -796,7 +792,7 @@
         fetchProducts();
     });
 
-    // Event bindings (same)
+    // Event bindings
     const closeModal = (m) => m.classList.add('hidden');
     const openModal = (m) => m.classList.remove('hidden');
     dom.homeNav.onclick = showHome;
