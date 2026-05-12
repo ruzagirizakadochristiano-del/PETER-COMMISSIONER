@@ -242,9 +242,29 @@
 <div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
 <div id="notificationContainer"></div>
 
-<!-- Navbar -->
+<!-- Navbar with inline contact info (Instagram, WhatsApp+flag, Email) -->
 <nav class="bg-black shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-30 border-b border-yellow-600 flex-wrap gap-4">
-    <div class="text-2xl font-bold tracking-tight"><i class="fas fa-home text-yellow-500 mr-2"></i>PETER <span class="text-yellow-500">COMMISSIONER</span></div>
+    <!-- Brand + Contact inline -->
+    <div class="flex items-center flex-wrap gap-4">
+        <div class="text-2xl font-bold tracking-tight">
+            <i class="fas fa-home text-yellow-500 mr-2"></i>PETER <span class="text-yellow-500">COMMISSIONER</span>
+        </div>
+        <!-- Contact links (Instagram, WhatsApp+flag, Email) -->
+        <div class="flex items-center gap-3 text-sm bg-gray-900/50 rounded-full px-3 py-1 border border-yellow-600/50">
+            <a href="https://www.instagram.com/__bullet_wi_gikondo__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
+                <i class="fab fa-instagram text-pink-500"></i> <span class="hidden sm:inline">Instagram</span>
+            </a>
+            <span class="text-yellow-600/50">|</span>
+            <a href="https://wa.me/250786811816" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
+                <i class="fab fa-whatsapp text-green-500"></i> <span>+250 786 811 816</span> <span class="text-lg">🇷🇼</span>
+            </a>
+            <span class="text-yellow-600/50">|</span>
+            <a href="mailto:ruzagirizakadochriistiano@gmail.com" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
+                <i class="fas fa-envelope"></i> <span class="hidden sm:inline">Email</span>
+            </a>
+        </div>
+    </div>
+    <!-- Navigation buttons (unchanged) -->
     <div class="flex gap-5 items-center flex-wrap">
         <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300" data-nav="home">Home</button>
         <button class="nav-btn hover:text-yellow-500 text-gray-300" data-nav="contact">Contact</button>
@@ -267,7 +287,7 @@
     </div>
 </section>
 
-<!-- Contact Section -->
+<!-- Contact Section (public, still available but duplicate info is fine) -->
 <section id="contact-section" class="max-w-4xl mx-auto px-4 py-16 hidden">
     <div class="bg-black/90 rounded-2xl p-8 shadow-md border border-yellow-600 text-center">
         <div class="flex justify-center mb-4"><i class="fas fa-address-card text-5xl text-yellow-500"></i></div>
@@ -770,7 +790,7 @@
         if (!dom.userTable) return;
         try {
             const snap = await getDocs(collection(db, "users"));
-            let html = `</table><th class="text-left text-yellow-500">Name</th><th class="text-left text-yellow-500">Email</th><th class="text-left text-yellow-500">Role</th>`;
+            let html = `<tr><th class="text-left text-yellow-500">Name</th><th class="text-left text-yellow-500">Email</th><th class="text-left text-yellow-500">Role</th>`;
             snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1 text-gray-300">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1 text-gray-300">${escapeHtml(data.email)}</td><td class="py-1 text-gray-300">${escapeHtml(data.role||'user')}</td>`; });
             dom.userTable.innerHTML = html;
             if (dom.perfStats) dom.perfStats.innerHTML = `<div class="p-3"><p class="font-semibold text-yellow-500">📊 Performance</p><p class="text-gray-300">Users: ${snap.size}</p><p class="text-gray-300">Properties: ${allProducts.length}</p><p class="text-gray-300">Inquiries: ${cart.reduce((a,b)=>a+b.quantity,0)}</p></div>`;
@@ -788,7 +808,7 @@
                 html += `<tr class="border-b border-gray-800"><td class="p-2 text-gray-300">${escapeHtml(o.fullName)}</td><td class="p-2 text-gray-300">${escapeHtml(o.email)}</td><td class="p-2 text-gray-300">${escapeHtml(o.phone)}</td><td class="p-2 text-gray-300">${escapeHtml(o.productName)}</td><td class="p-2 text-gray-300">${o.quantity}</td><td class="p-2 text-gray-300">${escapeHtml(o.location)}</td><td class="p-2 text-gray-300">${escapeHtml(o.notes || '')}</td><td class="p-2 text-gray-300">${new Date(o.createdAt?.toDate()).toLocaleString()}</td></tr>`;
             });
             dom.ordersList.innerHTML = html;
-        } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td></tr>'; }
+        } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td><tr>'; }
     }
 
     // Authentication
