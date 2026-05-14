@@ -225,7 +225,6 @@
             background: #000;
             border-top: 1px solid #d4af37;
         }
-        /* Override any remaining blue */
         .btn-primary.text-white, .btn-primary {
             color: #000 !important;
         }
@@ -235,6 +234,18 @@
         .text-blue-600, .text-blue-500, .text-blue-400 {
             color: #d4af37 !important;
         }
+        /* Location badge */
+        .location-badge {
+            background: #1a1a1a;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
     </style>
 </head>
 <body class="bg-black">
@@ -242,29 +253,18 @@
 <div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
 <div id="notificationContainer"></div>
 
-<!-- Navbar with inline contact info (Instagram, WhatsApp+flag, Email) -->
+<!-- Navbar with dynamic contact info (will be populated by JavaScript) -->
 <nav class="bg-black shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-30 border-b border-yellow-600 flex-wrap gap-4">
-    <!-- Brand + Contact inline -->
     <div class="flex items-center flex-wrap gap-4">
         <div class="text-2xl font-bold tracking-tight">
             <i class="fas fa-home text-yellow-500 mr-2"></i>PETER <span class="text-yellow-500">COMMISSIONER</span>
         </div>
-        <!-- Contact links (Instagram, WhatsApp+flag, Email) -->
-        <div class="flex items-center gap-3 text-sm bg-gray-900/50 rounded-full px-3 py-1 border border-yellow-600/50">
-            <a href="https://www.instagram.com/__bullet_wi_gikondo__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
-                <i class="fab fa-instagram text-pink-500"></i> <span class="hidden sm:inline">Instagram</span>
-            </a>
-            <span class="text-yellow-600/50">|</span>
-            <a href="https://wa.me/250786811816" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
-                <i class="fab fa-whatsapp text-green-500"></i> <span>+250 786 811 816</span> <span class="text-lg">🇷🇼</span>
-            </a>
-            <span class="text-yellow-600/50">|</span>
-            <a href="mailto:ruzagirizakadochriistiano@gmail.com" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
-                <i class="fas fa-envelope"></i> <span class="hidden sm:inline">Email</span>
-            </a>
+        <!-- Dynamic contact links container (filled by JS) -->
+        <div id="navbarContactLinks" class="flex items-center gap-3 text-sm bg-gray-900/50 rounded-full px-3 py-1 border border-yellow-600/50">
+            <!-- JS will inject Instagram, WhatsApp, Email here -->
+            <span class="text-gray-400 text-xs">Loading...</span>
         </div>
     </div>
-    <!-- Navigation buttons (unchanged) -->
     <div class="flex gap-5 items-center flex-wrap">
         <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300" data-nav="home">Home</button>
         <button class="nav-btn hover:text-yellow-500 text-gray-300" data-nav="contact">Contact</button>
@@ -287,7 +287,7 @@
     </div>
 </section>
 
-<!-- Contact Section (public, still available but duplicate info is fine) -->
+<!-- Contact Section (public) - also dynamic -->
 <section id="contact-section" class="max-w-4xl mx-auto px-4 py-16 hidden">
     <div class="bg-black/90 rounded-2xl p-8 shadow-md border border-yellow-600 text-center">
         <div class="flex justify-center mb-4"><i class="fas fa-address-card text-5xl text-yellow-500"></i></div>
@@ -345,6 +345,7 @@
         <h2 class="text-2xl font-bold text-yellow-500">🛠️ Property Management</h2>
         <form id="productForm" class="grid md:grid-cols-2 gap-4 mt-5">
             <input type="text" id="productName" placeholder="Property title" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white" required>
+            <input type="text" id="productLocation" placeholder="Location (e.g., Kigali, Rwanda)" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white" required>
             <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white" required>
             <textarea id="productDesc" placeholder="Description (location, features, etc.)" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg md:col-span-2 text-white"></textarea>
             <div><label class="block text-sm mb-1 text-gray-300">Bedrooms</label><input type="number" id="bedrooms" min="0" value="3" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white"></div>
@@ -467,13 +468,14 @@
         regModal: getEl('registerModal'), loginModal: getEl('loginModal'), closeReg: getEl('closeRegModal'), closeLogin: getEl('closeLoginModal'), regForm: getEl('regForm'), loginForm: getEl('loginForm'),
         productForm: getEl('productForm'), productList: getEl('productListAdmin'), userTable: getEl('userListAdmin'), perfStats: getEl('performanceStats'), cancelEdit: getEl('cancelEdit'), userInfo: getEl('userInfoDisplay'), contactSpan: getEl('contactEmailSpan'), socialContainer: getEl('socialLinksContainer'),
         productName: getEl('productName'), productPrice: getEl('productPrice'), productDesc: getEl('productDesc'), productStock: getEl('productStock'), productQuantity: getEl('productQuantity'), productImages: getEl('productImages'), productFormTitle: getEl('productFormTitle'),
-        bedrooms: getEl('bedrooms'), bathrooms: getEl('bathrooms'), area: getEl('area'), propertyType: getEl('propertyType'),
+        bedrooms: getEl('bedrooms'), bathrooms: getEl('bathrooms'), area: getEl('area'), propertyType: getEl('propertyType'), productLocation: getEl('productLocation'),
         searchInput: getEl('searchInput'), sortSelect: getEl('sortSelect'), minPrice: getEl('minPrice'), maxPrice: getEl('maxPrice'), resetFiltersBtn: getEl('resetFiltersBtn'),
         recommendationsGrid: getEl('recommendationsGrid'), recentlyViewedGrid: getEl('recentlyViewedGrid'),
         publicInstagramLink: getEl('publicInstagramLink'), publicPhoneNumber: getEl('publicPhoneNumber'), adminInstagramUrl: getEl('adminInstagramUrl'), adminPhoneNumber: getEl('adminPhoneNumber'), contactSettingsForm: getEl('contactSettingsForm'), resetContactBtn: getEl('resetContactBtn'),
         detailContent: getEl('detailContent'), relatedProductsGrid: getEl('relatedProductsGrid'), backToHomeBtn: getEl('backToHomeBtn'),
         customerModal: getEl('customerModal'), closeCustomerModal: getEl('closeCustomerModal'), customerOrderForm: getEl('customerOrderForm'), orderProductId: getEl('orderProductId'), orderProductName: getEl('orderProductName'), orderProductPrice: getEl('orderProductPrice'), orderMaxQuantity: getEl('orderMaxQuantity'), orderProductDisplay: getEl('orderProductDisplay'), orderPriceDisplay: getEl('orderPriceDisplay'), orderAvailableDisplay: getEl('orderAvailableDisplay'), ordersList: getEl('ordersList'),
-        loginRequiredModal: getEl('loginRequiredModal'), closeLoginRequiredModal: getEl('closeLoginRequiredModal'), loginRequiredLoginBtn: getEl('loginRequiredLoginBtn'), loginRequiredRegisterBtn: getEl('loginRequiredRegisterBtn'), switchToRegister: getEl('switchToRegister')
+        loginRequiredModal: getEl('loginRequiredModal'), closeLoginRequiredModal: getEl('closeLoginRequiredModal'), loginRequiredLoginBtn: getEl('loginRequiredLoginBtn'), loginRequiredRegisterBtn: getEl('loginRequiredRegisterBtn'), switchToRegister: getEl('switchToRegister'),
+        navbarContactLinks: getEl('navbarContactLinks')
     };
 
     let currentUser = null, userRole = 'guest', allProducts = [], filteredProducts = [], cart = [], editingId = null;
@@ -482,7 +484,28 @@
     let pendingProduct = null;
     let currentImages = [];
 
-    // Contact Info
+    // ========== UPDATE NAVBAR CONTACT LINKS DYNAMICALLY ==========
+    function updateNavbarContactLinks() {
+        if (!dom.navbarContactLinks) return;
+        const insta = contactInfo.instagramUrl || 'https://www.instagram.com/__bullet_wi_gikondo__';
+        const phone = contactInfo.phoneNumber || '+250786811816';
+        const email = 'ruzagirizakadochriistiano@gmail.com'; // fixed email
+        dom.navbarContactLinks.innerHTML = `
+            <a href="${insta}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
+                <i class="fab fa-instagram text-pink-500"></i> <span class="hidden sm:inline">Instagram</span>
+            </a>
+            <span class="text-yellow-600/50">|</span>
+            <a href="https://wa.me/${phone.replace(/\D/g,'')}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
+                <i class="fab fa-whatsapp text-green-500"></i> <span>${phone}</span> <span class="text-lg">🇷🇼</span>
+            </a>
+            <span class="text-yellow-600/50">|</span>
+            <a href="mailto:${email}" class="hover:text-yellow-500 transition flex items-center gap-1 text-gray-300">
+                <i class="fas fa-envelope"></i> <span class="hidden sm:inline">Email</span>
+            </a>
+        `;
+    }
+
+    // Contact Info (load and save)
     async function loadContactInfo() {
         try {
             const docRef = doc(db, "settings", "contactInfo");
@@ -492,10 +515,13 @@
                 contactInfo = { instagramUrl: "https://www.instagram.com/__bullet_wi_gikondo__", phoneNumber: "+250786811816" };
                 await setDoc(docRef, contactInfo);
             }
+            // Update public contact section
             if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML = `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-yellow-500 underline">${contactInfo.instagramUrl}</a>`;
             if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML = `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-yellow-500 underline">${contactInfo.phoneNumber}</a>`;
             if (dom.adminInstagramUrl) dom.adminInstagramUrl.value = contactInfo.instagramUrl;
             if (dom.adminPhoneNumber) dom.adminPhoneNumber.value = contactInfo.phoneNumber;
+            // Update navbar links
+            updateNavbarContactLinks();
         } catch (err) { console.error(err); }
     }
     async function saveContactInfo(url, phone) {
@@ -505,12 +531,13 @@
             contactInfo = { instagramUrl: url, phoneNumber: phone };
             if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML = `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-yellow-500 underline">${contactInfo.instagramUrl}</a>`;
             if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML = `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-yellow-500 underline">${contactInfo.phoneNumber}</a>`;
+            updateNavbarContactLinks();
             showMessage("Contact info updated", "success");
         } catch (err) { showMessage("Update failed", "error"); }
         finally { hideLoader(); }
     }
 
-    // Cart functions
+    // Cart functions (unchanged)
     function saveCart() { localStorage.setItem('peterCommissionerCart', JSON.stringify(cart)); updateCartUI(); }
     function loadCart() { cart = JSON.parse(localStorage.getItem('peterCommissionerCart') || '[]'); updateCartUI(); }
     function updateCartUI() {
@@ -539,7 +566,7 @@
         });
     }
 
-    // Order / Inquiry
+    // Order / Inquiry (unchanged)
     async function initiateOrder(product) {
         if (!currentUser) { pendingProduct = product; dom.loginRequiredModal.classList.remove('hidden'); return; }
         if (product.stock === 'sold' || product.quantity <= 0) { showMessage("This property is no longer available.", "warning"); return; }
@@ -590,15 +617,16 @@
         finally { hideLoader(); }
     }
 
-    // Product display
+    // Product display with location
     function showProductDetail(productId) {
         const product = allProducts.find(p => p.id === productId);
         if (!product) return;
         const statusBadge = product.stock === 'available' ? '<span class="status-available px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle mr-1"></i>Available</span>' : '<span class="status-sold px-3 py-1 rounded-full text-sm"><i class="fas fa-times-circle mr-1"></i>Sold</span>';
         const orderBtn = (product.stock === 'available' && product.quantity > 0) ? `<button class="add-to-cart-detail btn-primary text-black px-6 py-2 rounded-full font-semibold mt-6" data-id="${product.id}"><i class="fas fa-cart-plus mr-2"></i>Inquire Now</button>` : `<button class="bg-gray-700 text-gray-400 px-6 py-2 rounded-full font-semibold mt-6" disabled><i class="fas fa-times-circle mr-2"></i>Not Available</button>`;
         const imagesHtml = product.images && product.images.length ? `<div class="detail-image-grid">${product.images.map(img => `<img src="${img}" class="detail-main-img rounded-lg shadow-md">`).join('')}</div>` : `<img src="https://via.placeholder.com/400" class="detail-main-img rounded-lg">`;
+        const locationHtml = product.location ? `<div class="flex items-center gap-2 mt-2"><i class="fas fa-map-marker-alt text-yellow-500"></i><span class="text-gray-300">${escapeHtml(product.location)}</span></div>` : '';
         const extraInfo = `<div class="flex flex-wrap gap-3 mt-3"><span class="info-item"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span><span class="info-item"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span><span class="info-item"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span><span class="info-item"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span></div>`;
-        dom.detailContent.innerHTML = `<div class="grid md:grid-cols-2 gap-8"><div>${imagesHtml}</div><div><h2 class="text-3xl font-bold text-yellow-500">${escapeHtml(product.name)}</h2><p class="price-large mt-2">${product.price.toLocaleString()} RWF</p><div class="mt-3">${statusBadge}</div>${extraInfo}<p class="text-gray-400 mt-4">${escapeHtml(product.description || 'No description provided.')}</p>${orderBtn}</div></div>`;
+        dom.detailContent.innerHTML = `<div class="grid md:grid-cols-2 gap-8"><div>${imagesHtml}</div><div><h2 class="text-3xl font-bold text-yellow-500">${escapeHtml(product.name)}</h2><p class="price-large mt-2">${product.price.toLocaleString()} RWF</p>${locationHtml}<div class="mt-3">${statusBadge}</div>${extraInfo}<p class="text-gray-400 mt-4">${escapeHtml(product.description || 'No description provided.')}</p>${orderBtn}</div></div>`;
         if (product.stock === 'available' && product.quantity > 0) {
             dom.detailContent.querySelector('.add-to-cart-detail')?.addEventListener('click', (e) => { e.stopPropagation(); initiateOrder(product); });
         }
@@ -614,7 +642,8 @@
         const hasStock = (p.stock === 'available' && p.quantity > 0);
         const statusBadge = hasStock ? `<span class="absolute top-2 right-2 bg-yellow-600 text-black text-xs px-2 py-1 rounded-full font-bold">${p.quantity} left</span>` : `<span class="absolute top-2 right-2 bg-red-700 text-white text-xs px-2 py-1 rounded-full">Sold</span>`;
         const orderBtn = hasStock ? `<button class="add-cart-trigger btn-primary text-black font-semibold px-4 py-2 rounded-full text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>` : `<button class="bg-gray-700 text-gray-400 font-semibold px-4 py-2 rounded-full text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-1"></i> Sold</button>`;
-        return `<div class="product-card bg-black rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-56 w-full object-cover" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl text-yellow-500">${escapeHtml(p.name)}</h3><div class="flex justify-between items-center mt-1"><span class="text-yellow-500 font-semibold">${p.price.toLocaleString()} RWF</span><span class="text-xs text-gray-400"><i class="fas fa-bed"></i> ${p.bedrooms || 0}</span></div><div class="flex justify-between items-center mt-2">${orderBtn}</div></div></div>`;
+        const locationDisplay = p.location ? `<div class="flex items-center text-xs text-gray-400 mt-1"><i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>${escapeHtml(p.location)}</div>` : '';
+        return `<div class="product-card bg-black rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-56 w-full object-cover" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl text-yellow-500">${escapeHtml(p.name)}</h3>${locationDisplay}<div class="flex justify-between items-center mt-1"><span class="text-yellow-500 font-semibold">${p.price.toLocaleString()} RWF</span><span class="text-xs text-gray-400"><i class="fas fa-bed"></i> ${p.bedrooms || 0}</span></div><div class="flex justify-between items-center mt-2">${orderBtn}</div></div></div>`;
     }
     function attachProductEvents(container) {
         container.querySelectorAll('.product-card').forEach(card => {
@@ -656,7 +685,7 @@
     function applyFiltersAndRender() {
         let filtered = [...allProducts];
         const search = dom.searchInput.value.toLowerCase();
-        if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.description && p.description.toLowerCase().includes(search)));
+        if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.description && p.description.toLowerCase().includes(search)) || (p.location && p.location.toLowerCase().includes(search)));
         const min = parseFloat(dom.minPrice.value); if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
         const max = parseFloat(dom.maxPrice.value); if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
         const sort = dom.sortSelect.value;
@@ -670,12 +699,12 @@
     }
     function refreshAll() { applyFiltersAndRender(); renderRecentlyViewed(); renderRecommendations(); }
 
-    // Admin CRUD
+    // Admin CRUD with location
     async function fetchProducts() {
         showLoader();
         try {
             const snap = await getDocs(collection(db, "products"));
-            allProducts = snap.docs.map(d => ({ id: d.id, ...d.data(), stock: d.data().stock || 'available', quantity: d.data().quantity !== undefined ? d.data().quantity : 1, bedrooms: d.data().bedrooms || 0, bathrooms: d.data().bathrooms || 0, area: d.data().area || 0, propertyType: d.data().propertyType || 'House' }));
+            allProducts = snap.docs.map(d => ({ id: d.id, ...d.data(), stock: d.data().stock || 'available', quantity: d.data().quantity !== undefined ? d.data().quantity : 1, bedrooms: d.data().bedrooms || 0, bathrooms: d.data().bathrooms || 0, area: d.data().area || 0, propertyType: d.data().propertyType || 'House', location: d.data().location || '' }));
             refreshAll();
             if (userRole === 'admin') { await renderAdminList(); await fetchUsers(); await fetchOrders(); }
         } catch(e) { showMessage('Failed to load properties', 'error'); }
@@ -684,7 +713,7 @@
     async function renderAdminList() {
         if (!dom.productList) return;
         if (!allProducts.length) { dom.productList.innerHTML = '<div class="text-gray-500">No properties</div>'; return; }
-        dom.productList.innerHTML = allProducts.map(p => `<div class="flex justify-between items-center border-b border-gray-800 py-2"><div class="flex items-center gap-2"><img src="${p.images?.[0] || 'https://via.placeholder.com/40'}" class="w-8 h-8 object-cover rounded"><span class="text-gray-300"><strong class="text-yellow-500">${escapeHtml(p.name)}</strong> - ${p.price.toLocaleString()} RWF</span><span class="ml-2 ${p.stock === 'available' ? 'text-green-400' : 'text-red-400'} text-xs">${p.stock === 'available' ? `Available (${p.quantity})` : 'Sold'}</span></div><div><button class="edit-prod bg-yellow-600 text-black px-2 py-1 rounded text-sm mr-1 font-bold" data-id="${p.id}">Edit</button><button class="del-prod bg-red-700 text-white px-2 py-1 rounded text-sm" data-id="${p.id}">Del</button></div></div>`).join('');
+        dom.productList.innerHTML = allProducts.map(p => `<div class="flex justify-between items-center border-b border-gray-800 py-2"><div class="flex items-center gap-2"><img src="${p.images?.[0] || 'https://via.placeholder.com/40'}" class="w-8 h-8 object-cover rounded"><div><span class="text-gray-300"><strong class="text-yellow-500">${escapeHtml(p.name)}</strong> - ${p.price.toLocaleString()} RWF</span><div class="text-xs text-gray-400"><i class="fas fa-map-marker-alt mr-1"></i>${escapeHtml(p.location || 'No location')}</div></div><span class="ml-2 ${p.stock === 'available' ? 'text-green-400' : 'text-red-400'} text-xs">${p.stock === 'available' ? `Available (${p.quantity})` : 'Sold'}</span></div><div><button class="edit-prod bg-yellow-600 text-black px-2 py-1 rounded text-sm mr-1 font-bold" data-id="${p.id}">Edit</button><button class="del-prod bg-red-700 text-white px-2 py-1 rounded text-sm" data-id="${p.id}">Del</button></div></div>`).join('');
         dom.productList.querySelectorAll('.edit-prod').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
         dom.productList.querySelectorAll('.del-prod').forEach(btn => btn.onclick = async () => { if (confirm('Delete property?')) await deleteProduct(btn.dataset.id); });
     }
@@ -703,8 +732,9 @@
         if (!prod) return;
         editingId = id;
         dom.productName.value = prod.name;
-        dom.productDesc.value = prod.description || '';
+        dom.productLocation.value = prod.location || '';
         dom.productPrice.value = prod.price;
+        dom.productDesc.value = prod.description || '';
         dom.productStock.value = prod.stock;
         dom.productQuantity.value = prod.quantity;
         dom.bedrooms.value = prod.bedrooms; dom.bathrooms.value = prod.bathrooms; dom.area.value = prod.area; dom.propertyType.value = prod.propertyType;
@@ -733,7 +763,16 @@
     }
     dom.productForm.onsubmit = async (e) => {
         e.preventDefault();
-        const name = dom.productName.value.trim(), desc = dom.productDesc.value.trim(), price = parseInt(dom.productPrice.value), stock = dom.productStock.value, quantity = parseInt(dom.productQuantity.value), bedrooms = parseInt(dom.bedrooms.value), bathrooms = parseInt(dom.bathrooms.value), area = parseInt(dom.area.value), propertyType = dom.propertyType.value;
+        const name = dom.productName.value.trim();
+        const location = dom.productLocation.value.trim();
+        const desc = dom.productDesc.value.trim();
+        const price = parseInt(dom.productPrice.value);
+        const stock = dom.productStock.value;
+        const quantity = parseInt(dom.productQuantity.value);
+        const bedrooms = parseInt(dom.bedrooms.value);
+        const bathrooms = parseInt(dom.bathrooms.value);
+        const area = parseInt(dom.area.value);
+        const propertyType = dom.propertyType.value;
         const files = Array.from(dom.productImages.files);
         if (!name || isNaN(price)) { showMessage('Name and valid price required', 'warning'); return; }
         showLoader();
@@ -752,12 +791,13 @@
                 hideLoader();
                 return;
             }
+            const productData = { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms, area, propertyType, location };
             if (editingId) {
                 const existingRef = doc(db, "products", editingId);
-                await updateDoc(existingRef, { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms, area, propertyType, updatedAt: new Date() });
+                await updateDoc(existingRef, { ...productData, updatedAt: new Date() });
                 showMessage('Property updated', 'success');
             } else {
-                await addDoc(collection(db, "products"), { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms, area, propertyType, createdAt: new Date() });
+                await addDoc(collection(db, "products"), { ...productData, createdAt: new Date() });
                 showMessage('Property added', 'success');
             }
             resetEdit();
@@ -801,14 +841,14 @@
         try {
             const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
             const snap = await getDocs(q);
-            if (snap.empty) { dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-500">No inquiries yet</td></tr>'; return; }
+            if (snap.empty) { dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-500">No inquiries yet</tr>'; return; }
             let html = '';
             snap.forEach(doc => {
                 const o = doc.data();
                 html += `<tr class="border-b border-gray-800"><td class="p-2 text-gray-300">${escapeHtml(o.fullName)}</td><td class="p-2 text-gray-300">${escapeHtml(o.email)}</td><td class="p-2 text-gray-300">${escapeHtml(o.phone)}</td><td class="p-2 text-gray-300">${escapeHtml(o.productName)}</td><td class="p-2 text-gray-300">${o.quantity}</td><td class="p-2 text-gray-300">${escapeHtml(o.location)}</td><td class="p-2 text-gray-300">${escapeHtml(o.notes || '')}</td><td class="p-2 text-gray-300">${new Date(o.createdAt?.toDate()).toLocaleString()}</td></tr>`;
             });
             dom.ordersList.innerHTML = html;
-        } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td><tr>'; }
+        } catch(e) { console.warn(e); dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center text-red-500">Error loading inquiries</td></tr>'; }
     }
 
     // Authentication
