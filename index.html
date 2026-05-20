@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PETER COMMISSIONER | Premium Real Estate</title>
+    <title>HITAMO NEZA | Premium Real Estate</title>
     <meta name="google-site-verification" content="2jL8GdxU9t9f92S00Ab5OuVwpAfjBo6VLhbGbkZpJNE" />
     
     <!-- Favicon (your logo.png) -->
@@ -258,7 +258,7 @@
 <nav class="bg-black shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-30 border-b border-yellow-600 flex-wrap gap-4">
     <div class="flex items-center flex-wrap gap-4">
         <div class="text-2xl font-bold tracking-tight">
-            <i class="fas fa-home text-yellow-500 mr-2"></i>PETER <span class="text-yellow-500">COMMISSIONER</span>
+            <i class="fas fa-home text-yellow-500 mr-2"></i>HITAMO <span class="text-yellow-500">NEZA</span>
         </div>
         <!-- Dynamic contact links container (filled by JS) -->
         <div id="navbarContactLinks" class="flex items-center gap-3 text-sm bg-gray-900/50 rounded-full px-3 py-1 border border-yellow-600/50">
@@ -283,7 +283,7 @@
     <div class="max-w-7xl mx-auto px-6 text-center">
         <div class="inline-block mb-4 px-4 py-1 bg-yellow-900/30 text-yellow-500 rounded-full text-sm uppercase">Your Dream Home Awaits</div>
         <h1 class="text-5xl md:text-7xl font-bold mb-4">Find Your <span class="text-yellow-500">Perfect Property</span></h1>
-        <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">Luxury houses, modern apartments, and prime land – curated by Peter Commissioner.</p>
+        <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">Luxury houses, modern apartments, and prime land – curated by HITAMO NEZA.</p>
         <div class="mt-10 flex justify-center gap-5"><button id="heroShopBtn" class="btn-primary text-black px-8 py-3 rounded-full font-semibold text-lg">Explore Properties</button><button id="heroExploreBtn" class="btn-outline px-8 py-3 rounded-full font-semibold text-lg">Contact Agent</button></div>
     </div>
 </section>
@@ -292,7 +292,7 @@
 <section id="contact-section" class="max-w-4xl mx-auto px-4 py-16 hidden">
     <div class="bg-black/90 rounded-2xl p-8 shadow-md border border-yellow-600 text-center">
         <div class="flex justify-center mb-4"><i class="fas fa-address-card text-5xl text-yellow-500"></i></div>
-        <h2 class="text-3xl font-bold mb-6 text-yellow-500">Contact Peter Commissioner</h2>
+        <h2 class="text-3xl font-bold mb-6 text-yellow-500">Contact HITAMO NEZA</h2>
         <div class="space-y-4 text-lg">
             <div class="flex justify-center items-center gap-3 flex-wrap"><i class="fab fa-instagram text-pink-500 text-2xl"></i> <span id="publicInstagramLink" class="text-yellow-500 break-all"></span></div>
             <div class="flex justify-center items-center gap-3 flex-wrap"><i class="fab fa-whatsapp text-green-500 text-2xl"></i> <span id="publicPhoneNumber" class="text-yellow-500"></span></div>
@@ -832,7 +832,7 @@
         try {
             const snap = await getDocs(collection(db, "users"));
             let html = `<tr><th class="text-left text-yellow-500">Name</th><th class="text-left text-yellow-500">Email</th><th class="text-left text-yellow-500">Role</th>`;
-            snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1 text-gray-300">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1 text-gray-300">${escapeHtml(data.email)}</td><td class="py-1 text-gray-300">${escapeHtml(data.role||'user')}</td>`; });
+            snap.forEach(d => { const data = d.data(); html += `<tr><td class="py-1 text-gray-300">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-1 text-gray-300">${escapeHtml(data.email)}</td><td class="py-1 text-gray-300">${escapeHtml(data.role||'user')}<tr>`; });
             dom.userTable.innerHTML = html;
             if (dom.perfStats) dom.perfStats.innerHTML = `<div class="p-3"><p class="font-semibold text-yellow-500">📊 Performance</p><p class="text-gray-300">Users: ${snap.size}</p><p class="text-gray-300">Properties: ${allProducts.length}</p><p class="text-gray-300">Inquiries: ${cart.reduce((a,b)=>a+b.quantity,0)}</p></div>`;
         } catch(e) { console.warn(e); }
@@ -842,7 +842,7 @@
         try {
             const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
             const snap = await getDocs(q);
-            if (snap.empty) { dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-500">No inquiries yet</tr>'; return; }
+            if (snap.empty) { dom.ordersList.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-500">No inquiries yet</td></tr>'; return; }
             let html = '';
             snap.forEach(doc => {
                 const o = doc.data();
