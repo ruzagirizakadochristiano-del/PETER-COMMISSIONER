@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HITAMO NEZA | Premium Real Estate</title>
+    <meta name="google-site-verification" content="2jL8GdxU9t9f92S00Ab5OuVwpAfjBo6VLhbGbkZpJNE" />
+
+    <!-- Favicon (with fallback) -->
+    <link rel="icon" type="image/png" sizes="512x512" href="logo.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>'">
+    <link rel="icon" type="image/png" sizes="192x192" href="logo.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>'">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>'">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.png" onerror="this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>'">
+    <link rel="shortcut icon" href="logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
+
+    <!-- Tailwind CDN (warning is fine for dev) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- Loader & Notification -->
+    <div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
+    <div id="notificationContainer"></div>
+
+    <!-- ====== NAVBAR (mobile‑friendly) ====== -->
+    <nav class="bg-black shadow-sm px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap justify-between items-center sticky top-0 z-30 border-b border-yellow-600 gap-3">
+        <div class="flex items-center flex-wrap gap-2 sm:gap-4">
+            <div class="text-xl sm:text-2xl font-bold tracking-tight">
+                <i class="fas fa-home text-yellow-500 mr-2"></i>HITAMO <span class="text-yellow-500">NEZA</span>
+            </div>
+            <div id="navbarContactLinks" class="flex items-center gap-2 text-xs sm:text-sm bg-gray-900/50 rounded-full px-2 sm:px-3 py-1 border border-yellow-600/50">
+                <span class="text-gray-400 text-[10px] sm:text-xs">Loading...</span>
+            </div>
+        </div>
+        <div class="flex gap-2 sm:gap-4 items-center flex-wrap justify-center sm:justify-end w-full sm:w-auto">
+            <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300 text-sm sm:text-base" data-nav="home">Home</button>
+            <button class="nav-btn hover:text-yellow-500 text-gray-300 text-sm sm:text-base" data-nav="contact">Contact</button>
+            <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-sm sm:text-base" data-nav="user">My Panel</button>
+            <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-sm sm:text-base" data-nav="admin">Admin</button>
+            <button id="cartIconBtn" class="relative hover:text-yellow-500 text-gray-300">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span id="cartCount" class="absolute -top-2 -right-3 bg-yellow-600 text-black text-xs font-bold rounded-full px-1.5 min-w-[20px] text-center">0</span>
+            </button>
+            <button id="registerBtn" class="btn-primary text-black px-3 sm:px-5 py-1 rounded-full text-xs sm:text-sm font-semibold">Register</button>
+            <button id="loginBtn" class="border border-yellow-600 text-yellow-600 hover:bg-yellow-900/30 px-3 sm:px-5 py-1 rounded-full text-xs sm:text-sm">Login</button>
+            <button id="logoutBtn" class="hidden bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 sm:px-5 py-1 rounded-full text-xs sm:text-sm">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ====== HERO (mobile‑optimised) ====== -->
+    <section class="hero-bg py-12 sm:py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <div class="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-1 bg-yellow-900/30 text-yellow-500 rounded-full text-xs sm:text-sm uppercase">Your Dream Home Awaits</div>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-3 sm:mb-4 leading-tight">Find Your <span class="text-yellow-500">Perfect Property</span></h1>
+            <p class="text-base sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">Luxury houses, modern apartments, and prime land – curated by HITAMO NEZA.</p>
+            <div class="mt-6 sm:mt-10 flex flex-col sm:flex-row justify-center gap-3 sm:gap-5">
+                <button id="heroShopBtn" class="btn-primary text-black px-6 sm:px-8 py-3 rounded-full font-semibold text-base sm:text-lg w-full sm:w-auto">Explore Properties</button>
+                <button id="heroExploreBtn" class="btn-outline px-6 sm:px-8 py-3 rounded-full font-semibold text-base sm:text-lg w-full sm:w-auto">Contact Agent</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CONTACT SECTION ====== -->
+    <section id="contact-section" class="max-w-4xl mx-auto px-4 py-12 sm:py-16 hidden">
+        <div class="bg-black/90 rounded-2xl p-6 sm:p-8 shadow-md border border-yellow-600 text-center">
+            <div class="flex justify-center mb-4"><i class="fas fa-address-card text-4xl sm:text-5xl text-yellow-500"></i></div>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-yellow-500">Contact HITAMO NEZA</h2>
+            <div class="space-y-4 text-base sm:text-lg">
+                <div class="flex justify-center items-center gap-2 sm:gap-3 flex-wrap">
+                    <i class="fab fa-instagram text-pink-500 text-xl sm:text-2xl"></i>
+                    <span id="publicInstagramLink" class="text-yellow-500 break-all"></span>
+                </div>
+                <div class="flex justify-center items-center gap-2 sm:gap-3 flex-wrap">
+                    <i class="fab fa-whatsapp text-green-500 text-xl sm:text-2xl"></i>
+                    <span id="publicPhoneNumber" class="text-yellow-500"></span>
+                </div>
+            </div>
+            <p class="mt-6 text-gray-400 text-sm">We reply within 24 hours. For inquiries, viewings, or investments.</p>
+        </div>
+    </section>
+
+    <!-- ====== FILTER BAR (mobile‑friendly) ====== -->
+    <section class="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+        <div class="filter-bar p-4 sm:p-6">
+            <div class="flex flex-wrap gap-3 items-end">
+                <div class="w-full sm:flex-1 min-w-[120px]">
+                    <label class="text-gray-300 text-sm block mb-1">Search properties</label>
+                    <input type="text" id="searchInput" placeholder="Location, type, or name..." class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-2 text-white text-sm sm:text-base" />
+                </div>
+                <div class="w-full sm:w-48">
+                    <label class="text-gray-300 text-sm block mb-1">Sort by</label>
+                    <select id="sortSelect" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-2 text-white text-sm sm:text-base">
+                        <option value="default">Default</option>
+                        <option value="price_asc">Price (Low to High)</option>
+                        <option value="price_desc">Price (High to Low)</option>
+                    </select>
+                </div>
+                <div class="w-full sm:w-36">
+                    <label class="text-gray-300 text-sm block mb-1">Min Price</label>
+                    <input type="number" id="minPrice" placeholder="0" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-2 text-white text-sm sm:text-base" />
+                </div>
+                <div class="w-full sm:w-36">
+                    <label class="text-gray-300 text-sm block mb-1">Max Price</label>
+                    <input type="number" id="maxPrice" placeholder="No max" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-2 text-white text-sm sm:text-base" />
+                </div>
+                <button id="resetFiltersBtn" class="btn-primary text-black px-4 py-2 rounded-lg font-semibold w-full sm:w-auto">Reset</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== PROPERTIES GRID ====== -->
+    <section id="home-section" class="max-w-7xl mx-auto px-4 pb-12">
+        <div class="text-center mb-6 sm:mb-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-yellow-500">Featured <span class="text-yellow-500">Properties</span></h2>
+            <div class="w-24 h-1 bg-yellow-600 mx-auto mt-3 rounded-full"></div>
+        </div>
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"></div>
+    </section>
+
+    <!-- ====== PRODUCT DETAIL ====== -->
+    <section id="product-detail-section" class="max-w-6xl mx-auto px-4 py-8 sm:py-12 hidden">
+        <button id="backToHomeBtn" class="btn-primary text-black px-4 py-2 rounded-lg mb-4 sm:mb-6 inline-block text-sm sm:text-base">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Properties
+        </button>
+        <div class="bg-black/90 rounded-2xl p-4 sm:p-6 shadow-md border border-yellow-600">
+            <div id="detailContent"></div>
+        </div>
+        <div class="mt-6 sm:mt-8">
+            <h3 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-link mr-2 text-yellow-500"></i>Similar Properties</h3>
+            <div id="relatedProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- ====== RECOMMENDATIONS ====== -->
+    <section id="recommendations-section" class="max-w-7xl mx-auto px-4 py-8 border-t border-yellow-700">
+        <h2 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-6"><i class="fas fa-star text-yellow-500 mr-2"></i>Recommended for You</h2>
+        <div id="recommendationsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"></div>
+    </section>
+
+    <!-- ====== RECENTLY VIEWED ====== -->
+    <section id="recently-viewed-section" class="max-w-7xl mx-auto px-4 py-8 border-t border-yellow-700">
+        <h2 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-6"><i class="fas fa-history text-yellow-500 mr-2"></i>Recently Viewed</h2>
+        <div id="recentlyViewedGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"></div>
+    </section>
+
+    <!-- ====== USER PANEL ====== -->
+    <section id="user-panel-section" class="max-w-4xl mx-auto px-4 py-8 sm:py-12 hidden">
+        <div class="bg-black/90 rounded-2xl p-4 sm:p-6 shadow-md border border-yellow-600">
+            <h2 class="text-xl sm:text-2xl font-bold border-b border-yellow-700 pb-2 mb-4">
+                <i class="fas fa-id-card text-yellow-500 mr-2"></i>My Dashboard
+            </h2>
+            <div id="userInfoDisplay"></div>
+            <div class="mt-6 bg-gray-900 p-4 sm:p-5 rounded-xl">
+                <h3 class="font-semibold text-lg text-yellow-500">📧 Contact &amp; Social</h3>
+                <p class="text-sm sm:text-base">Official Contact Email: <span id="contactEmailSpan" class="font-mono text-yellow-500"></span></p>
+                <div id="socialLinksContainer" class="flex gap-4 mt-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== ADMIN PANEL ====== -->
+    <section id="admin-panel-section" class="max-w-6xl mx-auto px-4 py-8 sm:py-12 hidden">
+        <!-- Property Management -->
+        <div class="bg-black/90 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-md border border-yellow-600">
+            <h2 class="text-xl sm:text-2xl font-bold text-yellow-500">🛠️ Property Management</h2>
+            <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                <input type="text" id="productName" placeholder="Property title" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="text" id="productLocation" placeholder="Location (e.g., Kigali, Rwanda)" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" required />
+                <textarea id="productDesc" placeholder="Description (location, features, etc.)" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg md:col-span-2 text-white text-sm sm:text-base"></textarea>
+                <div><label class="block text-sm mb-1 text-gray-300">Bedrooms</label><input type="number" id="bedrooms" min="0" value="3" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white text-sm sm:text-base" /></div>
+                <div><label class="block text-sm mb-1 text-gray-300">Bathrooms</label><input type="number" id="bathrooms" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white text-sm sm:text-base" /></div>
+                <div><label class="block text-sm mb-1 text-gray-300">Area (sq m)</label><input type="number" id="area" min="0" value="150" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white text-sm sm:text-base" /></div>
+                <div><label class="block text-sm mb-1 text-gray-300">Property Type</label>
+                    <select id="propertyType" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white text-sm sm:text-base">
+                        <option value="House">House</option><option value="Apartment">Apartment</option>
+                        <option value="Villa">Villa</option><option value="Land">Land</option><option value="Commercial">Commercial</option>
+                    </select>
+                </div>
+                <div><label class="block text-sm mb-1 text-gray-300">Status</label>
+                    <select id="productStock" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white text-sm sm:text-base">
+                        <option value="available">Available</option><option value="sold">Sold</option>
+                    </select>
+                </div>
+                <div><label class="block text-sm mb-1 text-gray-300">Quantity (for land plots)</label>
+                    <input type="number" id="productQuantity" min="0" value="1" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg w-full text-white text-sm sm:text-base" />
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm mb-1 text-gray-300">Property Images (multiple, max 5)</label>
+                    <input type="file" id="productImages" accept="image/*" multiple class="bg-gray-900 border border-yellow-600 p-1 rounded-lg w-full text-white text-sm" />
+                    <div id="existingImagesPreview" class="flex flex-wrap gap-2 mt-2"></div>
+                    <p class="text-xs text-gray-400 mt-1">Select up to 5 images. On edit, you can add new images or remove existing ones.</p>
+                </div>
+                <div class="md:col-span-2 flex flex-col sm:flex-row gap-3">
+                    <button type="submit" class="btn-primary text-black px-5 py-2 rounded-lg font-semibold w-full sm:w-auto">
+                        <span id="productFormTitle">➕ Add New Property</span>
+                    </button>
+                    <button type="button" id="cancelEdit" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-5 py-2 rounded-lg hidden w-full sm:w-auto">Cancel Edit</button>
+                </div>
+            </form>
+            <div class="mt-6 sm:mt-8">
+                <h3 class="font-bold text-lg sm:text-xl text-yellow-500">📋 Property Inventory</h3>
+                <div id="productListAdmin" class="mt-2 space-y-2 text-sm sm:text-base"></div>
+            </div>
+        </div>
+
+        <!-- Customer Inquiries -->
+        <div class="bg-black/90 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-md border border-yellow-600">
+            <h2 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-users mr-2"></i>Customer Inquiries</h2>
+            <div class="overflow-x-auto">
+                <table id="ordersTable" class="w-full text-xs sm:text-sm border border-yellow-700">
+                    <thead><tr class="border-b border-yellow-700">
+                        <th class="text-left p-2 text-yellow-500">Name</th>
+                        <th class="text-left p-2 text-yellow-500">Email</th>
+                        <th class="text-left p-2 text-yellow-500">Phone</th>
+                        <th class="text-left p-2 text-yellow-500">Property</th>
+                        <th class="text-left p-2 text-yellow-500">Qty</th>
+                        <th class="text-left p-2 text-yellow-500">Location</th>
+                        <th class="text-left p-2 text-yellow-500">Notes</th>
+                        <th class="text-left p-2 text-yellow-500">Date</th>
+                    </tr></thead>
+                    <tbody id="ordersList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Contact Settings -->
+        <div class="bg-black/90 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-md border border-yellow-600">
+            <h2 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-edit mr-2"></i>Edit Contact Information (Public)</h2>
+            <form id="contactSettingsForm" class="space-y-4">
+                <div><label class="block text-sm mb-1 text-gray-300">Instagram Profile URL</label>
+                    <input type="url" id="adminInstagramUrl" placeholder="https://www.instagram.com/username" class="w-full bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" />
+                </div>
+                <div><label class="block text-sm mb-1 text-gray-300">WhatsApp Phone Number (with country code)</label>
+                    <input type="tel" id="adminPhoneNumber" placeholder="+250XXXXXXXXX" class="w-full bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" />
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="submit" class="btn-primary text-black px-5 py-2 rounded-lg font-semibold w-full sm:w-auto">Save Changes</button>
+                    <button type="button" id="resetContactBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-5 py-2 rounded-lg w-full sm:w-auto">Reset to Default</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Users & Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-black/90 p-4 sm:p-5 rounded-2xl shadow-md border border-yellow-600">
+                <h3 class="text-lg sm:text-xl font-bold mb-3 text-yellow-500">👥 Registered Users</h3>
+                <div class="overflow-auto max-h-72"><table id="userListAdmin" class="w-full text-xs sm:text-sm text-gray-300"></table></div>
+            </div>
+            <div id="performanceStats" class="bg-black/90 p-4 sm:p-5 rounded-2xl shadow-md border border-yellow-600 text-gray-300 text-sm sm:text-base"></div>
+        </div>
+    </section>
+
+    <!-- ====== CART SIDEBAR (mobile width) ====== -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/80 z-40 hidden"></div>
+    <div id="cartSidebar" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-black shadow-xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-yellow-600">
+        <div class="flex justify-between items-center p-4 sm:p-5 border-b border-yellow-600">
+            <h2 class="text-xl sm:text-2xl font-bold text-yellow-500"><i class="fas fa-shopping-bag mr-2"></i>Your Inquiries</h2>
+            <button id="closeCart" class="text-3xl text-gray-400 hover:text-yellow-500">&times;</button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto p-3 sm:p-4 text-gray-300 text-sm sm:text-base"></div>
+        <div class="border-t border-yellow-600 p-4 sm:p-5 bg-black">
+            <div class="flex justify-between text-lg sm:text-xl font-bold text-yellow-500">
+                Total: <span id="cartTotal" class="text-yellow-500">0</span> RWF
+            </div>
+            <button class="w-full btn-primary text-black py-3 mt-4 rounded-full font-semibold">Submit Inquiry</button>
+        </div>
+    </div>
+
+    <!-- ====== MODALS (mobile‑optimised) ====== -->
+    <!-- Customer Inquiry Modal -->
+    <div id="customerModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-2xl w-full p-4 sm:p-6 relative border border-yellow-600 max-h-[90vh] overflow-y-auto">
+            <button id="closeCustomerModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
+            <h3 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-4">Request Property Information</h3>
+            <form id="customerOrderForm">
+                <input type="hidden" id="orderProductId" />
+                <input type="hidden" id="orderProductName" />
+                <input type="hidden" id="orderProductPrice" />
+                <input type="hidden" id="orderMaxQuantity" />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="orderFullName" placeholder="Full Name *" required class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" />
+                    <input type="email" id="orderEmail" placeholder="Email Address *" required class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" />
+                    <input type="tel" id="orderPhone" placeholder="Phone Number *" required class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" />
+                    <input type="number" id="orderQuantity" placeholder="Interested units *" min="1" value="1" required class="bg-gray-900 border border-yellow-600 p-2 rounded-lg text-white text-sm sm:text-base" />
+                    <input type="text" id="orderLocation" placeholder="Preferred location for viewing *" required class="bg-gray-900 border border-yellow-600 p-2 rounded-lg md:col-span-2 text-white text-sm sm:text-base" />
+                    <textarea id="orderNotes" placeholder="Additional questions or message" rows="3" class="bg-gray-900 border border-yellow-600 p-2 rounded-lg md:col-span-2 text-white text-sm sm:text-base"></textarea>
+                </div>
+                <div class="mt-4 p-3 bg-gray-900 rounded-lg text-sm sm:text-base">
+                    <p class="text-gray-300">Property: <span id="orderProductDisplay" class="text-yellow-500"></span></p>
+                    <p class="text-gray-300">Price per unit: <span id="orderPriceDisplay" class="text-yellow-500"></span> RWF</p>
+                    <p class="text-gray-300">Available: <span id="orderAvailableDisplay" class="text-yellow-500"></span></p>
+                </div>
+                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold mt-4">Send Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Required Modal -->
+    <div id="loginRequiredModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-md w-full p-4 sm:p-6 relative border border-yellow-600 text-center">
+            <button id="closeLoginRequiredModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
+            <i class="fas fa-lock text-4xl sm:text-5xl text-yellow-500 mb-3"></i>
+            <h3 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-2">Login Required</h3>
+            <p class="text-gray-400 mb-6 text-sm sm:text-base">Please log in or create an account to inquire about properties.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="loginRequiredLoginBtn" class="btn-primary text-black px-5 py-2 rounded-full font-semibold">Login</button>
+                <button id="loginRequiredRegisterBtn" class="border border-yellow-600 text-yellow-600 px-5 py-2 rounded-full font-semibold hover:bg-yellow-900/30">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-md w-full p-4 sm:p-6 relative border border-yellow-600">
+            <button id="closeRegModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
+            <h3 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-4">Create Account</h3>
+            <form id="regForm">
+                <input type="text" id="regFirstName" placeholder="First Name" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-3 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="text" id="regLastName" placeholder="Last Name" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-3 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="email" id="regEmail" placeholder="Email" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-3 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="password" id="regPassword" placeholder="Password (min 6 chars)" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-3 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="password" id="regConfirmPassword" placeholder="Confirm Password" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-4 rounded-lg text-white text-sm sm:text-base" required />
+                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-md w-full p-4 sm:p-6 relative border border-yellow-600">
+            <button id="closeLoginModal" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
+            <h3 class="text-xl sm:text-2xl font-bold text-yellow-500 mb-4">Welcome Back</h3>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-3 rounded-lg text-white text-sm sm:text-base" required />
+                <input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-900 border border-yellow-600 p-2 mb-4 rounded-lg text-white text-sm sm:text-base" required />
+                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold">Login</button>
+            </form>
+            <p class="text-center text-gray-400 text-sm mt-4">Don't have an account? <button id="switchToRegister" class="text-yellow-500 hover:underline">Register here</button></p>
+        </div>
+    </div>
+
+    <!-- ====== FIREBASE + APP MODULES ====== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js"
+            }
+        }
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
