@@ -321,14 +321,97 @@
             gap: 4px;
         }
 
-        /* ===== MOBILE TWEAKS ===== */
+        /* ===== MOBILE COMPACT NAVBAR ===== */
         @media (max-width: 640px) {
+            /* Force navbar into 3 distinct rows */
+            nav .flex-wrap {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 0.1rem !important;
+                padding: 2px 0 !important;
+            }
+            /* Row 1: Brand */
+            .brand-row {
+                font-size: 1rem !important;
+                font-weight: bold !important;
+                letter-spacing: 0.5px !important;
+                padding: 0 !important;
+            }
+            /* Row 2: Panels + Contact + Cart */
+            .links-row {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 0.15rem !important;
+                width: 100% !important;
+            }
+            .links-row .nav-btn {
+                font-size: 0.6rem !important;
+                padding: 1px 4px !important;
+                min-height: unset !important;
+                line-height: 1.2 !important;
+            }
+            .links-row #navbarContactLinks {
+                font-size: 0.5rem !important;
+                padding: 0 2px !important;
+                gap: 2px !important;
+                border: none !important;
+                background: transparent !important;
+            }
+            .links-row #navbarContactLinks a span {
+                display: none !important;
+            }
+            .links-row #navbarContactLinks a {
+                font-size: 0.6rem !important;
+                padding: 0 2px !important;
+            }
+            .links-row #navbarContactLinks .text-yellow-600\/50 {
+                display: none !important;
+            }
+            .links-row #cartIconBtn i {
+                font-size: 0.8rem !important;
+            }
+            .links-row #cartCount {
+                font-size: 0.4rem !important;
+                min-width: 12px !important;
+                padding: 0 2px !important;
+                top: -4px !important;
+                right: -4px !important;
+            }
+            /* Row 3: Auth buttons */
+            .auth-row {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 0.15rem !important;
+                width: 100% !important;
+            }
+            .auth-row #registerBtn,
+            .auth-row #loginBtn,
+            .auth-row #logoutBtn {
+                font-size: 0.55rem !important;
+                padding: 1px 6px !important;
+                min-height: unset !important;
+                line-height: 1.4 !important;
+                border-radius: 12px !important;
+                margin: 0 !important;
+            }
+            /* Hide "My Panel" and "Admin" if not logged in */
+            .nav-btn[data-nav="user"].hidden,
+            .nav-btn[data-nav="admin"].hidden {
+                display: none !important;
+            }
+            
+            /* Hero */
             .hero-bg h1 {
                 font-size: 2.2rem !important;
             }
             .hero-bg p {
                 font-size: 0.95rem !important;
             }
+            /* Filters */
             .filter-bar .flex-wrap {
                 gap: 0.4rem;
             }
@@ -337,6 +420,7 @@
                 font-size: 14px !important;
                 padding: 6px 10px !important;
             }
+            /* Product cards */
             .product-card .p-4 {
                 padding: 0.5rem !important;
             }
@@ -349,7 +433,7 @@
             button,
             .btn-primary,
             .btn-outline {
-                min-height: 36px !important;
+                min-height: 30px !important;
                 font-size: 0.8rem !important;
                 padding-left: 10px !important;
                 padding-right: 10px !important;
@@ -368,41 +452,12 @@
             .detail-main-img {
                 max-height: 180px;
             }
-            /* Two columns for product cards */
             #productsGrid,
             #recommendationsGrid,
             #recentlyViewedGrid,
             #relatedProductsGrid {
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 0.5rem !important;
-            }
-            /* Navbar: stacked rows */
-            nav .flex-wrap {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.25rem;
-            }
-            nav .flex-wrap .flex.items-center {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .nav-btn {
-                font-size: 0.75rem !important;
-                padding: 0.2rem 0.4rem !important;
-            }
-            #navbarContactLinks {
-                font-size: 0.6rem !important;
-                padding: 0.1rem 0.5rem !important;
-            }
-            #navbarContactLinks a {
-                font-size: 0.6rem !important;
-            }
-            #registerBtn,
-            #loginBtn,
-            #logoutBtn {
-                font-size: 0.7rem !important;
-                padding: 0.2rem 0.6rem !important;
-                min-height: 28px !important;
             }
             .modal-content {
                 max-width: 98% !important;
@@ -419,8 +474,22 @@
                 padding: 0.2rem 0.4rem !important;
             }
         }
+
         /* For very tiny screens (≤ 360px) */
         @media (max-width: 360px) {
+            .brand-row {
+                font-size: 0.85rem !important;
+            }
+            .links-row .nav-btn {
+                font-size: 0.5rem !important;
+                padding: 1px 2px !important;
+            }
+            .auth-row #registerBtn,
+            .auth-row #loginBtn,
+            .auth-row #logoutBtn {
+                font-size: 0.45rem !important;
+                padding: 1px 4px !important;
+            }
             #productsGrid,
             #recommendationsGrid,
             #recentlyViewedGrid,
@@ -449,7 +518,8 @@
                 font-size: 0.8rem !important;
             }
         }
-        /* Admin panel grid: two columns on medium and up */
+
+        /* Admin grid: two columns on medium and up */
         @media (min-width: 768px) {
             .admin-grid {
                 display: grid;
@@ -468,32 +538,39 @@
     <div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
     <div id="notificationContainer"></div>
 
-    <!-- ====== NAVBAR ====== -->
-    <nav class="bg-black shadow-sm px-2 sm:px-4 py-2 flex flex-wrap justify-center items-center sticky top-0 z-30 border-b border-yellow-600 gap-1 sm:gap-2">
-        <div class="flex items-center flex-wrap justify-center w-full gap-1 sm:gap-2">
-            <!-- Brand + Contact links -->
-            <div class="flex items-center flex-wrap justify-center gap-1 sm:gap-2">
-                <div class="text-base sm:text-2xl font-bold tracking-tight flex items-center">
-                    <i class="fas fa-home text-yellow-500 mr-1 sm:mr-2"></i>HITAMO <span class="text-yellow-500">NEZA</span>
-                </div>
-                <div id="navbarContactLinks" class="flex items-center gap-1 text-[0.55rem] sm:text-xs bg-gray-900/50 rounded-full px-1 sm:px-3 py-0.5 border border-yellow-600/50">
-                    <span class="text-gray-400 text-[0.5rem] sm:text-xs">Loading...</span>
-                </div>
+    <!-- ====== NAVBAR – 3 ROWS ON MOBILE ====== -->
+    <nav class="bg-black shadow-sm px-1 sm:px-4 py-1 sm:py-2 flex flex-wrap justify-center items-center sticky top-0 z-30 border-b border-yellow-600 gap-0 sm:gap-2">
+        <div class="flex flex-wrap items-center justify-center w-full gap-0 sm:gap-2">
+
+            <!-- ROW 1: Brand Name -->
+            <div class="brand-row flex items-center justify-center w-full sm:w-auto text-xs sm:text-2xl font-bold tracking-tight">
+                <i class="fas fa-home text-yellow-500 mr-0.5 sm:mr-2"></i>HITAMO <span class="text-yellow-500">NEZA</span>
             </div>
-            <!-- Navigation + Auth -->
-            <div class="flex items-center flex-wrap justify-center gap-1 sm:gap-3">
-                <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300 text-[0.65rem] sm:text-sm" data-nav="home">Home</button>
-                <button class="nav-btn hover:text-yellow-500 text-gray-300 text-[0.65rem] sm:text-sm" data-nav="contact">Contact</button>
-                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.65rem] sm:text-sm" data-nav="user">My Panel</button>
-                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.65rem] sm:text-sm" data-nav="admin">Admin</button>
+
+            <!-- ROW 2: Panels + Contact + Cart -->
+            <div class="links-row flex flex-wrap items-center justify-center gap-0.5 sm:gap-3 w-full">
+                <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300 text-[0.55rem] sm:text-sm" data-nav="home">Home</button>
+                <button class="nav-btn hover:text-yellow-500 text-gray-300 text-[0.55rem] sm:text-sm" data-nav="contact">Contact</button>
+                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.55rem] sm:text-sm" data-nav="user">Panel</button>
+                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.55rem] sm:text-sm" data-nav="admin">Admin</button>
+
+                <div id="navbarContactLinks" class="flex items-center gap-0.5 text-[0.4rem] sm:text-xs bg-gray-900/50 rounded-full px-0.5 sm:px-3 py-0 border border-yellow-600/50 sm:border">
+                    <span class="text-gray-400 text-[0.3rem] sm:text-xs hidden sm:inline">Loading...</span>
+                </div>
+
                 <button id="cartIconBtn" class="relative hover:text-yellow-500 text-gray-300">
-                    <i class="fas fa-shopping-cart text-base sm:text-xl"></i>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-600 text-black text-[0.5rem] font-bold rounded-full px-1 min-w-[16px] text-center">0</span>
+                    <i class="fas fa-shopping-cart text-xs sm:text-xl"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-yellow-600 text-black text-[0.35rem] sm:text-xs font-bold rounded-full px-0.5 min-w-[10px] sm:min-w-[20px] text-center">0</span>
                 </button>
-                <button id="registerBtn" class="btn-primary text-black px-2 sm:px-4 py-0.5 rounded-full text-[0.6rem] sm:text-sm font-semibold">Register</button>
-                <button id="loginBtn" class="border border-yellow-600 text-yellow-600 hover:bg-yellow-900/30 px-2 sm:px-4 py-0.5 rounded-full text-[0.6rem] sm:text-sm">Login</button>
-                <button id="logoutBtn" class="hidden bg-gray-800 hover:bg-gray-700 text-gray-300 px-2 sm:px-4 py-0.5 rounded-full text-[0.6rem] sm:text-sm">Logout</button>
             </div>
+
+            <!-- ROW 3: Auth Buttons -->
+            <div class="auth-row flex flex-wrap items-center justify-center gap-0.5 sm:gap-2 w-full sm:w-auto">
+                <button id="registerBtn" class="btn-primary text-black px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm font-semibold cursor-pointer">Register</button>
+                <button id="loginBtn" class="border border-yellow-600 text-yellow-600 hover:bg-yellow-900/30 px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm cursor-pointer">Login</button>
+                <button id="logoutBtn" class="hidden bg-gray-800 hover:bg-gray-700 text-gray-300 px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm cursor-pointer">Logout</button>
+            </div>
+
         </div>
     </nav>
 
@@ -607,11 +684,9 @@
         </div>
     </section>
 
-    <!-- ====== ADMIN PANEL – now with horizontal grid ====== -->
+    <!-- ====== ADMIN PANEL ====== -->
     <section id="admin-panel-section" class="max-w-7xl mx-auto px-3 py-6 sm:py-12 hidden">
-        <!-- Wrap all admin sections in a grid container -->
         <div class="admin-grid">
-
             <!-- Property Management -->
             <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
                 <h2 class="text-lg sm:text-2xl font-bold text-yellow-500">🛠️ Property Management</h2>
@@ -699,8 +774,7 @@
                 <div class="overflow-auto max-h-60"><table id="userListAdmin" class="w-full text-[0.6rem] sm:text-sm text-gray-300"></table></div>
                 <div id="performanceStats" class="mt-3 text-gray-300 text-xs sm:text-base"></div>
             </div>
-
-        </div> <!-- end admin-grid -->
+        </div>
     </section>
 
     <!-- ====== CART SIDEBAR ====== -->
@@ -792,7 +866,7 @@
         </div>
     </div>
 
-    <!-- ====== ALL JAVASCRIPT (same as before) ====== -->
+    <!-- ====== JAVASCRIPT ====== -->
     <script>
         // ============================================================
         //  FIREBASE CONFIG
@@ -975,16 +1049,16 @@
             const phone = contactInfo.phoneNumber || '+250786811816';
             const email = 'ruzagirizakadochriistiano@gmail.com';
             dom.navbarContactLinks.innerHTML = `
-                <a href="${insta}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.5rem] sm:text-xs">
-                    <i class="fab fa-instagram text-pink-500 text-[0.6rem] sm:text-sm"></i> <span class="hidden sm:inline">Instagram</span>
+                <a href="${insta}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.4rem] sm:text-xs">
+                    <i class="fab fa-instagram text-pink-500 text-[0.5rem] sm:text-sm"></i> <span class="hidden sm:inline">Instagram</span>
                 </a>
-                <span class="text-yellow-600/50 text-[0.4rem]">|</span>
-                <a href="https://wa.me/${phone.replace(/\D/g,'')}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.5rem] sm:text-xs">
-                    <i class="fab fa-whatsapp text-green-500 text-[0.6rem] sm:text-sm"></i> <span>${phone}</span> <span class="text-[0.5rem]">🇷🇼</span>
+                <span class="text-yellow-600/50 text-[0.3rem] hidden sm:inline">|</span>
+                <a href="https://wa.me/${phone.replace(/\D/g,'')}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.4rem] sm:text-xs">
+                    <i class="fab fa-whatsapp text-green-500 text-[0.5rem] sm:text-sm"></i> <span class="hidden sm:inline">${phone}</span>
                 </a>
-                <span class="text-yellow-600/50 text-[0.4rem]">|</span>
-                <a href="mailto:${email}" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.5rem] sm:text-xs">
-                    <i class="fas fa-envelope text-[0.6rem] sm:text-sm"></i> <span class="hidden sm:inline">Email</span>
+                <span class="text-yellow-600/50 text-[0.3rem] hidden sm:inline">|</span>
+                <a href="mailto:${email}" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.4rem] sm:text-xs">
+                    <i class="fas fa-envelope text-[0.5rem] sm:text-sm"></i> <span class="hidden sm:inline">Email</span>
                 </a>
             `;
         }
