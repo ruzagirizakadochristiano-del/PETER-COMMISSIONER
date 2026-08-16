@@ -6,7 +6,7 @@
     <title>HITAMO NEZA | Premium Real Estate</title>
     <meta name="google-site-verification" content="2jL8GdxU9t9f92S00Ab5OuVwpAfjBo6VLhbGbkZpJNE" />
 
-    <!-- Favicon – data URI fallback -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏠%3C/text%3E%3C/svg%3E">
     <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏠%3C/text%3E%3C/svg%3E">
     <link rel="icon" type="image/png" sizes="512x512" href="logo.png">
@@ -121,7 +121,9 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
             border-bottom: 2px solid #d4af37;
         }
-        /* Text colour overrides */
+        .gold-text {
+            color: #d4af37 !important;
+        }
         .text-gray-800,
         .text-gray-700,
         .text-gray-600,
@@ -195,9 +197,7 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
+            100% { transform: rotate(360deg); }
         }
         .image-preview {
             width: 80px;
@@ -215,6 +215,12 @@
         .detail-main-img {
             max-height: 400px;
             object-fit: contain;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 8px;
+        }
+        .detail-main-img:hover {
+            transform: scale(1.02);
         }
         .price-large {
             font-size: 2rem;
@@ -259,56 +265,6 @@
             font-size: 12px;
             font-weight: bold;
         }
-        .gold-text {
-            color: #d4af37 !important;
-        }
-        .bg-blue-600,
-        .bg-blue-500,
-        .bg-blue-700 {
-            background: #d4af37 !important;
-        }
-        .bg-red-600 {
-            background: #b91c1c !important;
-        }
-        .hover\:bg-blue-50:hover {
-            background: rgba(212, 175, 55, 0.1) !important;
-        }
-        .text-yellow-300 {
-            color: #d4af37 !important;
-        }
-        .border-blue-600 {
-            border-color: #d4af37 !important;
-        }
-        .bg-yellow-100 {
-            background: rgba(212, 175, 55, 0.2) !important;
-        }
-        .text-blue-700,
-        .text-blue-800 {
-            color: #d4af37 !important;
-        }
-        .bg-gray-50 {
-            background: #111 !important;
-        }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        footer {
-            background: #000;
-            border-top: 1px solid #d4af37;
-        }
-        .btn-primary.text-white,
-        .btn-primary {
-            color: #000 !important;
-        }
-        .bg-white\/20 {
-            background: rgba(212, 175, 55, 0.2) !important;
-        }
-        .text-blue-600,
-        .text-blue-500,
-        .text-blue-400 {
-            color: #d4af37 !important;
-        }
         .location-badge {
             background: #1a1a1a;
             color: #d4af37;
@@ -321,23 +277,134 @@
             gap: 4px;
         }
 
+        /* ===== LIGHTBOX ===== */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            animation: fadeIn 0.3s ease;
+        }
+        #lightbox.active {
+            display: flex;
+        }
+        #lightbox img {
+            max-width: 92%;
+            max-height: 92%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+            cursor: default;
+        }
+        #lightbox .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 44px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+            z-index: 100000;
+        }
+        #lightbox .close-lightbox:hover {
+            transform: scale(1.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== LANGUAGE DROPDOWN ===== */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .lang-dropdown .lang-btn {
+            background: rgba(212,175,55,0.15);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            border-radius: 20px;
+            padding: 0.1rem 0.4rem;
+            font-size: 0.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            font-weight: 600;
+        }
+        .lang-dropdown .lang-btn:hover {
+            background: rgba(212,175,55,0.25);
+        }
+        .lang-dropdown .lang-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a1a1a;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            min-width: 80px;
+            z-index: 50;
+            padding: 2px 0;
+        }
+        .lang-dropdown .lang-menu.show {
+            display: block;
+        }
+        .lang-dropdown .lang-menu button {
+            display: block;
+            width: 100%;
+            padding: 4px 10px;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 0.6rem;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .lang-dropdown .lang-menu button:hover {
+            background: rgba(212,175,55,0.2);
+            color: #d4af37;
+        }
+        .lang-dropdown .lang-menu button i {
+            margin-right: 4px;
+        }
+
         /* ===== MOBILE COMPACT NAVBAR ===== */
         @media (max-width: 640px) {
-            /* Force navbar into 3 distinct rows */
             nav .flex-wrap {
                 flex-direction: column !important;
                 align-items: center !important;
                 gap: 0.1rem !important;
                 padding: 2px 0 !important;
             }
-            /* Row 1: Brand */
             .brand-row {
-                font-size: 1rem !important;
+                font-size: 0.9rem !important;
                 font-weight: bold !important;
                 letter-spacing: 0.5px !important;
                 padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 2px !important;
             }
-            /* Row 2: Panels + Contact + Cart */
+            .brand-row .lang-dropdown .lang-btn {
+                font-size: 0.4rem !important;
+                padding: 0.1rem 0.3rem !important;
+            }
+            .brand-row .lang-dropdown .lang-menu button {
+                font-size: 0.5rem !important;
+                padding: 2px 6px !important;
+            }
             .links-row {
                 display: flex !important;
                 flex-wrap: wrap !important;
@@ -347,15 +414,15 @@
                 width: 100% !important;
             }
             .links-row .nav-btn {
-                font-size: 0.6rem !important;
+                font-size: 0.55rem !important;
                 padding: 1px 4px !important;
                 min-height: unset !important;
                 line-height: 1.2 !important;
             }
             .links-row #navbarContactLinks {
-                font-size: 0.5rem !important;
+                font-size: 0.45rem !important;
                 padding: 0 2px !important;
-                gap: 2px !important;
+                gap: 1px !important;
                 border: none !important;
                 background: transparent !important;
             }
@@ -363,23 +430,22 @@
                 display: none !important;
             }
             .links-row #navbarContactLinks a {
-                font-size: 0.6rem !important;
+                font-size: 0.5rem !important;
                 padding: 0 2px !important;
             }
             .links-row #navbarContactLinks .text-yellow-600\/50 {
                 display: none !important;
             }
             .links-row #cartIconBtn i {
-                font-size: 0.8rem !important;
+                font-size: 0.7rem !important;
             }
             .links-row #cartCount {
-                font-size: 0.4rem !important;
-                min-width: 12px !important;
+                font-size: 0.35rem !important;
+                min-width: 10px !important;
                 padding: 0 2px !important;
                 top: -4px !important;
                 right: -4px !important;
             }
-            /* Row 3: Auth buttons */
             .auth-row {
                 display: flex !important;
                 flex-wrap: wrap !important;
@@ -391,57 +457,53 @@
             .auth-row #registerBtn,
             .auth-row #loginBtn,
             .auth-row #logoutBtn {
-                font-size: 0.55rem !important;
+                font-size: 0.5rem !important;
                 padding: 1px 6px !important;
                 min-height: unset !important;
                 line-height: 1.4 !important;
                 border-radius: 12px !important;
                 margin: 0 !important;
             }
-            /* Hide "My Panel" and "Admin" if not logged in */
             .nav-btn[data-nav="user"].hidden,
             .nav-btn[data-nav="admin"].hidden {
                 display: none !important;
             }
-            
-            /* Hero */
             .hero-bg h1 {
-                font-size: 2.2rem !important;
+                font-size: 2rem !important;
             }
             .hero-bg p {
-                font-size: 0.95rem !important;
+                font-size: 0.85rem !important;
             }
-            /* Filters */
             .filter-bar .flex-wrap {
-                gap: 0.4rem;
+                gap: 0.3rem;
             }
             .filter-bar input,
             .filter-bar select {
-                font-size: 14px !important;
-                padding: 6px 10px !important;
+                font-size: 12px !important;
+                padding: 4px 8px !important;
             }
-            /* Product cards */
             .product-card .p-4 {
-                padding: 0.5rem !important;
+                padding: 0.4rem !important;
             }
             .product-card h3 {
-                font-size: 0.9rem !important;
+                font-size: 0.8rem !important;
             }
             .product-card .text-xs {
-                font-size: 0.6rem !important;
+                font-size: 0.5rem !important;
             }
             button,
             .btn-primary,
             .btn-outline {
-                min-height: 30px !important;
-                font-size: 0.8rem !important;
-                padding-left: 10px !important;
-                padding-right: 10px !important;
+                min-height: 26px !important;
+                font-size: 0.7rem !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
             }
             input,
             select,
             textarea {
-                font-size: 14px !important;
+                font-size: 12px !important;
+                padding: 4px 8px !important;
             }
             .price-large {
                 font-size: 1.2rem !important;
@@ -450,44 +512,46 @@
                 grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
             }
             .detail-main-img {
-                max-height: 180px;
+                max-height: 150px;
             }
             #productsGrid,
             #recommendationsGrid,
             #recentlyViewedGrid,
             #relatedProductsGrid {
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.5rem !important;
+                gap: 0.4rem !important;
             }
             .modal-content {
                 max-width: 98% !important;
-                padding: 1rem !important;
+                padding: 0.8rem !important;
             }
             #cartSidebar {
                 width: 100% !important;
             }
             .overflow-x-auto {
-                font-size: 0.7rem !important;
+                font-size: 0.6rem !important;
             }
             .overflow-x-auto th,
             .overflow-x-auto td {
-                padding: 0.2rem 0.4rem !important;
+                padding: 0.15rem 0.3rem !important;
             }
         }
 
-        /* For very tiny screens (≤ 360px) */
         @media (max-width: 360px) {
             .brand-row {
-                font-size: 0.85rem !important;
+                font-size: 0.75rem !important;
+            }
+            .brand-row .lang-dropdown .lang-btn {
+                font-size: 0.35rem !important;
             }
             .links-row .nav-btn {
-                font-size: 0.5rem !important;
+                font-size: 0.45rem !important;
                 padding: 1px 2px !important;
             }
             .auth-row #registerBtn,
             .auth-row #loginBtn,
             .auth-row #logoutBtn {
-                font-size: 0.45rem !important;
+                font-size: 0.4rem !important;
                 padding: 1px 4px !important;
             }
             #productsGrid,
@@ -498,28 +562,27 @@
                 gap: 0.3rem !important;
             }
             .product-card .p-4 {
-                padding: 0.3rem !important;
+                padding: 0.2rem !important;
             }
             .product-card h3 {
-                font-size: 0.75rem !important;
+                font-size: 0.65rem !important;
             }
             .product-card .text-xs {
-                font-size: 0.5rem !important;
+                font-size: 0.4rem !important;
             }
             .product-card .btn-primary {
-                font-size: 0.6rem !important;
-                padding: 0.1rem 0.3rem !important;
-                min-height: 24px !important;
+                font-size: 0.5rem !important;
+                padding: 0.1rem 0.2rem !important;
+                min-height: 20px !important;
             }
             .hero-bg h1 {
-                font-size: 1.8rem !important;
+                font-size: 1.6rem !important;
             }
             .hero-bg p {
-                font-size: 0.8rem !important;
+                font-size: 0.7rem !important;
             }
         }
 
-        /* Admin grid: two columns on medium and up */
         @media (min-width: 768px) {
             .admin-grid {
                 display: grid;
@@ -534,7 +597,13 @@
 </head>
 <body>
 
-    <!-- Loader & Notification -->
+    <!-- ===== LIGHTBOX ===== -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img id="lightboxImg" src="" alt="Property image">
+    </div>
+
+    <!-- ===== LOADER & NOTIFICATIONS ===== -->
     <div id="globalLoader" class="loader-overlay"><div class="spinner"></div></div>
     <div id="notificationContainer"></div>
 
@@ -542,17 +611,26 @@
     <nav class="bg-black shadow-sm px-1 sm:px-4 py-1 sm:py-2 flex flex-wrap justify-center items-center sticky top-0 z-30 border-b border-yellow-600 gap-0 sm:gap-2">
         <div class="flex flex-wrap items-center justify-center w-full gap-0 sm:gap-2">
 
-            <!-- ROW 1: Brand Name -->
+            <!-- ROW 1: Brand Name + Language Switcher -->
             <div class="brand-row flex items-center justify-center w-full sm:w-auto text-xs sm:text-2xl font-bold tracking-tight">
                 <i class="fas fa-home text-yellow-500 mr-0.5 sm:mr-2"></i>HITAMO <span class="text-yellow-500">NEZA</span>
+                <!-- Language Dropdown -->
+                <div class="lang-dropdown">
+                    <button class="lang-btn" id="langToggle"><i class="fas fa-globe"></i> <span id="currentLangLabel">EN</span></button>
+                    <div class="lang-menu" id="langMenu">
+                        <button data-lang="en"><i class="fas fa-flag"></i> English</button>
+                        <button data-lang="fr"><i class="fas fa-flag"></i> Français</button>
+                        <button data-lang="rw"><i class="fas fa-flag"></i> Kinyarwanda</button>
+                    </div>
+                </div>
             </div>
 
             <!-- ROW 2: Panels + Contact + Cart -->
             <div class="links-row flex flex-wrap items-center justify-center gap-0.5 sm:gap-3 w-full">
-                <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300 text-[0.55rem] sm:text-sm" data-nav="home">Home</button>
-                <button class="nav-btn hover:text-yellow-500 text-gray-300 text-[0.55rem] sm:text-sm" data-nav="contact">Contact</button>
-                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.55rem] sm:text-sm" data-nav="user">Panel</button>
-                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.55rem] sm:text-sm" data-nav="admin">Admin</button>
+                <button class="nav-btn hover:text-yellow-500 font-medium text-gray-300 text-[0.5rem] sm:text-sm" data-nav="home" data-i18n="nav-home">Home</button>
+                <button class="nav-btn hover:text-yellow-500 text-gray-300 text-[0.5rem] sm:text-sm" data-nav="contact" data-i18n="nav-contact">Contact</button>
+                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.5rem] sm:text-sm" data-nav="user" data-i18n="nav-panel">Panel</button>
+                <button class="nav-btn hover:text-yellow-500 hidden text-gray-300 text-[0.5rem] sm:text-sm" data-nav="admin" data-i18n="nav-admin">Admin</button>
 
                 <div id="navbarContactLinks" class="flex items-center gap-0.5 text-[0.4rem] sm:text-xs bg-gray-900/50 rounded-full px-0.5 sm:px-3 py-0 border border-yellow-600/50 sm:border">
                     <span class="text-gray-400 text-[0.3rem] sm:text-xs hidden sm:inline">Loading...</span>
@@ -566,9 +644,9 @@
 
             <!-- ROW 3: Auth Buttons -->
             <div class="auth-row flex flex-wrap items-center justify-center gap-0.5 sm:gap-2 w-full sm:w-auto">
-                <button id="registerBtn" class="btn-primary text-black px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm font-semibold cursor-pointer">Register</button>
-                <button id="loginBtn" class="border border-yellow-600 text-yellow-600 hover:bg-yellow-900/30 px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm cursor-pointer">Login</button>
-                <button id="logoutBtn" class="hidden bg-gray-800 hover:bg-gray-700 text-gray-300 px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm cursor-pointer">Logout</button>
+                <button id="registerBtn" class="btn-primary text-black px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm font-semibold cursor-pointer" data-i18n="btn-register">Register</button>
+                <button id="loginBtn" class="border border-yellow-600 text-yellow-600 hover:bg-yellow-900/30 px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm cursor-pointer" data-i18n="btn-login">Login</button>
+                <button id="logoutBtn" class="hidden bg-gray-800 hover:bg-gray-700 text-gray-300 px-1 sm:px-4 py-0.5 rounded-full text-[0.5rem] sm:text-sm cursor-pointer" data-i18n="btn-logout">Logout</button>
             </div>
 
         </div>
@@ -577,12 +655,12 @@
     <!-- ====== HERO ====== -->
     <section class="hero-bg py-8 sm:py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 text-center">
-            <div class="inline-block mb-2 sm:mb-4 px-2 sm:px-4 py-0.5 bg-yellow-900/30 text-yellow-500 rounded-full text-[0.6rem] sm:text-sm uppercase">Your Dream Home Awaits</div>
-            <h1 class="text-2xl sm:text-5xl md:text-6xl font-bold mb-2 sm:mb-4 leading-tight">Find Your <span class="text-yellow-500">Perfect Property</span></h1>
-            <p class="text-sm sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">Luxury houses, modern apartments, and prime land – curated by HITAMO NEZA.</p>
+            <div class="inline-block mb-2 sm:mb-4 px-2 sm:px-4 py-0.5 bg-yellow-900/30 text-yellow-500 rounded-full text-[0.6rem] sm:text-sm uppercase" data-i18n="hero-badge">Your Dream Home Awaits</div>
+            <h1 class="text-2xl sm:text-5xl md:text-6xl font-bold mb-2 sm:mb-4 leading-tight" data-i18n="hero-title">Find Your <span class="text-yellow-500">Perfect Property</span></h1>
+            <p class="text-sm sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto" data-i18n="hero-subtitle">Luxury houses, modern apartments, and prime land – curated by HITAMO NEZA.</p>
             <div class="mt-4 sm:mt-10 flex flex-col sm:flex-row justify-center gap-2 sm:gap-5">
-                <button id="heroShopBtn" class="btn-primary text-black px-4 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-lg w-full sm:w-auto">Explore Properties</button>
-                <button id="heroExploreBtn" class="btn-outline px-4 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-lg w-full sm:w-auto">Contact Agent</button>
+                <button id="heroShopBtn" class="btn-primary text-black px-4 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-lg w-full sm:w-auto" data-i18n="hero-shop">Explore Properties</button>
+                <button id="heroExploreBtn" class="btn-outline px-4 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-lg w-full sm:w-auto" data-i18n="hero-contact">Contact Agent</button>
             </div>
         </div>
     </section>
@@ -591,7 +669,7 @@
     <section id="contact-section" class="max-w-4xl mx-auto px-3 py-8 sm:py-16 hidden">
         <div class="bg-black/90 rounded-2xl p-4 sm:p-8 shadow-md border border-yellow-600 text-center">
             <div class="flex justify-center mb-3"><i class="fas fa-address-card text-3xl sm:text-5xl text-yellow-500"></i></div>
-            <h2 class="text-xl sm:text-3xl font-bold mb-4 text-yellow-500">Contact HITAMO NEZA</h2>
+            <h2 class="text-xl sm:text-3xl font-bold mb-4 text-yellow-500" data-i18n="contact-title">Contact HITAMO NEZA</h2>
             <div class="space-y-3 text-sm sm:text-lg">
                 <div class="flex justify-center items-center gap-2 sm:gap-3 flex-wrap">
                     <i class="fab fa-instagram text-pink-500 text-lg sm:text-2xl"></i>
@@ -602,7 +680,7 @@
                     <span id="publicPhoneNumber" class="text-yellow-500 text-xs sm:text-base"></span>
                 </div>
             </div>
-            <p class="mt-4 text-gray-400 text-xs sm:text-sm">We reply within 24 hours. For inquiries, viewings, or investments.</p>
+            <p class="mt-4 text-gray-400 text-xs sm:text-sm" data-i18n="contact-note">We reply within 24 hours. For inquiries, viewings, or investments.</p>
         </div>
     </section>
 
@@ -611,26 +689,26 @@
         <div class="filter-bar p-2 sm:p-6">
             <div class="flex flex-wrap gap-2 items-end">
                 <div class="flex-1 min-w-[80px] sm:min-w-[120px]">
-                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5">Search</label>
-                    <input type="text" id="searchInput" placeholder="Location, type..." class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base" />
+                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5" data-i18n="filter-search-label">Search</label>
+                    <input type="text" id="searchInput" placeholder="Location, type..." class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base" data-i18n-placeholder="filter-search-placeholder" />
                 </div>
                 <div class="flex-1 min-w-[70px] sm:min-w-[100px]">
-                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5">Sort</label>
+                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5" data-i18n="filter-sort-label">Sort</label>
                     <select id="sortSelect" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base">
-                        <option value="default">Default</option>
-                        <option value="price_asc">Price ↑</option>
-                        <option value="price_desc">Price ↓</option>
+                        <option value="default" data-i18n="sort-default">Default</option>
+                        <option value="price_asc" data-i18n="sort-price-asc">Price ↑</option>
+                        <option value="price_desc" data-i18n="sort-price-desc">Price ↓</option>
                     </select>
                 </div>
                 <div class="flex-1 min-w-[60px] sm:min-w-[80px]">
-                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5">Min</label>
-                    <input type="number" id="minPrice" placeholder="0" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base" />
+                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5" data-i18n="filter-min-label">Min</label>
+                    <input type="number" id="minPrice" placeholder="0" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base" data-i18n-placeholder="filter-min-placeholder" />
                 </div>
                 <div class="flex-1 min-w-[60px] sm:min-w-[80px]">
-                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5">Max</label>
-                    <input type="number" id="maxPrice" placeholder="No max" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base" />
+                    <label class="text-gray-300 text-[0.6rem] sm:text-sm block mb-0.5" data-i18n="filter-max-label">Max</label>
+                    <input type="number" id="maxPrice" placeholder="No max" class="w-full bg-gray-900 border border-yellow-600 rounded-lg p-1 sm:p-2 text-white text-xs sm:text-base" data-i18n-placeholder="filter-max-placeholder" />
                 </div>
-                <button id="resetFiltersBtn" class="btn-primary text-black px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-semibold text-xs sm:text-base w-auto">Reset</button>
+                <button id="resetFiltersBtn" class="btn-primary text-black px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-semibold text-xs sm:text-base w-auto" data-i18n="btn-reset">Reset</button>
             </div>
         </div>
     </section>
@@ -638,7 +716,7 @@
     <!-- ====== PROPERTIES GRID ====== -->
     <section id="home-section" class="max-w-7xl mx-auto px-2 pb-8">
         <div class="text-center mb-4 sm:mb-8">
-            <h2 class="text-2xl sm:text-4xl font-bold text-yellow-500">Featured <span class="text-yellow-500">Properties</span></h2>
+            <h2 class="text-2xl sm:text-4xl font-bold text-yellow-500" data-i18n="featured-title">Featured <span class="text-yellow-500">Properties</span></h2>
             <div class="w-20 h-1 bg-yellow-600 mx-auto mt-2 rounded-full"></div>
         </div>
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6"></div>
@@ -647,25 +725,25 @@
     <!-- ====== PRODUCT DETAIL ====== -->
     <section id="product-detail-section" class="max-w-6xl mx-auto px-3 py-6 sm:py-12 hidden">
         <button id="backToHomeBtn" class="btn-primary text-black px-3 py-1 sm:px-4 sm:py-2 rounded-lg mb-3 sm:mb-6 inline-block text-xs sm:text-base">
-            <i class="fas fa-arrow-left mr-1"></i>Back
+            <i class="fas fa-arrow-left mr-1"></i><span data-i18n="btn-back">Back</span>
         </button>
         <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
             <div id="detailContent"></div>
         </div>
         <div class="mt-4 sm:mt-8">
-            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3"><i class="fas fa-link mr-2 text-yellow-500"></i>Similar</h3>
+            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3"><i class="fas fa-link mr-2 text-yellow-500"></i><span data-i18n="similar-title">Similar</span></h3>
             <div id="relatedProductsGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6"></div>
         </div>
     </section>
 
     <!-- ====== RECOMMENDATIONS & RECENTLY VIEWED ====== -->
     <section id="recommendations-section" class="max-w-7xl mx-auto px-2 py-6 border-t border-yellow-700">
-        <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-star text-yellow-500 mr-1"></i>Recommended</h2>
+        <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-star text-yellow-500 mr-1"></i><span data-i18n="recommended-title">Recommended</span></h2>
         <div id="recommendationsGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6"></div>
     </section>
 
     <section id="recently-viewed-section" class="max-w-7xl mx-auto px-2 py-6 border-t border-yellow-700">
-        <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-history text-yellow-500 mr-1"></i>Recent</h2>
+        <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-4"><i class="fas fa-history text-yellow-500 mr-1"></i><span data-i18n="recently-viewed-title">Recent</span></h2>
         <div id="recentlyViewedGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6"></div>
     </section>
 
@@ -673,12 +751,12 @@
     <section id="user-panel-section" class="max-w-4xl mx-auto px-3 py-6 sm:py-12 hidden">
         <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
             <h2 class="text-lg sm:text-2xl font-bold border-b border-yellow-700 pb-2 mb-3">
-                <i class="fas fa-id-card text-yellow-500 mr-2"></i>My Dashboard
+                <i class="fas fa-id-card text-yellow-500 mr-2"></i><span data-i18n="dashboard-title">My Dashboard</span>
             </h2>
             <div id="userInfoDisplay"></div>
             <div class="mt-4 bg-gray-900 p-3 sm:p-5 rounded-xl">
-                <h3 class="font-semibold text-base sm:text-lg text-yellow-500">📧 Contact &amp; Social</h3>
-                <p class="text-sm sm:text-base">Email: <span id="contactEmailSpan" class="font-mono text-yellow-500"></span></p>
+                <h3 class="font-semibold text-base sm:text-lg text-yellow-500"><span data-i18n="dashboard-contact-label">📧 Contact &amp; Social</span></h3>
+                <p class="text-sm sm:text-base"><span data-i18n="dashboard-email-label">Email:</span> <span id="contactEmailSpan" class="font-mono text-yellow-500"></span></p>
                 <div id="socialLinksContainer" class="flex gap-3 mt-2"></div>
             </div>
         </div>
@@ -689,62 +767,66 @@
         <div class="admin-grid">
             <!-- Property Management -->
             <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
-                <h2 class="text-lg sm:text-2xl font-bold text-yellow-500">🛠️ Property Management</h2>
+                <h2 class="text-lg sm:text-2xl font-bold text-yellow-500"><span data-i18n="admin-property-title">🛠️ Property Management</span></h2>
                 <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-                    <input type="text" id="productName" placeholder="Title" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required />
-                    <input type="text" id="productLocation" placeholder="Location" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required />
-                    <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required />
-                    <textarea id="productDesc" placeholder="Description" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base"></textarea>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Bedrooms</label><input type="number" id="bedrooms" min="0" value="3" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Bathrooms</label><input type="number" id="bathrooms" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Area (sq m)</label><input type="number" id="area" min="0" value="150" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Type</label>
+                    <input type="text" id="productName" placeholder="Title" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-title-placeholder" />
+                    <input type="text" id="productLocation" placeholder="Location" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-location-placeholder" />
+                    <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-price-placeholder" />
+                    <textarea id="productDesc" placeholder="Description" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base" data-i18n-placeholder="admin-desc-placeholder"></textarea>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-bedrooms-label">Bedrooms</label><input type="number" id="bedrooms" min="0" value="3" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-bathrooms-label">Bathrooms</label><input type="number" id="bathrooms" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-area-label">Area (sq m)</label><input type="number" id="area" min="0" value="150" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-type-label">Type</label>
                         <select id="propertyType" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base">
-                            <option value="House">House</option><option value="Apartment">Apartment</option>
-                            <option value="Villa">Villa</option><option value="Land">Land</option><option value="Commercial">Commercial</option>
+                            <option value="House" data-i18n="type-house">House</option>
+                            <option value="Apartment" data-i18n="type-apartment">Apartment</option>
+                            <option value="Villa" data-i18n="type-villa">Villa</option>
+                            <option value="Land" data-i18n="type-land">Land</option>
+                            <option value="Commercial" data-i18n="type-commercial">Commercial</option>
                         </select>
                     </div>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Status</label>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-status-label">Status</label>
                         <select id="productStock" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base">
-                            <option value="available">Available</option><option value="sold">Sold</option>
+                            <option value="available" data-i18n="status-available">Available</option>
+                            <option value="sold" data-i18n="status-sold">Sold</option>
                         </select>
                     </div>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Qty</label>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-qty-label">Qty</label>
                         <input type="number" id="productQuantity" min="0" value="1" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" />
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Images (max 5)</label>
+                        <label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-images-label">Images (max 5)</label>
                         <input type="file" id="productImages" accept="image/*" multiple class="bg-gray-900 border border-yellow-600 p-0.5 rounded-lg w-full text-white text-xs" />
                         <div id="existingImagesPreview" class="flex flex-wrap gap-1 mt-1"></div>
-                        <p class="text-[0.5rem] text-gray-400 mt-0.5">Select up to 5 images. Edit to add/remove.</p>
+                        <p class="text-[0.5rem] text-gray-400 mt-0.5" data-i18n="admin-images-hint">Select up to 5 images. Edit to add/remove.</p>
                     </div>
                     <div class="md:col-span-2 flex flex-col sm:flex-row gap-2">
                         <button type="submit" class="btn-primary text-black px-3 py-1 sm:px-5 sm:py-2 rounded-lg font-semibold text-xs sm:text-base w-full sm:w-auto">
-                            <span id="productFormTitle">➕ Add</span>
+                            <span id="productFormTitle" data-i18n="btn-add">➕ Add</span>
                         </button>
-                        <button type="button" id="cancelEdit" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 sm:px-5 sm:py-2 rounded-lg hidden text-xs sm:text-base w-full sm:w-auto">Cancel</button>
+                        <button type="button" id="cancelEdit" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 sm:px-5 sm:py-2 rounded-lg hidden text-xs sm:text-base w-full sm:w-auto" data-i18n="btn-cancel">Cancel</button>
                     </div>
                 </form>
                 <div class="mt-4 sm:mt-8">
-                    <h3 class="font-bold text-base sm:text-xl text-yellow-500">📋 Inventory</h3>
+                    <h3 class="font-bold text-base sm:text-xl text-yellow-500"><span data-i18n="admin-inventory-title">📋 Inventory</span></h3>
                     <div id="productListAdmin" class="mt-1 space-y-1 text-xs sm:text-base"></div>
                 </div>
             </div>
 
             <!-- Customer Inquiries -->
             <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
-                <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3"><i class="fas fa-users mr-2"></i>Inquiries</h2>
+                <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3"><i class="fas fa-users mr-2"></i><span data-i18n="admin-inquiries-title">Inquiries</span></h2>
                 <div class="overflow-x-auto">
                     <table id="ordersTable" class="w-full text-[0.6rem] sm:text-sm border border-yellow-700">
                         <thead><tr class="border-b border-yellow-700">
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Name</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Email</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Phone</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Property</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Qty</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Location</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Notes</th>
-                            <th class="text-left p-1 sm:p-2 text-yellow-500">Date</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-name">Name</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-email">Email</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-phone">Phone</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-property">Property</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-qty">Qty</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-location">Location</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-notes">Notes</th>
+                            <th class="text-left p-1 sm:p-2 text-yellow-500" data-i18n="inquiry-th-date">Date</th>
                         </tr></thead>
                         <tbody id="ordersList"></tbody>
                     </table>
@@ -753,24 +835,24 @@
 
             <!-- Edit Contact Information -->
             <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
-                <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3"><i class="fas fa-edit mr-2"></i>Edit Contact Info</h2>
+                <h2 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3"><i class="fas fa-edit mr-2"></i><span data-i18n="admin-contact-title">Edit Contact Info</span></h2>
                 <form id="contactSettingsForm" class="space-y-3">
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">Instagram URL</label>
-                        <input type="url" id="adminInstagramUrl" placeholder="https://www.instagram.com/username" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" />
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-instagram-label">Instagram URL</label>
+                        <input type="url" id="adminInstagramUrl" placeholder="https://www.instagram.com/username" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" data-i18n-placeholder="admin-instagram-placeholder" />
                     </div>
-                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300">WhatsApp (with country code)</label>
-                        <input type="tel" id="adminPhoneNumber" placeholder="+250XXXXXXXXX" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" />
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-whatsapp-label">WhatsApp (with country code)</label>
+                        <input type="tel" id="adminPhoneNumber" placeholder="+250XXXXXXXXX" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" data-i18n-placeholder="admin-whatsapp-placeholder" />
                     </div>
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <button type="submit" class="btn-primary text-black px-3 py-1 sm:px-5 sm:py-2 rounded-lg font-semibold text-xs sm:text-base w-full sm:w-auto">Save</button>
-                        <button type="button" id="resetContactBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 sm:px-5 sm:py-2 rounded-lg text-xs sm:text-base w-full sm:w-auto">Reset</button>
+                        <button type="submit" class="btn-primary text-black px-3 py-1 sm:px-5 sm:py-2 rounded-lg font-semibold text-xs sm:text-base w-full sm:w-auto" data-i18n="btn-save">Save</button>
+                        <button type="button" id="resetContactBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 sm:px-5 sm:py-2 rounded-lg text-xs sm:text-base w-full sm:w-auto" data-i18n="btn-reset">Reset</button>
                     </div>
                 </form>
             </div>
 
             <!-- Users & Stats -->
             <div class="bg-black/90 rounded-2xl p-3 sm:p-6 shadow-md border border-yellow-600">
-                <h3 class="text-lg sm:text-xl font-bold mb-3 text-yellow-500">👥 Users &amp; Stats</h3>
+                <h3 class="text-lg sm:text-xl font-bold mb-3 text-yellow-500"><span data-i18n="admin-users-stats-title">👥 Users &amp; Stats</span></h3>
                 <div class="overflow-auto max-h-60"><table id="userListAdmin" class="w-full text-[0.6rem] sm:text-sm text-gray-300"></table></div>
                 <div id="performanceStats" class="mt-3 text-gray-300 text-xs sm:text-base"></div>
             </div>
@@ -781,15 +863,15 @@
     <div id="cartOverlay" class="fixed inset-0 bg-black/80 z-40 hidden"></div>
     <div id="cartSidebar" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-black shadow-xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-yellow-600">
         <div class="flex justify-between items-center p-3 sm:p-5 border-b border-yellow-600">
-            <h2 class="text-lg sm:text-2xl font-bold text-yellow-500"><i class="fas fa-shopping-bag mr-2"></i>Your Inquiries</h2>
+            <h2 class="text-lg sm:text-2xl font-bold text-yellow-500"><i class="fas fa-shopping-bag mr-2"></i><span data-i18n="cart-title">Your Inquiries</span></h2>
             <button id="closeCart" class="text-2xl sm:text-3xl text-gray-400 hover:text-yellow-500">&times;</button>
         </div>
         <div id="cartItems" class="flex-1 overflow-y-auto p-2 sm:p-4 text-gray-300 text-xs sm:text-base"></div>
         <div class="border-t border-yellow-600 p-3 sm:p-5 bg-black">
             <div class="flex justify-between text-base sm:text-xl font-bold text-yellow-500">
-                Total: <span id="cartTotal" class="text-yellow-500">0</span> RWF
+                <span data-i18n="cart-total-label">Total:</span> <span id="cartTotal" class="text-yellow-500">0</span> RWF
             </div>
-            <button class="w-full btn-primary text-black py-2 sm:py-3 mt-3 rounded-full font-semibold text-sm sm:text-base">Submit Inquiry</button>
+            <button class="w-full btn-primary text-black py-2 sm:py-3 mt-3 rounded-full font-semibold text-sm sm:text-base" data-i18n="cart-submit-btn">Submit Inquiry</button>
         </div>
     </div>
 
@@ -798,26 +880,26 @@
     <div id="customerModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
         <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-2xl w-full p-3 sm:p-6 relative border border-yellow-600 max-h-[90vh] overflow-y-auto">
             <button id="closeCustomerModal" class="absolute top-2 right-3 text-xl sm:text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
-            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3">Request Property Info</h3>
+            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3" data-i18n="modal-inquiry-title">Request Property Info</h3>
             <form id="customerOrderForm">
                 <input type="hidden" id="orderProductId" />
                 <input type="hidden" id="orderProductName" />
                 <input type="hidden" id="orderProductPrice" />
                 <input type="hidden" id="orderMaxQuantity" />
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input type="text" id="orderFullName" placeholder="Full Name *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" />
-                    <input type="email" id="orderEmail" placeholder="Email *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" />
-                    <input type="tel" id="orderPhone" placeholder="Phone *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" />
-                    <input type="number" id="orderQuantity" placeholder="Units *" min="1" value="1" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" />
-                    <input type="text" id="orderLocation" placeholder="Viewing location *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base" />
-                    <textarea id="orderNotes" placeholder="Message" rows="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base"></textarea>
+                    <input type="text" id="orderFullName" placeholder="Full Name *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" data-i18n-placeholder="modal-name-placeholder" />
+                    <input type="email" id="orderEmail" placeholder="Email *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" data-i18n-placeholder="modal-email-placeholder" />
+                    <input type="tel" id="orderPhone" placeholder="Phone *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" data-i18n-placeholder="modal-phone-placeholder" />
+                    <input type="number" id="orderQuantity" placeholder="Units *" min="1" value="1" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" data-i18n-placeholder="modal-qty-placeholder" />
+                    <input type="text" id="orderLocation" placeholder="Viewing location *" required class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base" data-i18n-placeholder="modal-location-placeholder" />
+                    <textarea id="orderNotes" placeholder="Message" rows="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base" data-i18n-placeholder="modal-notes-placeholder"></textarea>
                 </div>
                 <div class="mt-3 p-2 bg-gray-900 rounded-lg text-xs sm:text-base">
-                    <p class="text-gray-300">Property: <span id="orderProductDisplay" class="text-yellow-500"></span></p>
-                    <p class="text-gray-300">Price/unit: <span id="orderPriceDisplay" class="text-yellow-500"></span> RWF</p>
-                    <p class="text-gray-300">Available: <span id="orderAvailableDisplay" class="text-yellow-500"></span></p>
+                    <p class="text-gray-300"><span data-i18n="modal-property-label">Property:</span> <span id="orderProductDisplay" class="text-yellow-500"></span></p>
+                    <p class="text-gray-300"><span data-i18n="modal-price-label">Price/unit:</span> <span id="orderPriceDisplay" class="text-yellow-500"></span> RWF</p>
+                    <p class="text-gray-300"><span data-i18n="modal-available-label">Available:</span> <span id="orderAvailableDisplay" class="text-yellow-500"></span></p>
                 </div>
-                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold mt-3 text-sm sm:text-base">Send Inquiry</button>
+                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold mt-3 text-sm sm:text-base" data-i18n="modal-submit-btn">Send Inquiry</button>
             </form>
         </div>
     </div>
@@ -827,11 +909,11 @@
         <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-md w-full p-4 sm:p-6 relative border border-yellow-600 text-center">
             <button id="closeLoginRequiredModal" class="absolute top-2 right-3 text-xl sm:text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
             <i class="fas fa-lock text-3xl sm:text-5xl text-yellow-500 mb-2"></i>
-            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-1">Login Required</h3>
-            <p class="text-gray-400 mb-4 text-sm sm:text-base">Please log in or create an account.</p>
+            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-1" data-i18n="login-required-title">Login Required</h3>
+            <p class="text-gray-400 mb-4 text-sm sm:text-base" data-i18n="login-required-message">Please log in or create an account.</p>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                <button id="loginRequiredLoginBtn" class="btn-primary text-black px-4 py-1 sm:px-5 sm:py-2 rounded-full font-semibold">Login</button>
-                <button id="loginRequiredRegisterBtn" class="border border-yellow-600 text-yellow-600 px-4 py-1 sm:px-5 sm:py-2 rounded-full font-semibold hover:bg-yellow-900/30">Register</button>
+                <button id="loginRequiredLoginBtn" class="btn-primary text-black px-4 py-1 sm:px-5 sm:py-2 rounded-full font-semibold" data-i18n="btn-login">Login</button>
+                <button id="loginRequiredRegisterBtn" class="border border-yellow-600 text-yellow-600 px-4 py-1 sm:px-5 sm:py-2 rounded-full font-semibold hover:bg-yellow-900/30" data-i18n="btn-register">Register</button>
             </div>
         </div>
     </div>
@@ -840,14 +922,14 @@
     <div id="registerModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
         <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-md w-full p-4 sm:p-6 relative border border-yellow-600">
             <button id="closeRegModal" class="absolute top-2 right-3 text-xl sm:text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
-            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3">Create Account</h3>
+            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3" data-i18n="register-title">Create Account</h3>
             <form id="regForm">
-                <input type="text" id="regFirstName" placeholder="First Name" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required />
-                <input type="text" id="regLastName" placeholder="Last Name" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required />
-                <input type="email" id="regEmail" placeholder="Email" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required />
-                <input type="password" id="regPassword" placeholder="Password (6+ chars)" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required />
-                <input type="password" id="regConfirmPassword" placeholder="Confirm Password" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-3 rounded-lg text-white text-xs sm:text-base" required />
-                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold">Register</button>
+                <input type="text" id="regFirstName" placeholder="First Name" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="reg-firstname-placeholder" />
+                <input type="text" id="regLastName" placeholder="Last Name" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="reg-lastname-placeholder" />
+                <input type="email" id="regEmail" placeholder="Email" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="reg-email-placeholder" />
+                <input type="password" id="regPassword" placeholder="Password (6+ chars)" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="reg-password-placeholder" />
+                <input type="password" id="regConfirmPassword" placeholder="Confirm Password" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-3 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="reg-confirm-placeholder" />
+                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold" data-i18n="btn-register">Register</button>
             </form>
         </div>
     </div>
@@ -856,18 +938,339 @@
     <div id="loginModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
         <div class="bg-black rounded-2xl max-w-[95%] sm:max-w-md w-full p-4 sm:p-6 relative border border-yellow-600">
             <button id="closeLoginModal" class="absolute top-2 right-3 text-xl sm:text-2xl text-gray-400 hover:text-yellow-500">&times;</button>
-            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3">Welcome Back</h3>
+            <h3 class="text-lg sm:text-2xl font-bold text-yellow-500 mb-3" data-i18n="login-title">Welcome Back</h3>
             <form id="loginForm">
-                <input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required />
-                <input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-3 rounded-lg text-white text-xs sm:text-base" required />
-                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold">Login</button>
+                <input type="email" id="loginEmail" placeholder="Email Address" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="login-email-placeholder" />
+                <input type="password" id="loginPassword" placeholder="Password" class="w-full bg-gray-900 border border-yellow-600 p-1 sm:p-2 mb-3 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="login-password-placeholder" />
+                <button type="submit" class="w-full btn-primary text-black py-2 rounded-full font-semibold" data-i18n="btn-login">Login</button>
             </form>
-            <p class="text-center text-gray-400 text-xs sm:text-sm mt-3">Don't have an account? <button id="switchToRegister" class="text-yellow-500 hover:underline">Register here</button></p>
+            <p class="text-center text-gray-400 text-xs sm:text-sm mt-3"><span data-i18n="login-switch-text">Don't have an account?</span> <button id="switchToRegister" class="text-yellow-500 hover:underline" data-i18n="login-switch-link">Register here</button></p>
         </div>
     </div>
 
     <!-- ====== JAVASCRIPT ====== -->
     <script>
+        // ============================================================
+        //  TRANSLATIONS
+        // ============================================================
+        const translations = {
+            en: {
+                "nav-home": "Home",
+                "nav-contact": "Contact",
+                "nav-panel": "Panel",
+                "nav-admin": "Admin",
+                "btn-register": "Register",
+                "btn-login": "Login",
+                "btn-logout": "Logout",
+                "hero-badge": "Your Dream Home Awaits",
+                "hero-title": 'Find Your <span class="text-yellow-500">Perfect Property</span>',
+                "hero-subtitle": "Luxury houses, modern apartments, and prime land – curated by HITAMO NEZA.",
+                "hero-shop": "Explore Properties",
+                "hero-contact": "Contact Agent",
+                "contact-title": "Contact HITAMO NEZA",
+                "contact-note": "We reply within 24 hours. For inquiries, viewings, or investments.",
+                "filter-search-label": "Search",
+                "filter-search-placeholder": "Location, type...",
+                "filter-sort-label": "Sort",
+                "sort-default": "Default",
+                "sort-price-asc": "Price ↑",
+                "sort-price-desc": "Price ↓",
+                "filter-min-label": "Min",
+                "filter-min-placeholder": "0",
+                "filter-max-label": "Max",
+                "filter-max-placeholder": "No max",
+                "btn-reset": "Reset",
+                "featured-title": 'Featured <span class="text-yellow-500">Properties</span>',
+                "btn-back": "Back",
+                "similar-title": "Similar",
+                "recommended-title": "Recommended",
+                "recently-viewed-title": "Recent",
+                "dashboard-title": "My Dashboard",
+                "dashboard-contact-label": "📧 Contact &amp; Social",
+                "dashboard-email-label": "Email:",
+                "admin-property-title": "🛠️ Property Management",
+                "admin-title-placeholder": "Title",
+                "admin-location-placeholder": "Location",
+                "admin-price-placeholder": "Price (RWF)",
+                "admin-desc-placeholder": "Description",
+                "admin-bedrooms-label": "Bedrooms",
+                "admin-bathrooms-label": "Bathrooms",
+                "admin-area-label": "Area (sq m)",
+                "admin-type-label": "Type",
+                "type-house": "House",
+                "type-apartment": "Apartment",
+                "type-villa": "Villa",
+                "type-land": "Land",
+                "type-commercial": "Commercial",
+                "admin-status-label": "Status",
+                "status-available": "Available",
+                "status-sold": "Sold",
+                "admin-qty-label": "Qty",
+                "admin-images-label": "Images (max 5)",
+                "admin-images-hint": "Select up to 5 images. Edit to add/remove.",
+                "btn-add": "➕ Add",
+                "btn-cancel": "Cancel",
+                "admin-inventory-title": "📋 Inventory",
+                "admin-inquiries-title": "Inquiries",
+                "inquiry-th-name": "Name",
+                "inquiry-th-email": "Email",
+                "inquiry-th-phone": "Phone",
+                "inquiry-th-property": "Property",
+                "inquiry-th-qty": "Qty",
+                "inquiry-th-location": "Location",
+                "inquiry-th-notes": "Notes",
+                "inquiry-th-date": "Date",
+                "admin-contact-title": "Edit Contact Info",
+                "admin-instagram-label": "Instagram URL",
+                "admin-instagram-placeholder": "https://www.instagram.com/username",
+                "admin-whatsapp-label": "WhatsApp (with country code)",
+                "admin-whatsapp-placeholder": "+250XXXXXXXXX",
+                "btn-save": "Save",
+                "admin-users-stats-title": "👥 Users &amp; Stats",
+                "cart-title": "Your Inquiries",
+                "cart-total-label": "Total:",
+                "cart-submit-btn": "Submit Inquiry",
+                "modal-inquiry-title": "Request Property Info",
+                "modal-name-placeholder": "Full Name *",
+                "modal-email-placeholder": "Email *",
+                "modal-phone-placeholder": "Phone *",
+                "modal-qty-placeholder": "Units *",
+                "modal-location-placeholder": "Viewing location *",
+                "modal-notes-placeholder": "Message",
+                "modal-property-label": "Property:",
+                "modal-price-label": "Price/unit:",
+                "modal-available-label": "Available:",
+                "modal-submit-btn": "Send Inquiry",
+                "login-required-title": "Login Required",
+                "login-required-message": "Please log in or create an account.",
+                "register-title": "Create Account",
+                "reg-firstname-placeholder": "First Name",
+                "reg-lastname-placeholder": "Last Name",
+                "reg-email-placeholder": "Email",
+                "reg-password-placeholder": "Password (6+ chars)",
+                "reg-confirm-placeholder": "Confirm Password",
+                "login-title": "Welcome Back",
+                "login-email-placeholder": "Email Address",
+                "login-password-placeholder": "Password",
+                "login-switch-text": "Don't have an account?",
+                "login-switch-link": "Register here",
+                "cart-empty": "No inquiries yet",
+                "btn-loading": "Loading...",
+                "status-available-short": "Available",
+                "status-sold-short": "Sold"
+            },
+            fr: {
+                "nav-home": "Accueil",
+                "nav-contact": "Contact",
+                "nav-panel": "Panel",
+                "nav-admin": "Admin",
+                "btn-register": "S'inscrire",
+                "btn-login": "Connexion",
+                "btn-logout": "Déconnexion",
+                "hero-badge": "Votre maison de rêve vous attend",
+                "hero-title": 'Trouvez votre <span class="text-yellow-500">Propriété Parfaite</span>',
+                "hero-subtitle": "Maisons de luxe, appartements modernes et terrains de choix – sélectionnés par HITAMO NEZA.",
+                "hero-shop": "Explorer les propriétés",
+                "hero-contact": "Contacter un agent",
+                "contact-title": "Contacter HITAMO NEZA",
+                "contact-note": "Nous répondons dans les 24 heures. Pour des demandes, visites ou investissements.",
+                "filter-search-label": "Rechercher",
+                "filter-search-placeholder": "Emplacement, type...",
+                "filter-sort-label": "Trier",
+                "sort-default": "Défaut",
+                "sort-price-asc": "Prix ↑",
+                "sort-price-desc": "Prix ↓",
+                "filter-min-label": "Min",
+                "filter-min-placeholder": "0",
+                "filter-max-label": "Max",
+                "filter-max-placeholder": "Sans max",
+                "btn-reset": "Réinitialiser",
+                "featured-title": 'Propriétés <span class="text-yellow-500">en vedette</span>',
+                "btn-back": "Retour",
+                "similar-title": "Similaire",
+                "recommended-title": "Recommandé",
+                "recently-viewed-title": "Récent",
+                "dashboard-title": "Mon tableau de bord",
+                "dashboard-contact-label": "📧 Contact &amp; Réseaux",
+                "dashboard-email-label": "Email :",
+                "admin-property-title": "🛠️ Gestion des biens",
+                "admin-title-placeholder": "Titre",
+                "admin-location-placeholder": "Emplacement",
+                "admin-price-placeholder": "Prix (RWF)",
+                "admin-desc-placeholder": "Description",
+                "admin-bedrooms-label": "Chambres",
+                "admin-bathrooms-label": "Salles de bain",
+                "admin-area-label": "Surface (m²)",
+                "admin-type-label": "Type",
+                "type-house": "Maison",
+                "type-apartment": "Appartement",
+                "type-villa": "Villa",
+                "type-land": "Terrain",
+                "type-commercial": "Commercial",
+                "admin-status-label": "Statut",
+                "status-available": "Disponible",
+                "status-sold": "Vendu",
+                "admin-qty-label": "Qté",
+                "admin-images-label": "Images (max 5)",
+                "admin-images-hint": "Sélectionnez jusqu'à 5 images. Modifiez pour ajouter/supprimer.",
+                "btn-add": "➕ Ajouter",
+                "btn-cancel": "Annuler",
+                "admin-inventory-title": "📋 Inventaire",
+                "admin-inquiries-title": "Demandes",
+                "inquiry-th-name": "Nom",
+                "inquiry-th-email": "Email",
+                "inquiry-th-phone": "Téléphone",
+                "inquiry-th-property": "Bien",
+                "inquiry-th-qty": "Qté",
+                "inquiry-th-location": "Emplacement",
+                "inquiry-th-notes": "Notes",
+                "inquiry-th-date": "Date",
+                "admin-contact-title": "Modifier les coordonnées",
+                "admin-instagram-label": "URL Instagram",
+                "admin-instagram-placeholder": "https://www.instagram.com/username",
+                "admin-whatsapp-label": "WhatsApp (avec indicatif)",
+                "admin-whatsapp-placeholder": "+250XXXXXXXXX",
+                "btn-save": "Enregistrer",
+                "admin-users-stats-title": "👥 Utilisateurs &amp; Statistiques",
+                "cart-title": "Vos demandes",
+                "cart-total-label": "Total :",
+                "cart-submit-btn": "Soumettre la demande",
+                "modal-inquiry-title": "Demander des informations",
+                "modal-name-placeholder": "Nom complet *",
+                "modal-email-placeholder": "Email *",
+                "modal-phone-placeholder": "Téléphone *",
+                "modal-qty-placeholder": "Unités *",
+                "modal-location-placeholder": "Lieu de visite *",
+                "modal-notes-placeholder": "Message",
+                "modal-property-label": "Bien :",
+                "modal-price-label": "Prix/unité :",
+                "modal-available-label": "Disponible :",
+                "modal-submit-btn": "Envoyer la demande",
+                "login-required-title": "Connexion requise",
+                "login-required-message": "Veuillez vous connecter ou créer un compte.",
+                "register-title": "Créer un compte",
+                "reg-firstname-placeholder": "Prénom",
+                "reg-lastname-placeholder": "Nom",
+                "reg-email-placeholder": "Email",
+                "reg-password-placeholder": "Mot de passe (6+ caractères)",
+                "reg-confirm-placeholder": "Confirmer le mot de passe",
+                "login-title": "Bon retour",
+                "login-email-placeholder": "Adresse email",
+                "login-password-placeholder": "Mot de passe",
+                "login-switch-text": "Pas encore de compte ?",
+                "login-switch-link": "S'inscrire ici",
+                "cart-empty": "Aucune demande pour l'instant",
+                "btn-loading": "Chargement...",
+                "status-available-short": "Disponible",
+                "status-sold-short": "Vendu"
+            },
+            rw: {
+                "nav-home": "Ahabanza",
+                "nav-contact": "Twandikire",
+                "nav-panel": "Akabari",
+                "nav-admin": "Ubutegetsi",
+                "btn-register": "Iyandikishe",
+                "btn-login": "Injira",
+                "btn-logout": "Sohoka",
+                "hero-badge": "Inzu yawe ndoto irategereje",
+                "hero-title": 'Shaka <span class="text-yellow-500">Umurima Uwiza</span>',
+                "hero-subtitle": "Inzu z'ubucuruzi, amakonde mashya, n'ubutaka bwiza – byatoranijwe na HITAMO NEZA.",
+                "hero-shop": "Reba amazu",
+                "hero-contact": "Twandikire",
+                "contact-title": "Twandikire HITAMO NEZA",
+                "contact-note": "Tusubiza mu masaha 24. Kubaza, kureba, cyangwa gushora imari.",
+                "filter-search-label": "Shakisha",
+                "filter-search-placeholder": "Ahantu, ubwoko...",
+                "filter-sort-label": "Tondeka",
+                "sort-default": "Nzira",
+                "sort-price-asc": "Igiciro ↑",
+                "sort-price-desc": "Igiciro ↓",
+                "filter-min-label": "Ntoya",
+                "filter-min-placeholder": "0",
+                "filter-max-label": "Nini",
+                "filter-max-placeholder": "Nta mpaka",
+                "btn-reset": "Subiza",
+                "featured-title": 'Amazu <span class="text-yellow-500">yatowe</span>',
+                "btn-back": "Subira inyuma",
+                "similar-title": "Bisa",
+                "recommended-title": "Biteganyirijwe",
+                "recently-viewed-title": "Rebwe vuba",
+                "dashboard-title": "Akabari kanjye",
+                "dashboard-contact-label": "📧 Twandikire &amp; Mbuga",
+                "dashboard-email-label": "Email:",
+                "admin-property-title": "🛠️ Gucunga amazu",
+                "admin-title-placeholder": "Izina",
+                "admin-location-placeholder": "Ahantu",
+                "admin-price-placeholder": "Igiciro (RWF)",
+                "admin-desc-placeholder": "Ibisobanuro",
+                "admin-bedrooms-label": "Ibyumba",
+                "admin-bathrooms-label": "Ibyumba byo kwuhagira",
+                "admin-area-label": "Ubuso (m²)",
+                "admin-type-label": "Ubwoko",
+                "type-house": "Inzu",
+                "type-apartment": "Apartamento",
+                "type-villa": "Villa",
+                "type-land": "Ubutaka",
+                "type-commercial": "Ubucuruzi",
+                "admin-status-label": "Ibyo muri",
+                "status-available": "Irahari",
+                "status-sold": "Yagurishijwe",
+                "admin-qty-label": "Ingano",
+                "admin-images-label": "Amashusho (max 5)",
+                "admin-images-hint": "Hitamo amashusho 5. Hindura wongere cyangwa ukure.",
+                "btn-add": "➕ Ongera",
+                "btn-cancel": "Hagarika",
+                "admin-inventory-title": "📋 Ibigowe",
+                "admin-inquiries-title": "Ibibazo",
+                "inquiry-th-name": "Izina",
+                "inquiry-th-email": "Email",
+                "inquiry-th-phone": "Telefone",
+                "inquiry-th-property": "Umurima",
+                "inquiry-th-qty": "Ingano",
+                "inquiry-th-location": "Ahantu",
+                "inquiry-th-notes": "Inyandiko",
+                "inquiry-th-date": "Itariki",
+                "admin-contact-title": "Hindura amakuru y'ubucuruzi",
+                "admin-instagram-label": "URL ya Instagram",
+                "admin-instagram-placeholder": "https://www.instagram.com/username",
+                "admin-whatsapp-label": "WhatsApp (hamwe na code y'igihugu)",
+                "admin-whatsapp-placeholder": "+250XXXXXXXXX",
+                "btn-save": "Bika",
+                "admin-users-stats-title": "👥 Abakoresha &amp; Imibare",
+                "cart-title": "Ibibazo byawe",
+                "cart-total-label": "Igiteranyo:",
+                "cart-submit-btn": "Ohereza ikibazo",
+                "modal-inquiry-title": "Saba amakuru",
+                "modal-name-placeholder": "Izina ryose *",
+                "modal-email-placeholder": "Email *",
+                "modal-phone-placeholder": "Telefone *",
+                "modal-qty-placeholder": "Ingano *",
+                "modal-location-placeholder": "Ahantu kureba *",
+                "modal-notes-placeholder": "Ubutumwa",
+                "modal-property-label": "Umurima:",
+                "modal-price-label": "Igiciro/igice:",
+                "modal-available-label": "Irahari:",
+                "modal-submit-btn": "Ohereza ikibazo",
+                "login-required-title": "Saba Kwinjira",
+                "login-required-message": "Nyamuneka winjire cyangwa urebe konti.",
+                "register-title": "Kora konti",
+                "reg-firstname-placeholder": "Izina",
+                "reg-lastname-placeholder": "Izina ry'umuryango",
+                "reg-email-placeholder": "Email",
+                "reg-password-placeholder": "Ijambobanga (6+ inyuguti)",
+                "reg-confirm-placeholder": "Emeza ijambobanga",
+                "login-title": "Murakaza neza",
+                "login-email-placeholder": "Email",
+                "login-password-placeholder": "Ijambobanga",
+                "login-switch-text": "Nta konti ufite?",
+                "login-switch-link": "Iyandikishe hano",
+                "cart-empty": "Nta kibazo kigeze",
+                "btn-loading": "Birakorwa...",
+                "status-available-short": "Irahari",
+                "status-sold-short": "Yagurishijwe"
+            }
+        };
+
         // ============================================================
         //  FIREBASE CONFIG
         // ============================================================
@@ -884,6 +1287,71 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
+
+        // ============================================================
+        //  LANGUAGE
+        // ============================================================
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+            // Translate all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang] && translations[lang][key]) {
+                    // For elements that contain HTML (like hero-title), use innerHTML
+                    if (key === 'hero-title' || key === 'featured-title') {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            // Translate placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+            // Close dropdown
+            document.getElementById('langMenu').classList.remove('show');
+        }
+
+        // Language dropdown toggle
+        document.getElementById('langToggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('langMenu').classList.toggle('show');
+        });
+        // Language selection
+        document.querySelectorAll('#langMenu button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                setLanguage(lang);
+            });
+        });
+        // Click outside to close
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-dropdown')) {
+                document.getElementById('langMenu').classList.remove('show');
+            }
+        });
+
+        // ============================================================
+        //  LIGHTBOX
+        // ============================================================
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
 
         // ============================================================
         //  UTILITY
@@ -905,13 +1373,17 @@
             setTimeout(() => notif.remove(), 4000);
         }
 
-        function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[
-            m])); }
+        function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
 
         function getFriendlyError(code) {
-            const map = { 'auth/email-already-in-use': 'Email already registered.', 'auth/invalid-email': 'Invalid email.',
-                'auth/weak-password': 'Password must be 6+ chars.', 'auth/wrong-password': 'Incorrect password.',
-                'auth/user-not-found': 'No account. Register first.', 'auth/too-many-requests': 'Too many attempts.' };
+            const map = {
+                'auth/email-already-in-use': 'Email already registered.',
+                'auth/invalid-email': 'Invalid email.',
+                'auth/weak-password': 'Password must be 6+ chars.',
+                'auth/wrong-password': 'Incorrect password.',
+                'auth/user-not-found': 'No account. Register first.',
+                'auth/too-many-requests': 'Too many attempts.'
+            };
             return map[code] || `Error: ${code}`;
         }
 
@@ -1070,7 +1542,7 @@
                 if (docSnap.exists) contactInfo = docSnap.data();
                 else {
                     contactInfo = { instagramUrl: "https://www.instagram.com/__bullet_wi_gikondo__",
-                    phoneNumber: "+250786811816" };
+                        phoneNumber: "+250786811816" };
                     await docRef.set(contactInfo);
                 }
                 if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML =
@@ -1109,7 +1581,7 @@
             let total = 0,
                 count = 0;
             dom.cartItemsDiv.innerHTML = '';
-            if (!cart.length) dom.cartItemsDiv.innerHTML = '<div class="text-center py-4 text-gray-400 text-xs sm:text-base">No inquiries yet</div>';
+            if (!cart.length) dom.cartItemsDiv.innerHTML = '<div class="text-center py-4 text-gray-400 text-xs sm:text-base" data-i18n="cart-empty">No inquiries yet</div>';
             else cart.forEach((item, idx) => {
                 total += item.price * item.quantity;
                 count += item.quantity;
@@ -1139,12 +1611,13 @@
         function productCardTemplate(p) {
             const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/300';
             const hasStock = (p.stock === 'available' && p.quantity > 0);
+            const statusText = hasStock ? translations[currentLang]['status-available-short'] : translations[currentLang]['status-sold-short'];
             const statusBadge = hasStock ?
                 `<span class="absolute top-1 right-1 bg-yellow-600 text-black text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full font-bold">${p.quantity} left</span>` :
-                `<span class="absolute top-1 right-1 bg-red-700 text-white text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full">Sold</span>`;
+                `<span class="absolute top-1 right-1 bg-red-700 text-white text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full">${statusText}</span>`;
             const orderBtn = hasStock ?
-                `<button class="add-cart-trigger btn-primary text-black font-semibold px-1.5 py-0.5 sm:px-4 sm:py-2 rounded-full text-[0.5rem] sm:text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-0.5"></i> <span class="hidden sm:inline">Inquire</span><span class="sm:hidden">Buy</span></button>` :
-                `<button class="bg-gray-700 text-gray-400 font-semibold px-1.5 py-0.5 sm:px-4 sm:py-2 rounded-full text-[0.5rem] sm:text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-0.5"></i> Sold</button>`;
+                `<button class="add-cart-trigger btn-primary text-black font-semibold px-1.5 py-0.5 sm:px-4 sm:py-2 rounded-full text-[0.5rem] sm:text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-0.5"></i> <span class="hidden sm:inline" data-i18n="btn-inquire">Inquire</span><span class="sm:hidden" data-i18n="btn-buy">Buy</span></button>` :
+                `<button class="bg-gray-700 text-gray-400 font-semibold px-1.5 py-0.5 sm:px-4 sm:py-2 rounded-full text-[0.5rem] sm:text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-0.5"></i> <span data-i18n="sold-label">Sold</span></button>`;
             const locationDisplay = p.location ?
                 `<div class="flex items-center text-[0.4rem] sm:text-xs text-gray-400 mt-0.5"><i class="fas fa-map-marker-alt mr-0.5 text-yellow-500"></i>${escapeHtml(p.location)}</div>` :
                 '';
@@ -1172,34 +1645,58 @@
             });
         }
 
+        // ===== UPDATED PRODUCT DETAIL WITH LIGHTBOX =====
         function showProductDetail(productId) {
             const product = allProducts.find(p => p.id === productId);
             if (!product) return;
+            const statusText = product.stock === 'available' ? translations[currentLang]['status-available-short'] : translations[currentLang]['status-sold-short'];
             const statusBadge = product.stock === 'available' ?
-                '<span class="status-available px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-check-circle mr-1"></i>Available</span>' :
-                '<span class="status-sold px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-times-circle mr-1"></i>Sold</span>';
+                '<span class="status-available px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-check-circle mr-1"></i>' + statusText +
+                '</span>' :
+                '<span class="status-sold px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-times-circle mr-1"></i>' +
+                statusText + '</span>';
             const orderBtn = (product.stock === 'available' && product.quantity > 0) ?
-                `<button class="add-to-cart-detail btn-primary text-black px-3 sm:px-6 py-1 sm:py-2 rounded-full font-semibold mt-3 sm:mt-6 text-xs sm:text-base" data-id="${product.id}"><i class="fas fa-cart-plus mr-1"></i>Inquire</button>` :
-                `<button class="bg-gray-700 text-gray-400 px-3 sm:px-6 py-1 sm:py-2 rounded-full font-semibold mt-3 sm:mt-6 text-xs sm:text-base" disabled><i class="fas fa-times-circle mr-1"></i>Not Available</button>`;
+                `<button class="add-to-cart-detail btn-primary text-black px-3 sm:px-6 py-1 sm:py-2 rounded-full font-semibold mt-3 sm:mt-6 text-xs sm:text-base" data-id="${product.id}"><i class="fas fa-cart-plus mr-1"></i> <span data-i18n="btn-inquire-detail">Inquire</span></button>` :
+                `<button class="bg-gray-700 text-gray-400 px-3 sm:px-6 py-1 sm:py-2 rounded-full font-semibold mt-3 sm:mt-6 text-xs sm:text-base" disabled><i class="fas fa-times-circle mr-1"></i> <span data-i18n="sold-label">Sold</span></button>`;
+
             const imagesHtml = product.images && product.images.length ?
-                `<div class="detail-image-grid">${product.images.map(img => `<img src="${img}" class="detail-main-img rounded-lg shadow-md">`).join('')}</div>` :
-                `<img src="https://via.placeholder.com/400" class="detail-main-img rounded-lg">`;
+                `<div class="detail-image-grid">${product.images.map(img => `<img src="${img}" class="detail-main-img rounded-lg shadow-md" onclick="openLightbox('${img}')" />`).join('')}</div>` :
+                `<img src="https://via.placeholder.com/400" class="detail-main-img rounded-lg" onclick="openLightbox('https://via.placeholder.com/400')" />`;
+
             const locationHtml = product.location ?
                 `<div class="flex items-center gap-1 mt-1"><i class="fas fa-map-marker-alt text-yellow-500"></i><span class="text-gray-300 text-xs sm:text-base">${escapeHtml(product.location)}</span></div>` :
                 '';
             const extraInfo =
                 `<div class="flex flex-wrap gap-1 sm:gap-3 mt-1 sm:mt-3"><span class="info-item text-xs sm:text-sm"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span><span class="info-item text-xs sm:text-sm"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span><span class="info-item text-xs sm:text-sm"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span><span class="info-item text-xs sm:text-sm"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span></div>`;
-            dom.detailContent.innerHTML =
-                `<div class="grid md:grid-cols-2 gap-4 sm:gap-8"><div>${imagesHtml}</div><div><h2 class="text-lg sm:text-3xl font-bold text-yellow-500">${escapeHtml(product.name)}</h2><p class="price-large mt-1">${product.price.toLocaleString()} RWF</p>${locationHtml}<div class="mt-2">${statusBadge}</div>${extraInfo}<p class="text-gray-400 text-xs sm:text-base mt-2">${escapeHtml(product.description || 'No description provided.')}</p>${orderBtn}</div></div>`;
+
+            dom.detailContent.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-4 sm:gap-8">
+                    <div>${imagesHtml}</div>
+                    <div>
+                        <h2 class="text-lg sm:text-3xl font-bold text-yellow-500">${escapeHtml(product.name)}</h2>
+                        <p class="price-large mt-1">${product.price.toLocaleString()} RWF</p>
+                        ${locationHtml}
+                        <div class="mt-2">${statusBadge}</div>
+                        ${extraInfo}
+                        <p class="text-gray-400 text-xs sm:text-base mt-2">${escapeHtml(product.description || 'No description provided.')}</p>
+                        <div class="mt-4">${orderBtn}</div>
+                    </div>
+                </div>
+            `;
+
             if (product.stock === 'available' && product.quantity > 0) {
-                dom.detailContent.querySelector('.add-to-cart-detail')?.addEventListener('click', (e) => { e
-                        .stopPropagation();
-                    initiateOrder(product); });
+                dom.detailContent.querySelector('.add-to-cart-detail')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    initiateOrder(product);
+                });
             }
+
             const related = allProducts.filter(p => p.id !== product.id).sort(() => 0.5 - Math.random()).slice(0, 3);
             dom.relatedProductsGrid.innerHTML = related.map(p => productCardTemplate(p)).join('');
-            dom.relatedProductsGrid.querySelectorAll('.product-card').forEach(card => { card.onclick = () =>
-                    showProductDetail(card.dataset.id); });
+            dom.relatedProductsGrid.querySelectorAll('.product-card').forEach(card => {
+                card.onclick = () => showProductDetail(card.dataset.id);
+            });
+
             dom.homeSec.classList.add('hidden');
             dom.productDetailSec.classList.remove('hidden');
             document.getElementById('product-detail-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1217,7 +1714,7 @@
         function renderRecentlyViewed() {
             const recent = allProducts.filter(p => recentlyViewedIds.includes(p.id));
             dom.recentlyViewedGrid.innerHTML = recent.length ? recent.map(p => productCardTemplate(p)).join('') :
-                '<div class="col-span-full text-center text-gray-500 py-4 text-xs sm:text-base">No recently viewed</div>';
+                '<div class="col-span-full text-center text-gray-500 py-4 text-xs sm:text-base" data-i18n="recently-viewed-empty">No recently viewed</div>';
             attachProductEvents(dom.recentlyViewedGrid);
         }
 
@@ -1246,7 +1743,7 @@
             filteredProducts = filtered;
             dom.productsGrid.innerHTML = filteredProducts.length ? filteredProducts.map(p => productCardTemplate(p)).join(
                 '') :
-                '<div class="col-span-full text-center text-gray-500 py-6 text-xs sm:text-base">No properties found</div>';
+                '<div class="col-span-full text-center text-gray-500 py-6 text-xs sm:text-base" data-i18n="no-properties">No properties found</div>';
             attachProductEvents(dom.productsGrid);
             renderRecommendations();
         }
@@ -1528,6 +2025,9 @@
         //  DOMContentLoaded INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', async function() {
+            // Set initial language
+            setLanguage(currentLang);
+
             await loadContactInfo();
             updateCartUI();
 
