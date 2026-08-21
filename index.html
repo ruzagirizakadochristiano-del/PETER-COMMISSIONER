@@ -15,7 +15,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
 
-    <!-- Tailwind CSS – for development; replace with production build if needed -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
@@ -34,10 +33,7 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-image: radial-gradient(circle at 10% 20%, rgba(212,175,55,0.08) 1%, transparent 1%);
             background-size: 24px 24px;
             pointer-events: none;
@@ -176,10 +172,7 @@
         }
         .loader-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.95);
             display: flex;
             justify-content: center;
@@ -282,10 +275,7 @@
         #lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.92);
             z-index: 99999;
             justify-content: center;
@@ -611,7 +601,6 @@
             }
         }
 
-        /* Make brand row clickable */
         .brand-row {
             cursor: pointer;
         }
@@ -619,7 +608,6 @@
             opacity: 0.8;
         }
 
-        /* User orders table */
         .orders-table td,
         .orders-table th {
             padding: 0.3rem 0.5rem;
@@ -1024,11 +1012,364 @@
     <!-- ====== JAVASCRIPT ====== -->
     <script>
         // ============================================================
-        //  TRANSLATIONS (same as before, omitted for brevity)
+        //  TRANSLATIONS
         // ============================================================
-        // ... (copy your translations object from the previous version)
-        // For space, we assume you have the full translations object.
-        // If not, refer to the earlier full code.
+        const translations = {
+            en: {
+                "nav-home": "Home",
+                "nav-contact": "Contact",
+                "nav-panel": "Panel",
+                "nav-admin": "Admin",
+                "btn-register": "Register",
+                "btn-login": "Login",
+                "btn-logout": "Logout",
+                "hero-badge": "Your Dream Home Awaits",
+                "hero-title": 'Find Your <span class="text-yellow-500">Perfect Property</span>',
+                "hero-subtitle": "Luxury houses, modern apartments, and prime land – curated by HITAMO NEZA.",
+                "hero-shop": "Explore Properties",
+                "hero-contact": "Contact Agent",
+                "contact-title": "Contact HITAMO NEZA",
+                "contact-note": "We reply within 24 hours. For inquiries, viewings, or investments.",
+                "filter-search-label": "Search",
+                "filter-search-placeholder": "Location, type...",
+                "filter-sort-label": "Sort",
+                "sort-default": "Default",
+                "sort-price-asc": "Price ↑",
+                "sort-price-desc": "Price ↓",
+                "filter-min-label": "Min",
+                "filter-min-placeholder": "0",
+                "filter-max-label": "Max",
+                "filter-max-placeholder": "No max",
+                "btn-reset": "Reset",
+                "featured-title": 'Featured <span class="text-yellow-500">Properties</span>',
+                "btn-back": "Back",
+                "similar-title": "Similar",
+                "recommended-title": "Recommended",
+                "recently-viewed-title": "Recent",
+                "dashboard-title": "My Dashboard",
+                "dashboard-contact-label": "📧 Contact &amp; Social",
+                "dashboard-email-label": "Email:",
+                "admin-property-title": "🛠️ Property Management",
+                "admin-title-placeholder": "Title",
+                "admin-location-placeholder": "Location",
+                "admin-price-placeholder": "Price (RWF)",
+                "admin-desc-placeholder": "Description",
+                "admin-bedrooms-label": "Bedrooms",
+                "admin-bathrooms-label": "Bathrooms",
+                "admin-area-label": "Area (sq m)",
+                "admin-type-label": "Type",
+                "type-house": "House",
+                "type-apartment": "Apartment",
+                "type-villa": "Villa",
+                "type-land": "Land",
+                "type-commercial": "Commercial",
+                "admin-parking-label": "🚗 Parking Spaces",
+                "admin-toilets-label": "🚻 Toilets",
+                "admin-status-label": "Status",
+                "status-available": "Available",
+                "status-sold": "Sold",
+                "admin-qty-label": "Qty",
+                "admin-images-label": "Images (max 10)",
+                "admin-images-hint": "Select up to 10 images. Edit to add/remove.",
+                "btn-add": "➕ Add",
+                "btn-cancel": "Cancel",
+                "admin-inventory-title": "📋 Inventory",
+                "admin-inquiries-title": "Inquiries",
+                "inquiry-th-name": "Name",
+                "inquiry-th-email": "Email",
+                "inquiry-th-phone": "Phone",
+                "inquiry-th-property": "Property",
+                "inquiry-th-qty": "Qty",
+                "inquiry-th-location": "Location",
+                "inquiry-th-notes": "Notes",
+                "inquiry-th-date": "Date",
+                "inquiry-th-action": "Action",
+                "admin-contact-title": "Edit Contact Info",
+                "admin-instagram-label": "Instagram URL",
+                "admin-instagram-placeholder": "https://www.instagram.com/username",
+                "admin-whatsapp-label": "WhatsApp (with country code)",
+                "admin-whatsapp-placeholder": "+250XXXXXXXXX",
+                "btn-save": "Save",
+                "admin-users-stats-title": "👥 Users &amp; Stats",
+                "cart-title": "Your Inquiries",
+                "cart-total-label": "Total:",
+                "cart-submit-btn": "Submit Inquiry",
+                "modal-inquiry-title": "Request Property Info",
+                "modal-name-placeholder": "Full Name *",
+                "modal-email-placeholder": "Email *",
+                "modal-phone-placeholder": "Phone *",
+                "modal-qty-placeholder": "Units *",
+                "modal-location-placeholder": "Viewing location *",
+                "modal-notes-placeholder": "Message",
+                "modal-property-label": "Property:",
+                "modal-price-label": "Price/unit:",
+                "modal-available-label": "Available:",
+                "modal-submit-btn": "Send Inquiry",
+                "login-required-title": "Login Required",
+                "login-required-message": "Please log in or create an account.",
+                "register-title": "Create Account",
+                "reg-firstname-placeholder": "First Name",
+                "reg-lastname-placeholder": "Last Name",
+                "reg-email-placeholder": "Email",
+                "reg-password-placeholder": "Password (6+ chars)",
+                "reg-confirm-placeholder": "Confirm Password",
+                "login-title": "Welcome Back",
+                "login-email-placeholder": "Email Address",
+                "login-password-placeholder": "Password",
+                "login-switch-text": "Don't have an account?",
+                "login-switch-link": "Register here",
+                "cart-empty": "No inquiries yet",
+                "btn-loading": "Loading...",
+                "status-available-short": "Available",
+                "status-sold-short": "Sold",
+                "my-orders-title": "My Inquiries",
+                "order-th-property": "Property",
+                "order-th-price": "Price",
+                "order-th-qty": "Qty",
+                "order-th-status": "Status",
+                "order-th-action": "Action",
+                "btn-cancel-order": "Cancel",
+                "order-cancelled": "Inquiry cancelled and stock restored.",
+                "no-orders": "No inquiries yet.",
+                "confirm-cancel-order": "Are you sure you want to cancel this inquiry?"
+            },
+            fr: {
+                "nav-home": "Accueil",
+                "nav-contact": "Contact",
+                "nav-panel": "Panel",
+                "nav-admin": "Admin",
+                "btn-register": "S'inscrire",
+                "btn-login": "Connexion",
+                "btn-logout": "Déconnexion",
+                "hero-badge": "Votre maison de rêve vous attend",
+                "hero-title": 'Trouvez votre <span class="text-yellow-500">Propriété Parfaite</span>',
+                "hero-subtitle": "Maisons de luxe, appartements modernes et terrains de choix – sélectionnés par HITAMO NEZA.",
+                "hero-shop": "Explorer les propriétés",
+                "hero-contact": "Contacter un agent",
+                "contact-title": "Contacter HITAMO NEZA",
+                "contact-note": "Nous répondons dans les 24 heures. Pour des demandes, visites ou investissements.",
+                "filter-search-label": "Rechercher",
+                "filter-search-placeholder": "Emplacement, type...",
+                "filter-sort-label": "Trier",
+                "sort-default": "Défaut",
+                "sort-price-asc": "Prix ↑",
+                "sort-price-desc": "Prix ↓",
+                "filter-min-label": "Min",
+                "filter-min-placeholder": "0",
+                "filter-max-label": "Max",
+                "filter-max-placeholder": "Sans max",
+                "btn-reset": "Réinitialiser",
+                "featured-title": 'Propriétés <span class="text-yellow-500">en vedette</span>',
+                "btn-back": "Retour",
+                "similar-title": "Similaire",
+                "recommended-title": "Recommandé",
+                "recently-viewed-title": "Récent",
+                "dashboard-title": "Mon tableau de bord",
+                "dashboard-contact-label": "📧 Contact &amp; Réseaux",
+                "dashboard-email-label": "Email :",
+                "admin-property-title": "🛠️ Gestion des biens",
+                "admin-title-placeholder": "Titre",
+                "admin-location-placeholder": "Emplacement",
+                "admin-price-placeholder": "Prix (RWF)",
+                "admin-desc-placeholder": "Description",
+                "admin-bedrooms-label": "Chambres",
+                "admin-bathrooms-label": "Salles de bain",
+                "admin-area-label": "Surface (m²)",
+                "admin-type-label": "Type",
+                "type-house": "Maison",
+                "type-apartment": "Appartement",
+                "type-villa": "Villa",
+                "type-land": "Terrain",
+                "type-commercial": "Commercial",
+                "admin-parking-label": "🚗 Places de parking",
+                "admin-toilets-label": "🚻 Toilettes",
+                "admin-status-label": "Statut",
+                "status-available": "Disponible",
+                "status-sold": "Vendu",
+                "admin-qty-label": "Qté",
+                "admin-images-label": "Images (max 10)",
+                "admin-images-hint": "Sélectionnez jusqu'à 10 images. Modifiez pour ajouter/supprimer.",
+                "btn-add": "➕ Ajouter",
+                "btn-cancel": "Annuler",
+                "admin-inventory-title": "📋 Inventaire",
+                "admin-inquiries-title": "Demandes",
+                "inquiry-th-name": "Nom",
+                "inquiry-th-email": "Email",
+                "inquiry-th-phone": "Téléphone",
+                "inquiry-th-property": "Bien",
+                "inquiry-th-qty": "Qté",
+                "inquiry-th-location": "Emplacement",
+                "inquiry-th-notes": "Notes",
+                "inquiry-th-date": "Date",
+                "inquiry-th-action": "Action",
+                "admin-contact-title": "Modifier les coordonnées",
+                "admin-instagram-label": "URL Instagram",
+                "admin-instagram-placeholder": "https://www.instagram.com/username",
+                "admin-whatsapp-label": "WhatsApp (avec indicatif)",
+                "admin-whatsapp-placeholder": "+250XXXXXXXXX",
+                "btn-save": "Enregistrer",
+                "admin-users-stats-title": "👥 Utilisateurs &amp; Statistiques",
+                "cart-title": "Vos demandes",
+                "cart-total-label": "Total :",
+                "cart-submit-btn": "Soumettre la demande",
+                "modal-inquiry-title": "Demander des informations",
+                "modal-name-placeholder": "Nom complet *",
+                "modal-email-placeholder": "Email *",
+                "modal-phone-placeholder": "Téléphone *",
+                "modal-qty-placeholder": "Unités *",
+                "modal-location-placeholder": "Lieu de visite *",
+                "modal-notes-placeholder": "Message",
+                "modal-property-label": "Bien :",
+                "modal-price-label": "Prix/unité :",
+                "modal-available-label": "Disponible :",
+                "modal-submit-btn": "Envoyer la demande",
+                "login-required-title": "Connexion requise",
+                "login-required-message": "Veuillez vous connecter ou créer un compte.",
+                "register-title": "Créer un compte",
+                "reg-firstname-placeholder": "Prénom",
+                "reg-lastname-placeholder": "Nom",
+                "reg-email-placeholder": "Email",
+                "reg-password-placeholder": "Mot de passe (6+ caractères)",
+                "reg-confirm-placeholder": "Confirmer le mot de passe",
+                "login-title": "Bon retour",
+                "login-email-placeholder": "Adresse email",
+                "login-password-placeholder": "Mot de passe",
+                "login-switch-text": "Pas encore de compte ?",
+                "login-switch-link": "S'inscrire ici",
+                "cart-empty": "Aucune demande pour l'instant",
+                "btn-loading": "Chargement...",
+                "status-available-short": "Disponible",
+                "status-sold-short": "Vendu",
+                "my-orders-title": "Mes demandes",
+                "order-th-property": "Bien",
+                "order-th-price": "Prix",
+                "order-th-qty": "Qté",
+                "order-th-status": "Statut",
+                "order-th-action": "Action",
+                "btn-cancel-order": "Annuler",
+                "order-cancelled": "Demande annulée et stock restauré.",
+                "no-orders": "Aucune demande pour le moment.",
+                "confirm-cancel-order": "Voulez-vous vraiment annuler cette demande ?"
+            },
+            rw: {
+                "nav-home": "Ahabanza",
+                "nav-contact": "Twandikire",
+                "nav-panel": "Akabari",
+                "nav-admin": "Ubutegetsi",
+                "btn-register": "Iyandikishe",
+                "btn-login": "Injira",
+                "btn-logout": "Sohoka",
+                "hero-badge": "Inzu yawe ndoto irategereje",
+                "hero-title": 'Shaka <span class="text-yellow-500">Umurima Uwiza</span>',
+                "hero-subtitle": "Inzu z'ubucuruzi, amakonde mashya, n'ubutaka bwiza – byatoranijwe na HITAMO NEZA.",
+                "hero-shop": "Reba amazu",
+                "hero-contact": "Twandikire",
+                "contact-title": "Twandikire HITAMO NEZA",
+                "contact-note": "Tusubiza mu masaha 24. Kubaza, kureba, cyangwa gushora imari.",
+                "filter-search-label": "Shakisha",
+                "filter-search-placeholder": "Ahantu, ubwoko...",
+                "filter-sort-label": "Tondeka",
+                "sort-default": "Nzira",
+                "sort-price-asc": "Igiciro ↑",
+                "sort-price-desc": "Igiciro ↓",
+                "filter-min-label": "Ntoya",
+                "filter-min-placeholder": "0",
+                "filter-max-label": "Nini",
+                "filter-max-placeholder": "Nta mpaka",
+                "btn-reset": "Subiza",
+                "featured-title": 'Amazu <span class="text-yellow-500">yatowe</span>',
+                "btn-back": "Subira inyuma",
+                "similar-title": "Bisa",
+                "recommended-title": "Biteganyirijwe",
+                "recently-viewed-title": "Rebwe vuba",
+                "dashboard-title": "Akabari kanjye",
+                "dashboard-contact-label": "📧 Twandikire &amp; Mbuga",
+                "dashboard-email-label": "Email:",
+                "admin-property-title": "🛠️ Gucunga amazu",
+                "admin-title-placeholder": "Izina",
+                "admin-location-placeholder": "Ahantu",
+                "admin-price-placeholder": "Igiciro (RWF)",
+                "admin-desc-placeholder": "Ibisobanuro",
+                "admin-bedrooms-label": "Ibyumba",
+                "admin-bathrooms-label": "Ibyumba byo kwuhagira",
+                "admin-area-label": "Ubuso (m²)",
+                "admin-type-label": "Ubwoko",
+                "type-house": "Inzu",
+                "type-apartment": "Apartamento",
+                "type-villa": "Villa",
+                "type-land": "Ubutaka",
+                "type-commercial": "Ubucuruzi",
+                "admin-parking-label": "🚗 Ahantu ho guhagarika",
+                "admin-toilets-label": "🚻 Amazu n'isukura",
+                "admin-status-label": "Ibyo muri",
+                "status-available": "Irahari",
+                "status-sold": "Yagurishijwe",
+                "admin-qty-label": "Ingano",
+                "admin-images-label": "Amashusho (max 10)",
+                "admin-images-hint": "Hitamo amashusho 10. Hindura wongere cyangwa ukure.",
+                "btn-add": "➕ Ongera",
+                "btn-cancel": "Hagarika",
+                "admin-inventory-title": "📋 Ibigowe",
+                "admin-inquiries-title": "Ibibazo",
+                "inquiry-th-name": "Izina",
+                "inquiry-th-email": "Email",
+                "inquiry-th-phone": "Telefone",
+                "inquiry-th-property": "Umurima",
+                "inquiry-th-qty": "Ingano",
+                "inquiry-th-location": "Ahantu",
+                "inquiry-th-notes": "Inyandiko",
+                "inquiry-th-date": "Itariki",
+                "inquiry-th-action": "Ibikorwa",
+                "admin-contact-title": "Hindura amakuru y'ubucuruzi",
+                "admin-instagram-label": "URL ya Instagram",
+                "admin-instagram-placeholder": "https://www.instagram.com/username",
+                "admin-whatsapp-label": "WhatsApp (hamwe na code y'igihugu)",
+                "admin-whatsapp-placeholder": "+250XXXXXXXXX",
+                "btn-save": "Bika",
+                "admin-users-stats-title": "👥 Abakoresha &amp; Imibare",
+                "cart-title": "Ibibazo byawe",
+                "cart-total-label": "Igiteranyo:",
+                "cart-submit-btn": "Ohereza ikibazo",
+                "modal-inquiry-title": "Saba amakuru",
+                "modal-name-placeholder": "Izina ryose *",
+                "modal-email-placeholder": "Email *",
+                "modal-phone-placeholder": "Telefone *",
+                "modal-qty-placeholder": "Ingano *",
+                "modal-location-placeholder": "Ahantu kureba *",
+                "modal-notes-placeholder": "Ubutumwa",
+                "modal-property-label": "Umurima:",
+                "modal-price-label": "Igiciro/igice:",
+                "modal-available-label": "Irahari:",
+                "modal-submit-btn": "Ohereza ikibazo",
+                "login-required-title": "Saba Kwinjira",
+                "login-required-message": "Nyamuneka winjire cyangwa urebe konti.",
+                "register-title": "Kora konti",
+                "reg-firstname-placeholder": "Izina",
+                "reg-lastname-placeholder": "Izina ry'umuryango",
+                "reg-email-placeholder": "Email",
+                "reg-password-placeholder": "Ijambobanga (6+ inyuguti)",
+                "reg-confirm-placeholder": "Emeza ijambobanga",
+                "login-title": "Murakaza neza",
+                "login-email-placeholder": "Email",
+                "login-password-placeholder": "Ijambobanga",
+                "login-switch-text": "Nta konti ufite?",
+                "login-switch-link": "Iyandikishe hano",
+                "cart-empty": "Nta kibazo kigeze",
+                "btn-loading": "Birakorwa...",
+                "status-available-short": "Irahari",
+                "status-sold-short": "Yagurishijwe",
+                "my-orders-title": "Ibibazo byanjye",
+                "order-th-property": "Umurima",
+                "order-th-price": "Igiciro",
+                "order-th-qty": "Ingano",
+                "order-th-status": "Ibyo muri",
+                "order-th-action": "Ibikorwa",
+                "btn-cancel-order": "Hagarika",
+                "order-cancelled": "Ikibazo cyahagaritswe kandi ubwinshi bwasubijwe.",
+                "no-orders": "Nta kibazo kigeze.",
+                "confirm-cancel-order": "Urashaka kugira ngo uhagarike iki kibazo?"
+            }
+        };
 
         // ============================================================
         //  FIREBASE CONFIG
@@ -1045,24 +1386,108 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb"; // Your provided key
 
         // ============================================================
-        //  IMGBB API KEY – PLEASE REPLACE WITH YOUR OWN
+        //  LANGUAGE
         // ============================================================
-        const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb"; // <-- replace with your valid key
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang] && translations[lang][key]) {
+                    if (key === 'hero-title' || key === 'featured-title') {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+            document.getElementById('langMenu').classList.remove('show');
+        }
+
+        document.getElementById('langToggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('langMenu').classList.toggle('show');
+        });
+        document.querySelectorAll('#langMenu button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.dataset.lang);
+            });
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-dropdown')) {
+                document.getElementById('langMenu').classList.remove('show');
+            }
+        });
 
         // ============================================================
-        //  LANGUAGE, LIGHTBOX, UTILITY (same as before)
+        //  LIGHTBOX
         // ============================================================
-        // ... (copy all helper functions from previous version)
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        window.openLightbox = openLightbox;
+        window.closeLightbox = closeLightbox;
 
         // ============================================================
-        //  IMPROVED UPLOAD FUNCTION WITH ERROR HANDLING
+        //  UTILITY
+        // ============================================================
+        const loader = document.getElementById('globalLoader');
+
+        function showLoader() { if (loader) loader.classList.remove('hidden'); }
+
+        function hideLoader() { if (loader) loader.classList.add('hidden'); }
+
+        function showMessage(msg, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            if (!container) return;
+            const notif = document.createElement('div');
+            notif.className =
+                `fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-900 text-green-300 border-l-4 border-green-500' : type === 'error' ? 'bg-red-900 text-red-300 border-l-4 border-red-500' : 'bg-gray-800 text-yellow-500 border-l-4 border-yellow-500'}`;
+            notif.innerHTML =
+            `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
+            container.appendChild(notif);
+            setTimeout(() => notif.remove(), 4000);
+        }
+
+        function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[
+            m])); }
+
+        function getFriendlyError(code) {
+            const map = {
+                'auth/email-already-in-use': 'Email already registered.',
+                'auth/invalid-email': 'Invalid email.',
+                'auth/weak-password': 'Password must be 6+ chars.',
+                'auth/wrong-password': 'Incorrect password.',
+                'auth/user-not-found': 'No account. Register first.',
+                'auth/too-many-requests': 'Too many attempts.'
+            };
+            return map[code] || `Error: ${code}`;
+        }
+
+        // ============================================================
+        //  UPLOAD FUNCTIONS (using your API key)
         // ============================================================
         async function uploadImageToImgBB(file) {
             if (!IMGBB_API_KEY || IMGBB_API_KEY === "4fa8b99e2ba50cfe70cc9f69257055bb") {
-                console.warn("ImgBB API key is missing or invalid. Please get a free key from https://api.imgbb.com/");
-                throw new Error("Invalid ImgBB API key. Please check your key.");
+                console.warn("ImgBB API key is set but may be invalid. Please get a free key from https://api.imgbb.com/");
+                // Continue anyway – we'll let the API return an error
             }
             const formData = new FormData();
             formData.append('image', file);
@@ -1093,30 +1518,942 @@
         }
 
         // ============================================================
-        //  REST OF THE CODE (state, DOM, cart, product functions, admin, auth, navigation)
-        //  – Same as previous working version.
-        //  – The only change is the upload function above.
+        //  STATE
         // ============================================================
-
-        // For brevity, we include the essential part – the product form submit handler uses uploadMultipleImages.
-        // Ensure your product form submit uses the updated uploadMultipleImages.
-
-        // ... (copy everything else from the previous final code)
-        // Make sure to include all functions (applyFilters, fetchProducts, etc.)
+        let currentUser = null;
+        let userRole = 'guest';
+        let allProducts = [];
+        let filteredProducts = [];
+        let cart = JSON.parse(localStorage.getItem('peterCommissionerCart') || '[]');
+        let recentlyViewedIds = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+        let editingId = null;
+        let currentImages = [];
+        let pendingProduct = null;
+        let contactInfo = { instagramUrl: '', phoneNumber: '' };
 
         // ============================================================
-        //  PRODUCT FORM SUBMIT (with improved image handling)
+        //  DOM REFS
         // ============================================================
-        dom.productForm.onsubmit = async (e) => {
-            // ... (same as before, using uploadMultipleImages)
-            // The only difference is the upload function now has better error messages.
+        const $ = (id) => document.getElementById(id);
+        const dom = {
+            homeSec: $('home-section'),
+            productDetailSec: $('product-detail-section'),
+            contactSec: $('contact-section'),
+            userSec: $('user-panel-section'),
+            adminSec: $('admin-panel-section'),
+            registerBtn: $('registerBtn'),
+            loginBtn: $('loginBtn'),
+            logoutBtn: $('logoutBtn'),
+            userNav: document.querySelector('[data-nav="user"]'),
+            adminNav: document.querySelector('[data-nav="admin"]'),
+            homeNav: document.querySelector('[data-nav="home"]'),
+            contactNav: document.querySelector('[data-nav="contact"]'),
+            navbarContactLinks: $('navbarContactLinks'),
+            productsGrid: $('productsGrid'),
+            detailContent: $('detailContent'),
+            relatedProductsGrid: $('relatedProductsGrid'),
+            backToHomeBtn: $('backToHomeBtn'),
+            recommendationsGrid: $('recommendationsGrid'),
+            recentlyViewedGrid: $('recentlyViewedGrid'),
+            searchInput: $('searchInput'),
+            sortSelect: $('sortSelect'),
+            minPrice: $('minPrice'),
+            maxPrice: $('maxPrice'),
+            resetFiltersBtn: $('resetFiltersBtn'),
+            cartIcon: $('cartIconBtn'),
+            cartSidebar: $('cartSidebar'),
+            cartOverlay: $('cartOverlay'),
+            closeCart: $('closeCart'),
+            cartItemsDiv: $('cartItems'),
+            cartTotal: $('cartTotal'),
+            cartCount: $('cartCount'),
+            customerModal: $('customerModal'),
+            closeCustomerModal: $('closeCustomerModal'),
+            customerOrderForm: $('customerOrderForm'),
+            orderProductId: $('orderProductId'),
+            orderProductName: $('orderProductName'),
+            orderProductPrice: $('orderProductPrice'),
+            orderMaxQuantity: $('orderMaxQuantity'),
+            orderProductDisplay: $('orderProductDisplay'),
+            orderPriceDisplay: $('orderPriceDisplay'),
+            orderAvailableDisplay: $('orderAvailableDisplay'),
+            loginRequiredModal: $('loginRequiredModal'),
+            closeLoginRequiredModal: $('closeLoginRequiredModal'),
+            loginRequiredLoginBtn: $('loginRequiredLoginBtn'),
+            loginRequiredRegisterBtn: $('loginRequiredRegisterBtn'),
+            registerModal: $('registerModal'),
+            loginModal: $('loginModal'),
+            closeReg: $('closeRegModal'),
+            closeLogin: $('closeLoginModal'),
+            regForm: $('regForm'),
+            loginForm: $('loginForm'),
+            switchToRegister: $('switchToRegister'),
+            userInfo: $('userInfoDisplay'),
+            contactEmailSpan: $('contactEmailSpan'),
+            socialLinksContainer: $('socialLinksContainer'),
+            productForm: $('productForm'),
+            productList: $('productListAdmin'),
+            userTable: $('userListAdmin'),
+            perfStats: $('performanceStats'),
+            ordersList: $('ordersList'),
+            cancelEdit: $('cancelEdit'),
+            productName: $('productName'),
+            productLocation: $('productLocation'),
+            productPrice: $('productPrice'),
+            productDesc: $('productDesc'),
+            productStock: $('productStock'),
+            productQuantity: $('productQuantity'),
+            productImages: $('productImages'),
+            productFormTitle: $('productFormTitle'),
+            bedrooms: $('bedrooms'),
+            bathrooms: $('bathrooms'),
+            area: $('area'),
+            propertyType: $('propertyType'),
+            parking: $('parking'),
+            toilets: $('toilets'),
+            existingImagesPreview: $('existingImagesPreview'),
+            publicInstagramLink: $('publicInstagramLink'),
+            publicPhoneNumber: $('publicPhoneNumber'),
+            adminInstagramUrl: $('adminInstagramUrl'),
+            adminPhoneNumber: $('adminPhoneNumber'),
+            contactSettingsForm: $('contactSettingsForm'),
+            resetContactBtn: $('resetContactBtn'),
+            userOrdersBody: $('userOrdersBody'),
+            userOrdersEmpty: $('userOrdersEmpty'),
         };
+
+        // ============================================================
+        //  CONTACT INFO
+        // ============================================================
+        function updateNavbarContactLinks() {
+            if (!dom.navbarContactLinks) return;
+            const insta = contactInfo.instagramUrl || 'https://www.instagram.com/__bullet_wi_gikondo__';
+            const phone = contactInfo.phoneNumber || '+250786811816';
+            const email = 'ruzagirizakadochriistiano@gmail.com';
+            dom.navbarContactLinks.innerHTML = `
+                <a href="${insta}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.4rem] sm:text-xs">
+                    <i class="fab fa-instagram text-pink-500 text-[0.5rem] sm:text-sm"></i> <span class="hidden sm:inline">Instagram</span>
+                </a>
+                <span class="text-yellow-600/50 text-[0.3rem] hidden sm:inline">|</span>
+                <a href="https://wa.me/${phone.replace(/\D/g,'')}" target="_blank" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.4rem] sm:text-xs">
+                    <i class="fab fa-whatsapp text-green-500 text-[0.5rem] sm:text-sm"></i> <span class="hidden sm:inline">${phone}</span>
+                </a>
+                <span class="text-yellow-600/50 text-[0.3rem] hidden sm:inline">|</span>
+                <a href="mailto:${email}" class="hover:text-yellow-500 transition flex items-center gap-0.5 text-gray-300 text-[0.4rem] sm:text-xs">
+                    <i class="fas fa-envelope text-[0.5rem] sm:text-sm"></i> <span class="hidden sm:inline">Email</span>
+                </a>
+            `;
+        }
+
+        async function loadContactInfo() {
+            try {
+                const docRef = db.collection("settings").doc("contactInfo");
+                const docSnap = await docRef.get();
+                if (docSnap.exists) contactInfo = docSnap.data();
+                else {
+                    contactInfo = { instagramUrl: "https://www.instagram.com/__bullet_wi_gikondo__",
+                        phoneNumber: "+250786811816" };
+                    await docRef.set(contactInfo);
+                }
+                if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML =
+                    `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-yellow-500 underline">${contactInfo.instagramUrl}</a>`;
+                if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML =
+                    `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-yellow-500 underline">${contactInfo.phoneNumber}</a>`;
+                if (dom.adminInstagramUrl) dom.adminInstagramUrl.value = contactInfo.instagramUrl;
+                if (dom.adminPhoneNumber) dom.adminPhoneNumber.value = contactInfo.phoneNumber;
+                updateNavbarContactLinks();
+            } catch (err) { console.error(err); }
+        }
+
+        async function saveContactInfo(url, phone) {
+            showLoader();
+            try {
+                await db.collection("settings").doc("contactInfo").set({ instagramUrl: url, phoneNumber: phone });
+                contactInfo = { instagramUrl: url, phoneNumber: phone };
+                if (dom.publicInstagramLink) dom.publicInstagramLink.innerHTML =
+                    `<a href="${contactInfo.instagramUrl}" target="_blank" class="text-yellow-500 underline">${contactInfo.instagramUrl}</a>`;
+                if (dom.publicPhoneNumber) dom.publicPhoneNumber.innerHTML =
+                    `<a href="https://wa.me/${contactInfo.phoneNumber.replace(/\D/g,'')}" target="_blank" class="text-yellow-500 underline">${contactInfo.phoneNumber}</a>`;
+                updateNavbarContactLinks();
+                showMessage("Contact info updated", "success");
+            } catch (err) { showMessage("Update failed", "error"); } finally { hideLoader(); }
+        }
+
+        // ============================================================
+        //  CART
+        // ============================================================
+        function saveCart() {
+            localStorage.setItem('peterCommissionerCart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let total = 0,
+                count = 0;
+            dom.cartItemsDiv.innerHTML = '';
+            if (!cart.length) dom.cartItemsDiv.innerHTML =
+                '<div class="text-center py-4 text-gray-400 text-xs sm:text-base" data-i18n="cart-empty">No inquiries yet</div>';
+            else cart.forEach((item, idx) => {
+                total += item.price * item.quantity;
+                count += item.quantity;
+                const div = document.createElement('div');
+                div.className = 'flex gap-2 border-b border-gray-800 pb-2 mb-2';
+                div.innerHTML =
+                    `<img src="${item.images?.[0] || 'https://via.placeholder.com/60'}" class="w-10 h-10 sm:w-14 sm:h-14 object-cover rounded"><div class="flex-1"><b class="text-yellow-500 text-xs sm:text-base">${escapeHtml(item.name)}</b><br><span class="text-gray-300 text-xs sm:text-sm">${item.price.toLocaleString()} RWF</span><div class="flex gap-1 mt-0.5"><button class="cart-dec bg-gray-800 text-yellow-500 px-1 rounded text-xs" data-idx="${idx}">-</button><span class="text-white text-xs">${item.quantity}</span><button class="cart-inc bg-gray-800 text-yellow-500 px-1 rounded text-xs" data-idx="${idx}">+</button><button class="cart-del text-red-500 ml-1 text-xs" data-idx="${idx}">🗑</button></div></div><div class="text-yellow-500 text-xs sm:text-base">${(item.price * item.quantity).toLocaleString()} RWF</div>`;
+                dom.cartItemsDiv.appendChild(div);
+            });
+            dom.cartTotal.innerText = total.toLocaleString();
+            dom.cartCount.innerText = count;
+            dom.cartItemsDiv.querySelectorAll('.cart-dec, .cart-inc, .cart-del').forEach(btn => {
+                btn.onclick = () => {
+                    const i = parseInt(btn.dataset.idx);
+                    if (btn.classList.contains('cart-dec')) { if (cart[i].quantity > 1) cart[i].quantity--;
+                        else cart.splice(i, 1); } else if (btn.classList.contains('cart-inc')) cart[i].quantity++;
+                    else if (btn.classList.contains('cart-del')) cart.splice(i, 1);
+                    saveCart();
+                    applyFiltersAndRender();
+                };
+            });
+        }
+
+        // ============================================================
+        //  PRODUCT TEMPLATE
+        // ============================================================
+        function productCardTemplate(p) {
+            const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/300';
+            const hasStock = (p.stock === 'available' && p.quantity > 0);
+            const statusText = hasStock ? translations[currentLang]['status-available-short'] : translations[currentLang][
+                'status-sold-short'
+            ];
+            const statusBadge = hasStock ?
+                `<span class="absolute top-1 right-1 bg-yellow-600 text-black text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full font-bold">${p.quantity} left</span>` :
+                `<span class="absolute top-1 right-1 bg-red-700 text-white text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full">${statusText}</span>`;
+            const orderBtn = hasStock ?
+                `<button class="add-cart-trigger btn-primary text-black font-semibold px-1.5 py-0.5 sm:px-4 sm:py-2 rounded-full text-[0.5rem] sm:text-sm" data-id="${p.id}"><i class="fas fa-cart-plus mr-0.5"></i> <span class="hidden sm:inline" data-i18n="btn-inquire">Inquire</span><span class="sm:hidden" data-i18n="btn-buy">Buy</span></button>` :
+                `<button class="bg-gray-700 text-gray-400 font-semibold px-1.5 py-0.5 sm:px-4 sm:py-2 rounded-full text-[0.5rem] sm:text-sm cursor-not-allowed" disabled><i class="fas fa-times-circle mr-0.5"></i> <span data-i18n="sold-label">Sold</span></button>`;
+            const locationDisplay = p.location ?
+                `<div class="flex items-center text-[0.4rem] sm:text-xs text-gray-400 mt-0.5"><i class="fas fa-map-marker-alt mr-0.5 text-yellow-500"></i>${escapeHtml(p.location)}</div>` :
+                '';
+            return `<div class="product-card bg-black rounded-2xl shadow-md overflow-hidden cursor-pointer relative" data-id="${p.id}">${statusBadge}<img src="${img}" class="h-24 sm:h-56 w-full object-cover" loading="lazy"><div class="p-1 sm:p-4"><h3 class="font-bold text-[0.65rem] sm:text-xl text-yellow-500 leading-tight">${escapeHtml(p.name)}</h3>${locationDisplay}<div class="flex justify-between items-center mt-0.5"><span class="text-yellow-500 font-semibold text-[0.6rem] sm:text-base">${p.price.toLocaleString()} RWF</span><span class="text-[0.4rem] sm:text-xs text-gray-400"><i class="fas fa-bed"></i> ${p.bedrooms || 0}</span></div><div class="flex justify-between items-center mt-1">${orderBtn}</div></div></div>`;
+        }
+
+        // ============================================================
+        //  PRODUCT FUNCTIONS
+        // ============================================================
+        function attachProductEvents(container) {
+            container.querySelectorAll('.product-card').forEach(card => {
+                card.onclick = (e) => {
+                    if (e.target.classList.contains('add-cart-trigger') || e.target.closest(
+                            '.add-cart-trigger') || e.target.disabled) return;
+                    showProductDetail(card.dataset.id);
+                };
+            });
+            container.querySelectorAll('.add-cart-trigger').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    const prod = allProducts.find(p => p.id === btn.dataset.id);
+                    if (prod && prod.stock === 'available' && prod.quantity > 0) initiateOrder(prod);
+                    else showMessage("This property is no longer available.", "warning");
+                };
+            });
+        }
+
+        function showProductDetail(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            const statusText = product.stock === 'available' ? translations[currentLang]['status-available-short'] :
+                translations[currentLang]['status-sold-short'];
+            const statusBadge = product.stock === 'available' ?
+                '<span class="status-available px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-check-circle mr-1"></i>' +
+                statusText +
+                '</span>' :
+                '<span class="status-sold px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-times-circle mr-1"></i>' +
+                statusText + '</span>';
+            const orderBtn = (product.stock === 'available' && product.quantity > 0) ?
+                `<button class="add-to-cart-detail btn-primary text-black px-3 sm:px-6 py-1 sm:py-2 rounded-full font-semibold mt-3 sm:mt-6 text-xs sm:text-base" data-id="${product.id}"><i class="fas fa-cart-plus mr-1"></i> <span data-i18n="btn-inquire-detail">Inquire</span></button>` :
+                `<button class="bg-gray-700 text-gray-400 px-3 sm:px-6 py-1 sm:py-2 rounded-full font-semibold mt-3 sm:mt-6 text-xs sm:text-base" disabled><i class="fas fa-times-circle mr-1"></i> <span data-i18n="sold-label">Sold</span></button>`;
+
+            const imagesHtml = product.images && product.images.length ?
+                `<div class="detail-image-grid">${product.images.map(img => `<img src="${img}" class="detail-main-img rounded-lg shadow-md" onclick="openLightbox('${img}')" />`).join('')}</div>` :
+                `<img src="https://via.placeholder.com/400" class="detail-main-img rounded-lg" onclick="openLightbox('https://via.placeholder.com/400')" />`;
+
+            const locationHtml = product.location ?
+                `<div class="flex items-center gap-1 mt-1"><i class="fas fa-map-marker-alt text-yellow-500"></i><span class="text-gray-300 text-xs sm:text-base">${escapeHtml(product.location)}</span></div>` :
+                '';
+            const extraInfo =
+                `<div class="flex flex-wrap gap-1 sm:gap-3 mt-1 sm:mt-3">
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-car"></i> 🚗 ${product.parking || 0} spaces</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-toilet"></i> 🚻 ${product.toilets || 0}</span>
+                </div>`;
+
+            dom.detailContent.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-4 sm:gap-8">
+                    <div>${imagesHtml}</div>
+                    <div>
+                        <h2 class="text-lg sm:text-3xl font-bold text-yellow-500">${escapeHtml(product.name)}</h2>
+                        <p class="price-large mt-1">${product.price.toLocaleString()} RWF</p>
+                        ${locationHtml}
+                        <div class="mt-2">${statusBadge}</div>
+                        ${extraInfo}
+                        <p class="text-gray-400 text-xs sm:text-base mt-2">${escapeHtml(product.description || 'No description provided.')}</p>
+                        <div class="mt-4">${orderBtn}</div>
+                    </div>
+                </div>
+            `;
+
+            if (product.stock === 'available' && product.quantity > 0) {
+                dom.detailContent.querySelector('.add-to-cart-detail')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    initiateOrder(product);
+                });
+            }
+
+            const related = allProducts.filter(p => p.id !== product.id).sort(() => 0.5 - Math.random()).slice(0, 3);
+            dom.relatedProductsGrid.innerHTML = related.map(p => productCardTemplate(p)).join('');
+            dom.relatedProductsGrid.querySelectorAll('.product-card').forEach(card => {
+                card.onclick = () => showProductDetail(card.dataset.id);
+            });
+
+            dom.homeSec.classList.add('hidden');
+            dom.productDetailSec.classList.remove('hidden');
+            document.getElementById('product-detail-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            addRecentlyViewed(product.id);
+        }
+
+        function addRecentlyViewed(productId) {
+            recentlyViewedIds = recentlyViewedIds.filter(id => id !== productId);
+            recentlyViewedIds.unshift(productId);
+            if (recentlyViewedIds.length > 6) recentlyViewedIds.pop();
+            localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewedIds));
+            renderRecentlyViewed();
+        }
+
+        function renderRecentlyViewed() {
+            const recent = allProducts.filter(p => recentlyViewedIds.includes(p.id));
+            dom.recentlyViewedGrid.innerHTML = recent.length ? recent.map(p => productCardTemplate(p)).join('') :
+                '<div class="col-span-full text-center text-gray-500 py-4 text-xs sm:text-base" data-i18n="recently-viewed-empty">No recently viewed</div>';
+            attachProductEvents(dom.recentlyViewedGrid);
+        }
+
+        function renderRecommendations() {
+            let recs = [...allProducts];
+            if (cart.length) recs = recs.filter(p => !cart.some(c => c.id === p.id));
+            recs = recs.sort(() => 0.5 - Math.random()).slice(0, 3);
+            if (!recs.length) recs = allProducts.slice(0, 3);
+            dom.recommendationsGrid.innerHTML = recs.map(p => productCardTemplate(p)).join('');
+            attachProductEvents(dom.recommendationsGrid);
+        }
+
+        function applyFiltersAndRender() {
+            let filtered = [...allProducts];
+            const search = dom.searchInput.value.toLowerCase();
+            if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.description && p
+                    .description.toLowerCase().includes(search)) || (p.location && p.location.toLowerCase().includes(
+                    search)));
+            const min = parseFloat(dom.minPrice.value);
+            if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
+            const max = parseFloat(dom.maxPrice.value);
+            if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
+            const sort = dom.sortSelect.value;
+            if (sort === 'price_asc') filtered.sort((a, b) => a.price - b.price);
+            else if (sort === 'price_desc') filtered.sort((a, b) => b.price - a.price);
+            filteredProducts = filtered;
+            dom.productsGrid.innerHTML = filteredProducts.length ? filteredProducts.map(p => productCardTemplate(p)).join(
+                '') :
+                '<div class="col-span-full text-center text-gray-500 py-6 text-xs sm:text-base" data-i18n="no-properties">No properties found</div>';
+            attachProductEvents(dom.productsGrid);
+            renderRecommendations();
+        }
+
+        async function fetchProducts() {
+            showLoader();
+            try {
+                const snap = await db.collection("products").get();
+                allProducts = snap.docs.map(d => ({ id: d.id, ...d.data(), stock: d.data().stock || 'available',
+                    quantity: d.data().quantity !== undefined ? d.data().quantity : 1, bedrooms: d.data()
+                        .bedrooms || 0,
+                    bathrooms: d.data().bathrooms || 0, area: d.data().area || 0, propertyType: d.data()
+                        .propertyType || 'House', location: d.data().location || '',
+                    parking: d.data().parking || 0, toilets: d.data().toilets || 0 }));
+                applyFiltersAndRender();
+                renderRecentlyViewed();
+            } catch (e) { showMessage('Failed to load properties', 'error'); } finally { hideLoader(); }
+        }
+
+        function initiateOrder(product) {
+            if (!currentUser) { pendingProduct = product;
+                dom.loginRequiredModal.classList.remove('hidden'); return; }
+            if (product.stock === 'sold' || product.quantity <= 0) { showMessage("This property is no longer available.",
+                    "warning"); return; }
+            dom.orderProductId.value = product.id;
+            dom.orderProductName.value = product.name;
+            dom.orderProductPrice.value = product.price;
+            dom.orderMaxQuantity.value = product.quantity;
+            dom.orderProductDisplay.innerText = product.name;
+            dom.orderPriceDisplay.innerText = product.price.toLocaleString();
+            dom.orderAvailableDisplay.innerText = product.quantity;
+            const qtyInput = document.getElementById('orderQuantity');
+            qtyInput.max = product.quantity;
+            qtyInput.value = 1;
+            dom.customerModal.classList.remove('hidden');
+        }
+
+        async function submitOrderAndAddToCart(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('orderFullName').value.trim();
+            const email = document.getElementById('orderEmail').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            let quantity = parseInt(document.getElementById('orderQuantity').value);
+            const location = document.getElementById('orderLocation').value.trim();
+            const notes = document.getElementById('orderNotes').value.trim();
+            const productId = dom.orderProductId.value;
+            const productName = dom.orderProductName.value;
+            const productPrice = parseFloat(dom.orderProductPrice.value);
+            const maxQuantity = parseInt(dom.orderMaxQuantity.value);
+            if (!fullName || !email || !phone || !quantity || !location) { showMessage("Please fill all required fields",
+                    "warning"); return; }
+            if (quantity > maxQuantity) { showMessage(`Only ${maxQuantity} unit(s) available.`, "warning"); return; }
+            showLoader();
+            try {
+                await db.collection("orders").add({
+                    fullName,
+                    email,
+                    phone,
+                    productId,
+                    productName,
+                    productPrice,
+                    quantity,
+                    location,
+                    notes,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    totalPrice: productPrice * quantity
+                });
+                const productRef = db.collection("products").doc(productId);
+                const newQuantity = maxQuantity - quantity;
+                await productRef.update({ quantity: newQuantity, stock: newQuantity > 0 ? 'available' : 'sold' });
+                const productIndex = allProducts.findIndex(p => p.id === productId);
+                if (productIndex !== -1) { allProducts[productIndex].quantity = newQuantity;
+                    allProducts[productIndex].stock = newQuantity > 0 ? 'available' : 'sold'; }
+                let existing = cart.find(i => i.id === productId);
+                if (existing) existing.quantity += quantity;
+                else cart.push({ id: productId, name: productName, price: productPrice, images: (allProducts.find(p => p
+                        .id === productId)?.images) || [], quantity: quantity });
+                saveCart();
+                dom.customerModal.classList.add('hidden');
+                dom.customerOrderForm.reset();
+                showMessage(`Inquiry sent! ${productName} added to your cart.`, "success");
+                applyFiltersAndRender();
+                if (userRole === 'admin') { renderAdminList();
+                    fetchUsersAndOrders(); }
+            } catch (err) { showMessage("Failed: " + err.message, "error"); } finally { hideLoader(); }
+        }
+
+        // ============================================================
+        //  CANCEL / DELETE ORDER
+        // ============================================================
+        async function cancelOrder(orderId, productId, qty) {
+            if (!confirm(translations[currentLang]['confirm-cancel-order'] || 'Are you sure?')) return;
+            showLoader();
+            try {
+                await db.collection("orders").doc(orderId).delete();
+                const productRef = db.collection("products").doc(productId);
+                const prodSnap = await productRef.get();
+                if (prodSnap.exists) {
+                    const currentQty = prodSnap.data().quantity || 0;
+                    const newQty = currentQty + qty;
+                    const newStock = newQty > 0 ? 'available' : 'sold';
+                    await productRef.update({ quantity: newQty, stock: newStock });
+                    const idx = allProducts.findIndex(p => p.id === productId);
+                    if (idx !== -1) {
+                        allProducts[idx].quantity = newQty;
+                        allProducts[idx].stock = newStock;
+                    }
+                }
+                cart = cart.filter(item => item.id !== productId);
+                saveCart();
+                showMessage(translations[currentLang]['order-cancelled'] || 'Order cancelled and stock restored.',
+                'success');
+                applyFiltersAndRender();
+                if (userRole === 'admin') {
+                    renderAdminList();
+                    fetchUsersAndOrders();
+                }
+                if (!dom.userSec.classList.contains('hidden')) {
+                    loadUserOrders();
+                }
+            } catch (err) {
+                showMessage('Error cancelling: ' + err.message, 'error');
+            } finally { hideLoader(); }
+        }
+        window.cancelOrder = cancelOrder;
+
+        // ============================================================
+        //  USER ORDERS
+        // ============================================================
+        async function loadUserOrders() {
+            if (!currentUser) return;
+            try {
+                const snap = await db.collection("orders")
+                    .where("email", "==", currentUser.email)
+                    .orderBy("createdAt", "desc")
+                    .get();
+                const tbody = dom.userOrdersBody;
+                const emptyMsg = dom.userOrdersEmpty;
+                tbody.innerHTML = '';
+                if (snap.empty) {
+                    emptyMsg.style.display = 'block';
+                    return;
+                }
+                emptyMsg.style.display = 'none';
+                snap.forEach(doc => {
+                    const o = doc.data();
+                    const tr = document.createElement('tr');
+                    const status = (o.productId && allProducts.find(p => p.id === o.productId)?.stock ===
+                        'available') ?
+                        'Available' : 'Sold';
+                    tr.innerHTML = `
+                        <td>${escapeHtml(o.productName)}</td>
+                        <td>${o.productPrice.toLocaleString()} RWF</td>
+                        <td>${o.quantity}</td>
+                        <td><span class="${status === 'Available' ? 'text-green-400' : 'text-red-400'}">${status}</span></td>
+                        <td><button class="btn-cancel-order" onclick="cancelOrder('${doc.id}','${o.productId}',${o.quantity})">${translations[currentLang]['btn-cancel-order']}</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {
+                console.warn('Error loading user orders:', e);
+                dom.userOrdersBody.innerHTML =
+                    '<tr><td colspan="5" class="text-red-400 text-xs">Error loading orders</td></tr>';
+            }
+        }
+
+        // ============================================================
+        //  ADMIN
+        // ============================================================
+        async function renderAdminList() {
+            if (!dom.productList) return;
+            if (!allProducts.length) { dom.productList.innerHTML = '<div class="text-gray-500">No properties</div>'; return; }
+            dom.productList.innerHTML = allProducts.map(p =>
+                `<div class="flex justify-between items-center border-b border-gray-800 py-1 text-xs sm:text-base"><div class="flex items-center gap-1"><img src="${p.images?.[0] || 'https://via.placeholder.com/40'}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded"><div><span class="text-gray-300"><strong class="text-yellow-500">${escapeHtml(p.name)}</strong> - ${p.price.toLocaleString()} RWF</span><div class="text-[0.5rem] sm:text-xs text-gray-400"><i class="fas fa-map-marker-alt mr-0.5"></i>${escapeHtml(p.location || 'No location')}</div></div><span class="ml-1 ${p.stock === 'available' ? 'text-green-400' : 'text-red-400'} text-[0.5rem] sm:text-xs">${p.stock === 'available' ? `Available (${p.quantity})` : 'Sold'}</span></div><div><button class="edit-prod bg-yellow-600 text-black px-1 sm:px-2 py-0.5 rounded text-[0.5rem] sm:text-sm mr-0.5 font-bold" data-id="${p.id}">Edit</button><button class="del-prod bg-red-700 text-white px-1 sm:px-2 py-0.5 rounded text-[0.5rem] sm:text-sm" data-id="${p.id}">Del</button></div></div>`
+            ).join('');
+            dom.productList.querySelectorAll('.edit-prod').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
+            dom.productList.querySelectorAll('.del-prod').forEach(btn => btn.onclick = async () => { if (confirm(
+                        'Delete property?')) await deleteProduct(btn.dataset.id); });
+        }
+
+        async function deleteProduct(id) {
+            showLoader();
+            try {
+                await db.collection("products").doc(id).delete();
+                showMessage('Property deleted', 'success');
+                await fetchProducts();
+                if (userRole === 'admin') await fetchUsersAndOrders();
+            } catch (e) { showMessage('Delete failed', 'error'); } finally { hideLoader(); }
+        }
+
+        async function openEdit(id) {
+            const prod = allProducts.find(p => p.id === id);
+            if (!prod) return;
+            editingId = id;
+            dom.productName.value = prod.name;
+            dom.productLocation.value = prod.location || '';
+            dom.productPrice.value = prod.price;
+            dom.productDesc.value = prod.description || '';
+            dom.productStock.value = prod.stock;
+            dom.productQuantity.value = prod.quantity;
+            dom.bedrooms.value = prod.bedrooms;
+            dom.bathrooms.value = prod.bathrooms;
+            dom.area.value = prod.area;
+            dom.propertyType.value = prod.propertyType || 'House';
+            dom.parking.value = prod.parking || 0;
+            dom.toilets.value = prod.toilets || 0;
+            dom.productFormTitle.innerText = '✏️ Update';
+            dom.cancelEdit.classList.remove('hidden');
+            if (dom.existingImagesPreview && prod.images) {
+                dom.existingImagesPreview.innerHTML = prod.images.map(url =>
+                    `<div class="existing-image-item"><img src="${url}" class="image-preview w-12 h-12 sm:w-20 sm:h-20"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span></div>`
+                    ).join('');
+                currentImages = [...prod.images];
+            } else {
+                currentImages = [];
+            }
+        }
+
+        function resetEdit() {
+            editingId = null;
+            dom.productForm.reset();
+            dom.productStock.value = 'available';
+            dom.productQuantity.value = 1;
+            dom.bedrooms.value = 3;
+            dom.bathrooms.value = 2;
+            dom.area.value = 150;
+            dom.propertyType.value = 'House';
+            dom.parking.value = 2;
+            dom.toilets.value = 2;
+            dom.productFormTitle.innerText = '➕ Add';
+            dom.cancelEdit.classList.add('hidden');
+            if (dom.existingImagesPreview) dom.existingImagesPreview.innerHTML = '';
+            currentImages = [];
+        }
+
+        async function fetchUsersAndOrders() {
+            if (dom.userTable) {
+                try {
+                    const snap = await db.collection("users").get();
+                    let html =
+                        `<tr><th class="text-left text-yellow-500 text-[0.5rem] sm:text-sm">Name</th><th class="text-left text-yellow-500 text-[0.5rem] sm:text-sm">Email</th><th class="text-left text-yellow-500 text-[0.5rem] sm:text-sm">Role</th>`;
+                    snap.forEach(d => { const data = d.data();
+                        html +=
+                            `<tr><td class="py-0.5 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(data.firstName||'')} ${escapeHtml(data.lastName||'')}</td><td class="py-0.5 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(data.email)}</td><td class="py-0.5 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(data.role||'user')}<tr>`; });
+                    dom.userTable.innerHTML = html;
+                    if (dom.perfStats) dom.perfStats.innerHTML =
+                        `<div class="p-2"><p class="font-semibold text-yellow-500 text-sm sm:text-base">📊 Performance</p><p class="text-gray-300 text-xs sm:text-base">Users: ${snap.size}</p><p class="text-gray-300 text-xs sm:text-base">Properties: ${allProducts.length}</p><p class="text-gray-300 text-xs sm:text-base">Inquiries: ${cart.reduce((a,b)=>a+b.quantity,0)}</p></div>`;
+                } catch (e) { console.warn(e); }
+            }
+            if (dom.ordersList) {
+                try {
+                    const snap = await db.collection("orders").orderBy("createdAt", "desc").get();
+                    if (snap.empty) {
+                        dom.ordersList.innerHTML =
+                            '<tr><td colspan="9" class="text-center py-2 text-gray-500 text-xs sm:text-sm">No inquiries yet</td></tr>';
+                        return;
+                    }
+                    let html = '';
+                    snap.forEach(doc => {
+                        const o = doc.data();
+                        html += `
+                            <tr class="border-b border-gray-800">
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(o.fullName)}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(o.email)}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(o.phone)}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(o.productName)}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${o.quantity}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(o.location)}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${escapeHtml(o.notes || '')}</td>
+                                <td class="p-0.5 sm:p-2 text-[0.5rem] sm:text-sm text-gray-300">${new Date(o.createdAt?.toDate()).toLocaleString()}</td>
+                                <td class="p-0.5 sm:p-2">
+                                    <button class="btn-delete-inquiry" onclick="cancelOrder('${doc.id}','${o.productId}',${o.quantity})">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    dom.ordersList.innerHTML = html;
+                } catch (e) { console.warn(e);
+                    dom.ordersList.innerHTML =
+                        '<tr><td colspan="9" class="text-center text-red-500 text-xs sm:text-sm">Error loading inquiries</td></tr>'; }
+            }
+        }
+
+        // ============================================================
+        //  AUTH
+        // ============================================================
+        function closeModal(m) { if (m) m.classList.add('hidden'); }
+
+        function openModal(m) { if (m) m.classList.remove('hidden'); }
+
+        async function registerUser(email, pwd, first, last) {
+            showLoader();
+            try {
+                const cred = await auth.createUserWithEmailAndPassword(email, pwd);
+                const role = email === 'admin@petercommissioner.com' ? 'admin' : 'user';
+                await db.collection("users").doc(cred.user.uid).set({ firstName: first, lastName: last, email, role,
+                    createdAt: new Date() });
+                showMessage(`Welcome ${first}!`, 'success');
+                closeModal(dom.registerModal);
+                if (pendingProduct) { initiateOrder(pendingProduct);
+                    pendingProduct = null; }
+            } catch (err) { showMessage(getFriendlyError(err.code), 'error'); } finally { hideLoader(); }
+        }
+
+        async function loginUser(email, pwd) {
+            showLoader();
+            try {
+                await auth.signInWithEmailAndPassword(email, pwd);
+                showMessage('Login success', 'success');
+                closeModal(dom.loginModal);
+                if (pendingProduct) { initiateOrder(pendingProduct);
+                    pendingProduct = null; }
+            } catch (err) { showMessage(getFriendlyError(err.code), 'error'); } finally { hideLoader(); }
+        }
+
+        function logoutUser() { auth.signOut();
+            showMessage('Logged out', 'info');
+            showHome();
+            pendingProduct = null; }
+
+        function updateNav() {
+            const logged = !!currentUser;
+            dom.registerBtn.classList.toggle('hidden', logged);
+            dom.loginBtn.classList.toggle('hidden', logged);
+            dom.logoutBtn.classList.toggle('hidden', !logged);
+            dom.userNav.classList.toggle('hidden', !logged);
+            dom.adminNav.classList.toggle('hidden', userRole !== 'admin');
+        }
+
+        async function loadProfile() {
+            if (!currentUser) return;
+            try {
+                const snap = await db.collection("users").doc(currentUser.uid).get();
+                if (snap.exists) {
+                    const d = snap.data();
+                    dom.userInfo.innerHTML =
+                        `<div class="p-2 sm:p-4 bg-gray-900 rounded-xl text-xs sm:text-base"><strong class="text-yellow-500">${escapeHtml(d.firstName)} ${escapeHtml(d.lastName)}</strong><br class="text-gray-300">${escapeHtml(d.email)}<br class="text-gray-300">Role: ${escapeHtml(d.role)}</div>`;
+                    dom.contactEmailSpan.innerText = d.email;
+                } else dom.userInfo.innerHTML = '<p class="text-red-500 text-xs sm:text-base">Profile error</p>';
+            } catch (e) { showMessage('Profile load error', 'error'); }
+        }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        function showHome() {
+            [dom.homeSec, dom.contactSec, dom.userSec, dom.adminSec, dom.productDetailSec].forEach(s => s.classList.add(
+                'hidden'));
+            dom.homeSec.classList.remove('hidden');
+            applyFiltersAndRender();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showContact() {
+            [dom.homeSec, dom.contactSec, dom.userSec, dom.adminSec, dom.productDetailSec].forEach(s => s.classList.add(
+                'hidden'));
+            dom.contactSec.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showUser() {
+            if (!currentUser) { showMessage('Please login first', 'warning'); return; }
+            [dom.homeSec, dom.contactSec, dom.userSec, dom.adminSec, dom.productDetailSec].forEach(s => s.classList.add(
+                'hidden'));
+            dom.userSec.classList.remove('hidden');
+            loadProfile();
+            loadUserOrders();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAdmin() {
+            if (userRole !== 'admin') { showMessage('Admin only', 'error'); return; }
+            [dom.homeSec, dom.contactSec, dom.userSec, dom.adminSec, dom.productDetailSec].forEach(s => s.classList.add(
+                'hidden'));
+            dom.adminSec.classList.remove('hidden');
+            renderAdminList();
+            fetchUsersAndOrders();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         // ============================================================
         //  INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', async function() {
-            // ... (same as before)
+            setLanguage(currentLang);
+            await loadContactInfo();
+            updateCartUI();
+
+            auth.onAuthStateChanged(async (user) => {
+                currentUser = user;
+                if (user) {
+                    try {
+                        const snap = await db.collection("users").doc(user.uid).get();
+                        userRole = snap.exists ? snap.data().role : (user.email === 'admin@petercommissioner.com' ?
+                            'admin' : 'user');
+                    } catch (e) { userRole = 'user'; }
+                } else userRole = 'guest';
+                updateNav();
+                if (userRole === 'admin') dom.adminNav.classList.remove('hidden');
+                if (currentUser && !dom.userSec.classList.contains('hidden')) {
+                    loadProfile();
+                    loadUserOrders();
+                }
+                await fetchProducts();
+            });
+
+            dom.homeNav.onclick = showHome;
+            dom.contactNav.onclick = showContact;
+            dom.userNav.onclick = showUser;
+            dom.adminNav.onclick = showAdmin;
+
+            dom.registerBtn.onclick = () => openModal(dom.registerModal);
+            dom.loginBtn.onclick = () => openModal(dom.loginModal);
+            dom.logoutBtn.onclick = logoutUser;
+
+            dom.closeReg.onclick = () => closeModal(dom.registerModal);
+            dom.closeLogin.onclick = () => closeModal(dom.loginModal);
+            dom.closeLoginRequiredModal.onclick = () => closeModal(dom.loginRequiredModal);
+
+            dom.switchToRegister.onclick = () => { closeModal(dom.loginModal);
+                openModal(dom.registerModal); };
+            dom.loginRequiredLoginBtn.onclick = () => { closeModal(dom.loginRequiredModal);
+                openModal(dom.loginModal); };
+            dom.loginRequiredRegisterBtn.onclick = () => { closeModal(dom.loginRequiredModal);
+                openModal(dom.registerModal); };
+
+            dom.regForm.onsubmit = (e) => {
+                e.preventDefault();
+                const pwd = document.getElementById('regPassword').value,
+                    cp = document.getElementById('regConfirmPassword').value;
+                if (pwd !== cp) { showMessage('Passwords mismatch', 'warning'); return; }
+                registerUser(document.getElementById('regEmail').value, pwd, document.getElementById('regFirstName')
+                    .value, document.getElementById('regLastName').value);
+            };
+            dom.loginForm.onsubmit = (e) => { e.preventDefault();
+                loginUser(document.getElementById('loginEmail').value, document.getElementById('loginPassword')
+                    .value); };
+
+            dom.cartIcon.onclick = () => {
+                dom.cartSidebar.classList.remove('translate-x-full');
+                dom.cartOverlay.classList.remove('hidden');
+            };
+            dom.closeCart.onclick = () => {
+                dom.cartSidebar.classList.add('translate-x-full');
+                dom.cartOverlay.classList.add('hidden');
+            };
+            dom.cartOverlay.onclick = () => {
+                dom.cartSidebar.classList.add('translate-x-full');
+                dom.cartOverlay.classList.add('hidden');
+            };
+
+            dom.searchInput.addEventListener('input', applyFiltersAndRender);
+            dom.sortSelect.addEventListener('change', applyFiltersAndRender);
+            dom.minPrice.addEventListener('input', applyFiltersAndRender);
+            dom.maxPrice.addEventListener('input', applyFiltersAndRender);
+            dom.resetFiltersBtn.onclick = () => {
+                dom.searchInput.value = '';
+                dom.sortSelect.value = 'default';
+                dom.minPrice.value = '';
+                dom.maxPrice.value = '';
+                applyFiltersAndRender();
+            };
+
+            document.getElementById('heroShopBtn')?.addEventListener('click', () => document.getElementById(
+                'productsGrid')?.scrollIntoView({ behavior: 'smooth' }));
+            document.getElementById('heroExploreBtn')?.addEventListener('click', showContact);
+            document.querySelector('.brand-row')?.addEventListener('click', showHome);
+
+            dom.backToHomeBtn.onclick = showHome;
+            dom.closeCustomerModal.onclick = () => dom.customerModal.classList.add('hidden');
+            dom.customerOrderForm.onsubmit = submitOrderAndAddToCart;
+
+            // ====== PRODUCT FORM SUBMIT ======
+            dom.productForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const name = dom.productName.value.trim();
+                const location = dom.productLocation.value.trim();
+                const desc = dom.productDesc.value.trim();
+                const price = parseInt(dom.productPrice.value);
+                const stock = dom.productStock.value;
+                const quantity = parseInt(dom.productQuantity.value);
+                const bedrooms = parseInt(dom.bedrooms.value);
+                const bathrooms = parseInt(dom.bathrooms.value);
+                const area = parseInt(dom.area.value);
+                const propertyType = dom.propertyType.value;
+                const parking = parseInt(dom.parking.value);
+                const toilets = parseInt(dom.toilets.value);
+                const files = Array.from(dom.productImages.files);
+
+                if (!name || isNaN(price)) {
+                    showMessage('Name and valid price required', 'warning');
+                    return;
+                }
+                // Start with existing image URLs (if editing) or empty
+                let images = editingId ? [...currentImages] : [];
+                // Check if we would exceed 10 images
+                if (images.length + files.length > 10) {
+                    showMessage('You can have a maximum of 10 images total. Please remove some.', 'warning');
+                    return;
+                }
+                showLoader();
+                try {
+                    // Upload new files
+                    if (files.length > 0) {
+                        const newUrls = await uploadMultipleImages(files);
+                        const validUrls = newUrls.filter(url => url);
+                        if (validUrls.length > 0) {
+                            images = images.concat(validUrls);
+                        }
+                    }
+                    // Ensure we don't exceed 10
+                    if (images.length > 10) {
+                        images = images.slice(0, 10);
+                    }
+                    if (images.length === 0) {
+                        showMessage('Please add at least one image', 'warning');
+                        hideLoader();
+                        return;
+                    }
+                    const productData = { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms,
+                        area, propertyType, location, parking, toilets };
+                    if (editingId) {
+                        await db.collection("products").doc(editingId).update({ ...productData,
+                            updatedAt: new Date() });
+                        showMessage('Property updated', 'success');
+                    } else {
+                        await db.collection("products").add({ ...productData, createdAt: new Date() });
+                        showMessage('Property added', 'success');
+                    }
+                    resetEdit();
+                    dom.productImages.value = '';
+                    await fetchProducts();
+                    if (userRole === 'admin') { renderAdminList();
+                        fetchUsersAndOrders(); }
+                } catch (err) {
+                    console.error(err);
+                    showMessage('Upload error: ' + err.message, 'error');
+                } finally { hideLoader(); }
+            };
+
+            dom.cancelEdit.onclick = resetEdit;
+
+            dom.productImages.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files);
+                if (files.length > 10) {
+                    showMessage('Maximum 10 images allowed. Only the first 10 will be used.', 'warning');
+                    dom.productImages.value = '';
+                    for (let i = 0; i < 10; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const imgContainer = document.createElement('div');
+                            imgContainer.className = 'existing-image-item';
+                            imgContainer.innerHTML =
+                                `<img src="${event.target.result}" class="image-preview w-12 h-12 sm:w-20 sm:h-20"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>`;
+                            dom.existingImagesPreview.appendChild(imgContainer);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    return;
+                }
+                for (const file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.className = 'existing-image-item';
+                        imgContainer.innerHTML =
+                            `<img src="${event.target.result}" class="image-preview w-12 h-12 sm:w-20 sm:h-20"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>`;
+                        dom.existingImagesPreview.appendChild(imgContainer);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            dom.contactSettingsForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const url = dom.adminInstagramUrl.value.trim(),
+                    phone = dom.adminPhoneNumber.value.trim();
+                if (!url || !phone) { showMessage('Both fields required', 'warning'); return; }
+                await saveContactInfo(url, phone);
+            };
+            dom.resetContactBtn.onclick = async () => {
+                await saveContactInfo("https://www.instagram.com/__bullet_wi_gikondo__", "+250786811816");
+            };
+
+            dom.socialLinksContainer.innerHTML =
+                `<a href="https://www.instagram.com/__bullet_wi_gikondo__" target="_blank" class="text-pink-500 text-base sm:text-2xl"><i class="fab fa-instagram"></i></a> <a href="https://wa.me/250786811816" target="_blank" class="text-green-500 text-base sm:text-2xl"><i class="fab fa-whatsapp"></i></a> <a href="#" class="text-blue-500 text-base sm:text-2xl"><i class="fab fa-twitter"></i></a>`;
+
+            showHome();
         });
     </script>
 </body>
