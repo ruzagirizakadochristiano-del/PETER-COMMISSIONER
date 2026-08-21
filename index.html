@@ -619,13 +619,15 @@
         }
 
         /* User orders table */
-        .orders-table td, .orders-table th {
+        .orders-table td,
+        .orders-table th {
             padding: 0.3rem 0.5rem;
             border-bottom: 1px solid #333;
             font-size: 0.75rem;
         }
         @media (max-width: 640px) {
-            .orders-table td, .orders-table th {
+            .orders-table td,
+            .orders-table th {
                 font-size: 0.6rem;
                 padding: 0.15rem 0.3rem;
             }
@@ -856,7 +858,7 @@
                     <input type="text" id="productLocation" placeholder="Location" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-location-placeholder" />
                     <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-price-placeholder" />
                     <textarea id="productDesc" placeholder="Description" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base" data-i18n-placeholder="admin-desc-placeholder"></textarea>
-                    
+
                     <!-- Bedrooms, Bathrooms, Area, Type -->
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-bedrooms-label">Bedrooms</label><input type="number" id="bedrooms" min="0" value="3" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-bathrooms-label">Bathrooms</label><input type="number" id="bathrooms" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
@@ -870,11 +872,11 @@
                             <option value="Commercial" data-i18n="type-commercial">Commercial</option>
                         </select>
                     </div>
-                    
+
                     <!-- NEW: Parking & Toilets -->
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-parking-label">🚗 Parking Spaces</label><input type="number" id="parking" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-toilets-label">🚻 Toilets</label><input type="number" id="toilets" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
-                    
+
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-status-label">Status</label>
                         <select id="productStock" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base">
                             <option value="available" data-i18n="status-available">Available</option>
@@ -884,7 +886,7 @@
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-qty-label">Qty</label>
                         <input type="number" id="productQuantity" min="0" value="1" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" />
                     </div>
-                    
+
                     <!-- Images (max 10) -->
                     <div class="md:col-span-2">
                         <label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-images-label">Images (max 10)</label>
@@ -1044,7 +1046,7 @@
     <!-- ====== JAVASCRIPT ====== -->
     <script>
         // ============================================================
-        //  TRANSLATIONS (added new keys for parking, toilets, and image limit)
+        //  TRANSLATIONS
         // ============================================================
         const translations = {
             en: {
@@ -1492,12 +1494,14 @@
             const notif = document.createElement('div');
             notif.className =
                 `fixed top-20 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-900 text-green-300 border-l-4 border-green-500' : type === 'error' ? 'bg-red-900 text-red-300 border-l-4 border-red-500' : 'bg-gray-800 text-yellow-500 border-l-4 border-yellow-500'}`;
-            notif.innerHTML = `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
+            notif.innerHTML =
+            `<span class="font-bold">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${escapeHtml(msg)}`;
             container.appendChild(notif);
             setTimeout(() => notif.remove(), 4000);
         }
 
-        function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+        function escapeHtml(s) { if (!s) return ''; return s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[
+            m])); }
 
         function getFriendlyError(code) {
             const map = {
@@ -1709,7 +1713,8 @@
             let total = 0,
                 count = 0;
             dom.cartItemsDiv.innerHTML = '';
-            if (!cart.length) dom.cartItemsDiv.innerHTML = '<div class="text-center py-4 text-gray-400 text-xs sm:text-base" data-i18n="cart-empty">No inquiries yet</div>';
+            if (!cart.length) dom.cartItemsDiv.innerHTML =
+                '<div class="text-center py-4 text-gray-400 text-xs sm:text-base" data-i18n="cart-empty">No inquiries yet</div>';
             else cart.forEach((item, idx) => {
                 total += item.price * item.quantity;
                 count += item.quantity;
@@ -1739,7 +1744,9 @@
         function productCardTemplate(p) {
             const img = (p.images && p.images.length) ? p.images[0] : 'https://via.placeholder.com/300';
             const hasStock = (p.stock === 'available' && p.quantity > 0);
-            const statusText = hasStock ? translations[currentLang]['status-available-short'] : translations[currentLang]['status-sold-short'];
+            const statusText = hasStock ? translations[currentLang]['status-available-short'] : translations[currentLang][
+                'status-sold-short'
+            ];
             const statusBadge = hasStock ?
                 `<span class="absolute top-1 right-1 bg-yellow-600 text-black text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full font-bold">${p.quantity} left</span>` :
                 `<span class="absolute top-1 right-1 bg-red-700 text-white text-[0.4rem] sm:text-xs px-1 py-0.5 rounded-full">${statusText}</span>`;
@@ -1773,13 +1780,15 @@
             });
         }
 
-        // ===== PRODUCT DETAIL (now shows parking and toilets) =====
+        // ===== PRODUCT DETAIL =====
         function showProductDetail(productId) {
             const product = allProducts.find(p => p.id === productId);
             if (!product) return;
-            const statusText = product.stock === 'available' ? translations[currentLang]['status-available-short'] : translations[currentLang]['status-sold-short'];
+            const statusText = product.stock === 'available' ? translations[currentLang]['status-available-short'] :
+                translations[currentLang]['status-sold-short'];
             const statusBadge = product.stock === 'available' ?
-                '<span class="status-available px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-check-circle mr-1"></i>' + statusText +
+                '<span class="status-available px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-check-circle mr-1"></i>' +
+                statusText +
                 '</span>' :
                 '<span class="status-sold px-2 py-0.5 rounded-full text-xs sm:text-sm"><i class="fas fa-times-circle mr-1"></i>' +
                 statusText + '</span>';
@@ -1989,7 +1998,8 @@
                 }
                 cart = cart.filter(item => item.id !== productId);
                 saveCart();
-                showMessage(translations[currentLang]['order-cancelled'] || 'Order cancelled and stock restored.', 'success');
+                showMessage(translations[currentLang]['order-cancelled'] || 'Order cancelled and stock restored.',
+                'success');
                 applyFiltersAndRender();
                 if (userRole === 'admin') {
                     renderAdminList();
@@ -2025,7 +2035,8 @@
                 snap.forEach(doc => {
                     const o = doc.data();
                     const tr = document.createElement('tr');
-                    const status = (o.productId && allProducts.find(p => p.id === o.productId)?.stock === 'available') ?
+                    const status = (o.productId && allProducts.find(p => p.id === o.productId)?.stock ===
+                        'available') ?
                         'Available' : 'Sold';
                     tr.innerHTML = `
                         <td>${escapeHtml(o.productName)}</td>
@@ -2038,7 +2049,8 @@
                 });
             } catch (e) {
                 console.warn('Error loading user orders:', e);
-                dom.userOrdersBody.innerHTML = '<tr><td colspan="5" class="text-red-400 text-xs">Error loading orders</td></tr>';
+                dom.userOrdersBody.innerHTML =
+                    '<tr><td colspan="5" class="text-red-400 text-xs">Error loading orders</td></tr>';
             }
         }
 
@@ -2088,7 +2100,10 @@
                 dom.existingImagesPreview.innerHTML = prod.images.map(url =>
                     `<div class="existing-image-item"><img src="${url}" class="image-preview w-12 h-12 sm:w-20 sm:h-20"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span></div>`
                     ).join('');
+                // Store current image URLs in currentImages for later use
                 currentImages = [...prod.images];
+            } else {
+                currentImages = [];
             }
         }
 
@@ -2346,6 +2361,7 @@
             dom.closeCustomerModal.onclick = () => dom.customerModal.classList.add('hidden');
             dom.customerOrderForm.onsubmit = submitOrderAndAddToCart;
 
+            // ====== FIXED: PRODUCT FORM SUBMIT (no base64 in images array) ======
             dom.productForm.onsubmit = async (e) => {
                 e.preventDefault();
                 const name = dom.productName.value.trim();
@@ -2361,27 +2377,38 @@
                 const parking = parseInt(dom.parking.value);
                 const toilets = parseInt(dom.toilets.value);
                 const files = Array.from(dom.productImages.files);
-                if (!name || isNaN(price)) { showMessage('Name and valid price required', 'warning'); return; }
-                // Limit images to 10
-                if (files.length > 10) { showMessage('Maximum 10 images allowed.', 'warning'); return; }
+
+                if (!name || isNaN(price)) {
+                    showMessage('Name and valid price required', 'warning');
+                    return;
+                }
+                // Start with existing image URLs (if editing) or empty array
+                let images = editingId ? [...currentImages] : [];
+                // Check if we would exceed 10 images
+                if (images.length + files.length > 10) {
+                    showMessage('You can have a maximum of 10 images total. Please remove some.', 'warning');
+                    return;
+                }
                 showLoader();
                 try {
-                    let images = [];
-                    const existingPreviews = document.querySelectorAll('#existingImagesPreview .existing-image-item img');
-                    for (const img of existingPreviews) {
-                        if (img.src) images.push(img.src);
-                    }
+                    // Upload new files and add their URLs
                     if (files.length > 0) {
                         const newUrls = await uploadMultipleImages(files);
-                        images.push(...newUrls);
+                        // Filter out any failed uploads (they return undefined)
+                        const validUrls = newUrls.filter(url => url);
+                        if (validUrls.length > 0) {
+                            images = images.concat(validUrls);
+                        }
+                    }
+                    // Ensure we don't exceed 10 after upload
+                    if (images.length > 10) {
+                        images = images.slice(0, 10);
                     }
                     if (images.length === 0) {
                         showMessage('Please add at least one image', 'warning');
                         hideLoader();
                         return;
                     }
-                    // Enforce max 10 images
-                    if (images.length > 10) images = images.slice(0, 10);
                     const productData = { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms,
                         area, propertyType, location, parking, toilets };
                     if (editingId) {
@@ -2402,6 +2429,7 @@
                     showMessage('Upload error: ' + err.message, 'error');
                 } finally { hideLoader(); }
             };
+
             dom.cancelEdit.onclick = resetEdit;
 
             dom.productImages.addEventListener('change', (e) => {
