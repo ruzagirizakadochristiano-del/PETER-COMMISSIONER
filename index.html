@@ -22,6 +22,7 @@
     <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-storage-compat.js"></script>
 
     <style>
         /* ===== CUSTOM STYLES ===== */
@@ -1386,11 +1387,7 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-
-        // ============================================================
-        //  IMGBB API KEY – YOUR PROVIDED KEY
-        // ============================================================
-        const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
+        const storage = firebase.storage();
 
         // ============================================================
         //  LANGUAGE
@@ -1486,42 +1483,32 @@
         }
 
         // ============================================================
-        //  UPLOAD FUNCTIONS (with your provided API key)
+        //  IMAGE UPLOAD USING FIREBASE STORAGE
         // ============================================================
-        async function uploadImageToImgBB(file) {
-            const formData = new FormData();
-            formData.append('image', file);
-            formData.append('key', IMGBB_API_KEY);
+        async function uploadImageToFirebase(file) {
+            // Generate unique filename
+            const timestamp = Date.now();
+            const random = Math.random().toString(36).substring(2, 8);
+            const fileName = `properties/${timestamp}_${random}_${file.name}`;
+            const fileRef = storage.ref(fileName);
 
-            try {
-                const response = await fetch('https://api.imgbb.com/1/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    return data.data.url;
-                } else {
-                    console.error('ImgBB error response:', data);
-                    throw new Error(`ImgBB upload failed: ${data.error?.message || 'Unknown error'}`);
-                }
-            } catch (error) {
-                console.error('Upload exception:', error);
-                throw error;
-            }
+            // Upload the file
+            const snapshot = await fileRef.put(file);
+            // Get download URL
+            const downloadURL = await snapshot.ref.getDownloadURL();
+            return downloadURL;
         }
 
         async function uploadMultipleImages(files) {
             const urls = [];
             for (const file of files) {
                 try {
-                    const url = await uploadImageToImgBB(file);
+                    const url = await uploadImageToFirebase(file);
                     urls.push(url);
                     showMessage(`Uploaded: ${file.name}`, 'success');
                 } catch (error) {
+                    console.error('Upload error:', error);
                     showMessage(`Failed to upload ${file.name}: ${error.message}`, 'error');
-                    // Continue with other files
                 }
             }
             return urls;
@@ -2347,7 +2334,7 @@
             dom.closeCustomerModal.onclick = () => dom.customerModal.classList.add('hidden');
             dom.customerOrderForm.onsubmit = submitOrderAndAddToCart;
 
-            // ====== PRODUCT FORM SUBMIT ======
+            // ====== PRODUCT FORM SUBMIT (with Firebase Storage) ======
             dom.productForm.onsubmit = async (e) => {
                 e.preventDefault();
                 const name = dom.productName.value.trim();
