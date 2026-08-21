@@ -823,7 +823,7 @@
                 <div id="socialLinksContainer" class="flex gap-3 mt-2"></div>
             </div>
 
-            <!-- === NEW: User's Orders / Inquiries === -->
+            <!-- User's Orders / Inquiries -->
             <div class="mt-6 bg-gray-900 p-3 sm:p-5 rounded-xl">
                 <h3 class="font-semibold text-base sm:text-lg text-yellow-500"><i class="fas fa-shopping-bag mr-2"></i><span data-i18n="my-orders-title">My Inquiries</span></h3>
                 <div id="userOrdersList" class="mt-2 overflow-x-auto">
@@ -856,6 +856,8 @@
                     <input type="text" id="productLocation" placeholder="Location" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-location-placeholder" />
                     <input type="number" step="1" id="productPrice" placeholder="Price (RWF)" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg text-white text-xs sm:text-base" required data-i18n-placeholder="admin-price-placeholder" />
                     <textarea id="productDesc" placeholder="Description" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg md:col-span-2 text-white text-xs sm:text-base" data-i18n-placeholder="admin-desc-placeholder"></textarea>
+                    
+                    <!-- Bedrooms, Bathrooms, Area, Type -->
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-bedrooms-label">Bedrooms</label><input type="number" id="bedrooms" min="0" value="3" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-bathrooms-label">Bathrooms</label><input type="number" id="bathrooms" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-area-label">Area (sq m)</label><input type="number" id="area" min="0" value="150" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
@@ -868,6 +870,11 @@
                             <option value="Commercial" data-i18n="type-commercial">Commercial</option>
                         </select>
                     </div>
+                    
+                    <!-- NEW: Parking & Toilets -->
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-parking-label">🚗 Parking Spaces</label><input type="number" id="parking" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
+                    <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-toilets-label">🚻 Toilets</label><input type="number" id="toilets" min="0" value="2" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" /></div>
+                    
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-status-label">Status</label>
                         <select id="productStock" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base">
                             <option value="available" data-i18n="status-available">Available</option>
@@ -877,11 +884,13 @@
                     <div><label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-qty-label">Qty</label>
                         <input type="number" id="productQuantity" min="0" value="1" class="bg-gray-900 border border-yellow-600 p-1 sm:p-2 rounded-lg w-full text-white text-xs sm:text-base" />
                     </div>
+                    
+                    <!-- Images (max 10) -->
                     <div class="md:col-span-2">
-                        <label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-images-label">Images (max 5)</label>
+                        <label class="block text-[0.6rem] sm:text-sm mb-0.5 text-gray-300" data-i18n="admin-images-label">Images (max 10)</label>
                         <input type="file" id="productImages" accept="image/*" multiple class="bg-gray-900 border border-yellow-600 p-0.5 rounded-lg w-full text-white text-xs" />
                         <div id="existingImagesPreview" class="flex flex-wrap gap-1 mt-1"></div>
-                        <p class="text-[0.5rem] text-gray-400 mt-0.5" data-i18n="admin-images-hint">Select up to 5 images. Edit to add/remove.</p>
+                        <p class="text-[0.5rem] text-gray-400 mt-0.5" data-i18n="admin-images-hint">Select up to 10 images. Edit to add/remove.</p>
                     </div>
                     <div class="md:col-span-2 flex flex-col sm:flex-row gap-2">
                         <button type="submit" class="btn-primary text-black px-3 py-1 sm:px-5 sm:py-2 rounded-lg font-semibold text-xs sm:text-base w-full sm:w-auto">
@@ -1035,7 +1044,7 @@
     <!-- ====== JAVASCRIPT ====== -->
     <script>
         // ============================================================
-        //  TRANSLATIONS (added new keys)
+        //  TRANSLATIONS (added new keys for parking, toilets, and image limit)
         // ============================================================
         const translations = {
             en: {
@@ -1086,12 +1095,14 @@
                 "type-villa": "Villa",
                 "type-land": "Land",
                 "type-commercial": "Commercial",
+                "admin-parking-label": "🚗 Parking Spaces",
+                "admin-toilets-label": "🚻 Toilets",
                 "admin-status-label": "Status",
                 "status-available": "Available",
                 "status-sold": "Sold",
                 "admin-qty-label": "Qty",
-                "admin-images-label": "Images (max 5)",
-                "admin-images-hint": "Select up to 5 images. Edit to add/remove.",
+                "admin-images-label": "Images (max 10)",
+                "admin-images-hint": "Select up to 10 images. Edit to add/remove.",
                 "btn-add": "➕ Add",
                 "btn-cancel": "Cancel",
                 "admin-inventory-title": "📋 Inventory",
@@ -1143,7 +1154,6 @@
                 "btn-loading": "Loading...",
                 "status-available-short": "Available",
                 "status-sold-short": "Sold",
-                // NEW KEYS
                 "my-orders-title": "My Inquiries",
                 "order-th-property": "Property",
                 "order-th-price": "Price",
@@ -1203,12 +1213,14 @@
                 "type-villa": "Villa",
                 "type-land": "Terrain",
                 "type-commercial": "Commercial",
+                "admin-parking-label": "🚗 Places de parking",
+                "admin-toilets-label": "🚻 Toilettes",
                 "admin-status-label": "Statut",
                 "status-available": "Disponible",
                 "status-sold": "Vendu",
                 "admin-qty-label": "Qté",
-                "admin-images-label": "Images (max 5)",
-                "admin-images-hint": "Sélectionnez jusqu'à 5 images. Modifiez pour ajouter/supprimer.",
+                "admin-images-label": "Images (max 10)",
+                "admin-images-hint": "Sélectionnez jusqu'à 10 images. Modifiez pour ajouter/supprimer.",
                 "btn-add": "➕ Ajouter",
                 "btn-cancel": "Annuler",
                 "admin-inventory-title": "📋 Inventaire",
@@ -1319,12 +1331,14 @@
                 "type-villa": "Villa",
                 "type-land": "Ubutaka",
                 "type-commercial": "Ubucuruzi",
+                "admin-parking-label": "🚗 Ahantu ho guhagarika",
+                "admin-toilets-label": "🚻 Amazu n'isukura",
                 "admin-status-label": "Ibyo muri",
                 "status-available": "Irahari",
                 "status-sold": "Yagurishijwe",
                 "admin-qty-label": "Ingano",
-                "admin-images-label": "Amashusho (max 5)",
-                "admin-images-hint": "Hitamo amashusho 5. Hindura wongere cyangwa ukure.",
+                "admin-images-label": "Amashusho (max 10)",
+                "admin-images-hint": "Hitamo amashusho 10. Hindura wongere cyangwa ukure.",
                 "btn-add": "➕ Ongera",
                 "btn-cancel": "Hagarika",
                 "admin-inventory-title": "📋 Ibigowe",
@@ -1613,6 +1627,8 @@
             bathrooms: $('bathrooms'),
             area: $('area'),
             propertyType: $('propertyType'),
+            parking: $('parking'),
+            toilets: $('toilets'),
             existingImagesPreview: $('existingImagesPreview'),
             publicInstagramLink: $('publicInstagramLink'),
             publicPhoneNumber: $('publicPhoneNumber'),
@@ -1620,7 +1636,6 @@
             adminPhoneNumber: $('adminPhoneNumber'),
             contactSettingsForm: $('contactSettingsForm'),
             resetContactBtn: $('resetContactBtn'),
-            // User orders
             userOrdersBody: $('userOrdersBody'),
             userOrdersEmpty: $('userOrdersEmpty'),
         };
@@ -1758,7 +1773,7 @@
             });
         }
 
-        // ===== PRODUCT DETAIL =====
+        // ===== PRODUCT DETAIL (now shows parking and toilets) =====
         function showProductDetail(productId) {
             const product = allProducts.find(p => p.id === productId);
             if (!product) return;
@@ -1780,7 +1795,14 @@
                 `<div class="flex items-center gap-1 mt-1"><i class="fas fa-map-marker-alt text-yellow-500"></i><span class="text-gray-300 text-xs sm:text-base">${escapeHtml(product.location)}</span></div>` :
                 '';
             const extraInfo =
-                `<div class="flex flex-wrap gap-1 sm:gap-3 mt-1 sm:mt-3"><span class="info-item text-xs sm:text-sm"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span><span class="info-item text-xs sm:text-sm"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span><span class="info-item text-xs sm:text-sm"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span><span class="info-item text-xs sm:text-sm"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span></div>`;
+                `<div class="flex flex-wrap gap-1 sm:gap-3 mt-1 sm:mt-3">
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-bed"></i> ${product.bedrooms || 0} beds</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-bath"></i> ${product.bathrooms || 0} baths</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-vector-square"></i> ${product.area || 0} m²</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-building"></i> ${product.propertyType || 'House'}</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-car"></i> 🚗 ${product.parking || 0} spaces</span>
+                    <span class="info-item text-xs sm:text-sm"><i class="fas fa-toilet"></i> 🚻 ${product.toilets || 0}</span>
+                </div>`;
 
             dom.detailContent.innerHTML = `
                 <div class="grid md:grid-cols-2 gap-4 sm:gap-8">
@@ -1869,7 +1891,8 @@
                     quantity: d.data().quantity !== undefined ? d.data().quantity : 1, bedrooms: d.data()
                         .bedrooms || 0,
                     bathrooms: d.data().bathrooms || 0, area: d.data().area || 0, propertyType: d.data()
-                        .propertyType || 'House', location: d.data().location || '' }));
+                        .propertyType || 'House', location: d.data().location || '',
+                    parking: d.data().parking || 0, toilets: d.data().toilets || 0 }));
                 applyFiltersAndRender();
                 renderRecentlyViewed();
             } catch (e) { showMessage('Failed to load properties', 'error'); } finally { hideLoader(); }
@@ -1950,9 +1973,7 @@
             if (!confirm(translations[currentLang]['confirm-cancel-order'] || 'Are you sure?')) return;
             showLoader();
             try {
-                // Delete the order document
                 await db.collection("orders").doc(orderId).delete();
-                // Restore product quantity
                 const productRef = db.collection("products").doc(productId);
                 const prodSnap = await productRef.get();
                 if (prodSnap.exists) {
@@ -1960,24 +1981,20 @@
                     const newQty = currentQty + qty;
                     const newStock = newQty > 0 ? 'available' : 'sold';
                     await productRef.update({ quantity: newQty, stock: newStock });
-                    // Update local allProducts
                     const idx = allProducts.findIndex(p => p.id === productId);
                     if (idx !== -1) {
                         allProducts[idx].quantity = newQty;
                         allProducts[idx].stock = newStock;
                     }
                 }
-                // Remove from cart if present
                 cart = cart.filter(item => item.id !== productId);
                 saveCart();
                 showMessage(translations[currentLang]['order-cancelled'] || 'Order cancelled and stock restored.', 'success');
-                // Refresh views
                 applyFiltersAndRender();
                 if (userRole === 'admin') {
                     renderAdminList();
                     fetchUsersAndOrders();
                 }
-                // Refresh user orders if user panel is visible
                 if (!dom.userSec.classList.contains('hidden')) {
                     loadUserOrders();
                 }
@@ -1985,11 +2002,10 @@
                 showMessage('Error cancelling: ' + err.message, 'error');
             } finally { hideLoader(); }
         }
-        // Make function globally accessible for inline onclick
         window.cancelOrder = cancelOrder;
 
         // ============================================================
-        //  USER ORDERS (Load and display in user panel)
+        //  USER ORDERS
         // ============================================================
         async function loadUserOrders() {
             if (!currentUser) return;
@@ -2063,7 +2079,9 @@
             dom.bedrooms.value = prod.bedrooms;
             dom.bathrooms.value = prod.bathrooms;
             dom.area.value = prod.area;
-            dom.propertyType.value = prod.propertyType;
+            dom.propertyType.value = prod.propertyType || 'House';
+            dom.parking.value = prod.parking || 0;
+            dom.toilets.value = prod.toilets || 0;
             dom.productFormTitle.innerText = '✏️ Update';
             dom.cancelEdit.classList.remove('hidden');
             if (dom.existingImagesPreview && prod.images) {
@@ -2083,13 +2101,14 @@
             dom.bathrooms.value = 2;
             dom.area.value = 150;
             dom.propertyType.value = 'House';
+            dom.parking.value = 2;
+            dom.toilets.value = 2;
             dom.productFormTitle.innerText = '➕ Add';
             dom.cancelEdit.classList.add('hidden');
             if (dom.existingImagesPreview) dom.existingImagesPreview.innerHTML = '';
             currentImages = [];
         }
 
-        // ===== Admin Orders (with Delete button) =====
         async function fetchUsersAndOrders() {
             if (dom.userTable) {
                 try {
@@ -2221,7 +2240,7 @@
                 'hidden'));
             dom.userSec.classList.remove('hidden');
             loadProfile();
-            loadUserOrders(); // load user's orders
+            loadUserOrders();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -2339,8 +2358,12 @@
                 const bathrooms = parseInt(dom.bathrooms.value);
                 const area = parseInt(dom.area.value);
                 const propertyType = dom.propertyType.value;
+                const parking = parseInt(dom.parking.value);
+                const toilets = parseInt(dom.toilets.value);
                 const files = Array.from(dom.productImages.files);
                 if (!name || isNaN(price)) { showMessage('Name and valid price required', 'warning'); return; }
+                // Limit images to 10
+                if (files.length > 10) { showMessage('Maximum 10 images allowed.', 'warning'); return; }
                 showLoader();
                 try {
                     let images = [];
@@ -2357,8 +2380,10 @@
                         hideLoader();
                         return;
                     }
+                    // Enforce max 10 images
+                    if (images.length > 10) images = images.slice(0, 10);
                     const productData = { name, description: desc, price, images, stock, quantity, bedrooms, bathrooms,
-                        area, propertyType, location };
+                        area, propertyType, location, parking, toilets };
                     if (editingId) {
                         await db.collection("products").doc(editingId).update({ ...productData,
                             updatedAt: new Date() });
@@ -2381,6 +2406,24 @@
 
             dom.productImages.addEventListener('change', (e) => {
                 const files = Array.from(e.target.files);
+                // If more than 10, alert and truncate
+                if (files.length > 10) {
+                    showMessage('Maximum 10 images allowed. Only the first 10 will be used.', 'warning');
+                    dom.productImages.value = '';
+                    for (let i = 0; i < 10; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const imgContainer = document.createElement('div');
+                            imgContainer.className = 'existing-image-item';
+                            imgContainer.innerHTML =
+                                `<img src="${event.target.result}" class="image-preview w-12 h-12 sm:w-20 sm:h-20"><span class="remove-image-btn" onclick="this.parentElement.remove()">×</span>`;
+                            dom.existingImagesPreview.appendChild(imgContainer);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    return;
+                }
                 for (const file of files) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
