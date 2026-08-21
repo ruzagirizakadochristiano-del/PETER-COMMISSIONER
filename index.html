@@ -1386,7 +1386,11 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb"; // Your provided key
+
+        // ============================================================
+        //  IMGBB API KEY – YOUR PROVIDED KEY
+        // ============================================================
+        const IMGBB_API_KEY = "4fa8b99e2ba50cfe70cc9f69257055bb";
 
         // ============================================================
         //  LANGUAGE
@@ -1482,23 +1486,29 @@
         }
 
         // ============================================================
-        //  UPLOAD FUNCTIONS (using your API key)
+        //  UPLOAD FUNCTIONS (with your provided API key)
         // ============================================================
         async function uploadImageToImgBB(file) {
-            if (!IMGBB_API_KEY || IMGBB_API_KEY === "4fa8b99e2ba50cfe70cc9f69257055bb") {
-                console.warn("ImgBB API key is set but may be invalid. Please get a free key from https://api.imgbb.com/");
-                // Continue anyway – we'll let the API return an error
-            }
             const formData = new FormData();
             formData.append('image', file);
             formData.append('key', IMGBB_API_KEY);
-            const response = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData });
-            const data = await response.json();
-            if (data.success) {
-                return data.data.url;
-            } else {
-                console.error("ImgBB upload error:", data.error);
-                throw new Error(`ImgBB upload failed: ${data.error?.message || 'Unknown error'}`);
+
+            try {
+                const response = await fetch('https://api.imgbb.com/1/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    return data.data.url;
+                } else {
+                    console.error('ImgBB error response:', data);
+                    throw new Error(`ImgBB upload failed: ${data.error?.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Upload exception:', error);
+                throw error;
             }
         }
 
